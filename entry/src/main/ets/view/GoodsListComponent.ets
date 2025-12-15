@@ -45,8 +45,8 @@ export default struct GoodsList {
               // 商品图片区域
               Column() {
                 Image(item?.goodsImg)
-                  .width('90%')
-                  .height('90%')
+                  .width(commonConst.LAYOUT_WIDTH_OR_HEIGHT)
+                  .height(commonConst.LAYOUT_WIDTH_OR_HEIGHT)
                   .objectFit(ImageFit.Contain)
                   .draggable(false) // 禁止图片拖拽
                   .borderRadius(8)
@@ -91,7 +91,7 @@ export default struct GoodsList {
                     .fontWeight(FontWeight.Bold)
                 }
                 .justifyContent(FlexAlign.SpaceBetween)
-                .width('100%')
+                .width(commonConst.GOODS_LIST_WIDTH)
               }
               .padding(commonConst.GOODS_LIST_PADDING) // 设置内边距
               .width(commonConst.GOODS_FONT_WIDTH)
@@ -101,10 +101,10 @@ export default struct GoodsList {
             .justifyContent(FlexAlign.SpaceBetween) // 商品图片和信息区域两端对齐
             .height(commonConst.GOODS_LIST_HEIGHT)
             .width(commonConst.LAYOUT_WIDTH_OR_HEIGHT)
-            .backgroundColor($r('app.color.white'))
-            .borderRadius(12)
-            .margin({ left: 12, right: 12 })
-            .shadow({ radius: 6, color: '#20000000', offsetX: 1, offsetY: 2 })
+            // .backgroundColor($r('app.color.white'))
+            // .borderRadius(12)
+            // .margin({ left: 12, right: 12 })
+            // .shadow({ radius: 6, color: '#20000000', offsetX: 1, offsetY: 2 })
           }
           // 监听触摸事件，实现触底加载更多
           .onTouch((event?: TouchEvent) => {
