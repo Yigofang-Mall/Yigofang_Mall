@@ -25,7 +25,6 @@ import {
   MAX_LINES_TEXT
 } from '../common/CommonConstants';
 import GoodsList from './GoodsListComponent';
-import PutDownRefresh from './PutDownRefreshLayout';
 
 /**
  * 标签页组件
@@ -44,6 +43,8 @@ export default struct TabBar {
   @State refreshStatus: boolean = false;
   // 刷新文本
   @State refreshText: Resource = $r('app.string.refresh_text');
+  // 下拉偏移量
+  @State pullDownOffset: number = 0;
 
   /**
    * 构建第一个标签页（默认选中标签）
@@ -89,6 +90,31 @@ export default struct TabBar {
   }
 
   /**
+   * 构建下拉刷新组件
+   */
+  @Builder
+  buildRefreshView() {
+    Column() {
+      Row() {
+        Image($r('app.media.refreshing'))
+          .width(40)
+          .height(40)
+          .margin({ right: 20 })
+        Text(this.refreshText)
+          .fontSize(NORMAL_FONT_SIZE)
+          .fontColor($r('app.color.gray'))
+      }
+      .justifyContent(FlexAlign.Center)
+      .width('100%')
+      .height(60)
+      .backgroundColor($r('app.color.white'))
+    }
+    .width('100%')
+    .height(60)
+    .offset({ y: this.pullDownOffset })
+  }
+
+  /**
    * 处理下拉刷新逻辑
    * @param event 触摸事件
    */
@@ -102,18 +128,32 @@ export default struct TabBar {
         this.currentOffsetY = event.touches[0].y;
         break;
       case TouchType.Move:
-        // 根据下拉偏移量判断是否触发刷新
-        this.refreshStatus = event.touches[0].y - this.currentOffsetY > MAX_OFFSET_Y;
-        break;
-      case TouchType.Cancel:
+        const moveY = event.touches[0].y;
+        const deltaY = moveY - this.currentOffsetY;
+        
+        // 如果是向下滑动
+        if (deltaY > 0) {
+          this.pullDownOffset = Math.min(deltaY, MAX_OFFSET_Y);
+          // 当下拉距离超过阈值时，显示刷新状态
+          if (deltaY > MAX_OFFSET_Y) {
+            this.refreshStatus = true;
+          }
+        }
         break;
       case TouchType.Up:
-        // 模拟刷新效果，不实际请求数据
-        this.timer = setTimeout(() => {
-          this.refreshStatus = false;
-        }, REFRESH_TIME);
-        break;
-      default:
+        // 如果已经触发刷新状态
+        if (this.refreshStatus) {
+          this.refreshText = $r('app.string.refresh_text');
+          // 模拟刷新效果，不实际请求数据
+          this.timer = setTimeout(() => {
+            this.refreshStatus = false;
+            this.pullDownOffset = 0;
+            this.refreshText = $r('app.string.refresh_text');
+          }, REFRESH_TIME);
+        } else {
+          // 未触发刷新，回弹
+          this.pullDownOffset = 0;
+        }
         break;
     }
   }
@@ -123,7 +163,9 @@ export default struct TabBar {
    * 清除刷新定时器
    */
   aboutToDisappear() {
-    clearTimeout(this.timer);
+    if (this.timer) {
+      clearTimeout(this.timer);
+    }
   }
 
   build() {
@@ -131,24 +173,27 @@ export default struct TabBar {
     Tabs() {
       // 第一个标签内容（商品列表页）
       TabContent() {
-        // 可滚动容器
-        Scroll() {
-          Column() {
-            // 根据刷新状态决定是否显示刷新组件
-            if (this.refreshStatus) {
-              PutDownRefresh({ refreshText: $refreshText })
-            }
-            // 商品列表组件
-            GoodsList()
-            // 到底提示文本
-            Text($r('app.string.to_bottom')).fontSize(NORMAL_FONT_SIZE).fontColor($r('app.color.gray'))
+        // 使用Column包裹以便实现下拉刷新
+        Column() {
+          // 下拉刷新区域
+          if (this.refreshStatus || this.pullDownOffset > 0) {
+            this.buildRefreshView()
           }
-          .width(LAYOUT_WIDTH_OR_HEIGHT)
+          
+          // 商品列表组件
+          Scroll() {
+            Column() {
+              GoodsList()
+            }
+            .width('100%')
+          }
+          .scrollBar(BarState.Off) // 隐藏滚动条
+          .edgeEffect(EdgeEffect.Spring) // 设置边缘弹性效果
+          .width('100%')
+          .height('100%')
         }
-        .scrollBar(BarState.Off) // 隐藏滚动条
-        .edgeEffect(EdgeEffect.Spring) // 设置边缘弹性效果
-        .width(LAYOUT_WIDTH_OR_HEIGHT)
-        .height(LAYOUT_WIDTH_OR_HEIGHT)
+        .width('100%')
+        .height('100%')
         // 监听触摸事件处理下拉刷新
         .onTouch((event?: TouchEvent) => {
           this.putDownRefresh(event);
@@ -157,7 +202,7 @@ export default struct TabBar {
       .tabBar(this.firstTabBar) // 设置标签栏
 
       // 循环创建其他标签页
-      ForEach(initTabBarData, (item: Resource, index?: number) => {
+      ForEach(initTabBarData(), (item: Resource, index?: number) => {
         TabContent() {
           Column() {
             Text(item).fontSize(MAX_FONT_SIZE)
@@ -174,5 +219,9 @@ export default struct TabBar {
       this.tabsIndex = index;
     })
     .vertical(false) // 水平排列标签页
+    .barMode(BarMode.Fixed) // 固定标签栏
+    .barHeight(60) // 标签栏高度
+    .width(LAYOUT_WIDTH_OR_HEIGHT)
+    .height(LAYOUT_WIDTH_OR_HEIGHT)
   }
 }

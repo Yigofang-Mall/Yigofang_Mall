@@ -13,40 +13,64 @@
  * limitations under the License.
  */
 
-// 初始化标签栏数据
-export const initTabBarData = [
-  $r('app.string.mobile_phone'),
-  $r('app.string.clothes'),
-  $r('app.string.wear'),
-  $r('app.string.home_furnishing')
-]
-
-// 商品列表项数据类型
-export class GoodsListItemType {
-  // 商品图片资源
+// 商品列表项类型
+export interface GoodsListItemType {
+  id: number;
+  goodsName: ResourceStr;
+  price: ResourceStr;
   goodsImg: Resource;
-  // 商品名称
-  goodsName: Resource;
-  // 广告语
-  advertisingLanguage: Resource;
-  // 评价信息
-  evaluate: Resource;
-  // 价格
-  price: Resource;
-
-  constructor(goodsImg: Resource, goodsName: Resource, price: Resource) {
-    this.goodsImg = goodsImg;
-    this.goodsName = goodsName;
-    this.advertisingLanguage = $r('app.string.advertising_language');
-    this.evaluate = $r('app.string.evaluate');
-    this.price = price;
-  }
+  advertisingLanguage: ResourceStr;
+  evaluate: ResourceStr;
 }
 
-// 商品初始数据列表
-export const goodsInitialList: GoodsListItemType[] = [
-  new GoodsListItemType($r('app.media.goodsImg'), $r('app.string.goodsName'), $r('app.string.price_199')),
-  new GoodsListItemType($r('app.media.goodsImg_2'), $r('app.string.another_goodsName'), $r('app.string.price_199')),
-  new GoodsListItemType($r('app.media.goodsImg_3'), $r('app.string.goodsName'), $r('app.string.price_199')),
-  new GoodsListItemType($r('app.media.goodsImg_4'), $r('app.string.another_goodsName'), $r('app.string.price_199'))
-]
+// 初始化标签栏数据
+export function initTabBarData(): Resource[] {
+  return [
+    $r('app.string.mobile_phone'),
+    $r('app.string.clothes'),
+    $r('app.string.wear'),
+    $r('app.string.home_furnishing')
+  ];
+}
+
+// 初始化商品数据
+export function initGoodsData(): GoodsListItemType[] {
+  const goodsList: GoodsListItemType[] = [];
+  
+  // 生成20个初始商品
+  for (let i = 1; i <= 20; i++) {
+    const imageIndex = (i % 4) + 1;
+    goodsList.push({
+      id: i,
+      goodsName: i % 2 === 0 ? $r('app.string.goodsName') : $r('app.string.another_goodsName'),
+      price: getPriceByIndex(i),
+      goodsImg: getImageByIndex(imageIndex),
+      advertisingLanguage: $r('app.string.advertising_language'),
+      evaluate: $r('app.string.evaluate')
+    });
+  }
+  
+  return goodsList;
+}
+
+// 根据索引获取价格
+function getPriceByIndex(index: number): ResourceStr {
+  const prices = [
+    $r('app.string.price_199'),
+    $r('app.string.price_265'),
+    $r('app.string.price_810'),
+    $r('app.string.price_999')
+  ];
+  return prices[index % 4];
+}
+
+// 根据索引获取图片
+function getImageByIndex(index: number): Resource {
+  const images = [
+    $r('app.media.goodsImg'),
+    $r('app.media.goodsImg_2'),
+    $r('app.media.goodsImg_3'),
+    $r('app.media.goodsImg_4')
+  ];
+  return images[index % 4];
+}

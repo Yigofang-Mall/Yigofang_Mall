@@ -30,13 +30,15 @@ export default struct GoodsList {
   private startTouchOffsetY: number = 0;
   // 记录触摸结束点Y坐标
   private endTouchOffsetY: number = 0;
+  // 是否正在加载
+  private isLoading: boolean = false;
 
   build() {
     Row() {
       // 商品列表容器
       List({ space: commonConst.LIST_ITEM_SPACE }) {
         // 使用懒加载方式渲染列表项
-        LazyForEach(this.goodsListData, (item: GoodsListItemType) => {
+        LazyForEach(this.goodsListData, (item: GoodsListItemType, index: number) => {
           ListItem() {
             // 单个商品项布局
             Row() {
@@ -45,22 +47,32 @@ export default struct GoodsList {
                 Image(item?.goodsImg)
                   .width(commonConst.LAYOUT_WIDTH_OR_HEIGHT)
                   .height(commonConst.LAYOUT_WIDTH_OR_HEIGHT)
+                  .objectFit(ImageFit.Contain)
                   .draggable(false) // 禁止图片拖拽
+                  .borderRadius(8)
               }
               .width(commonConst.GOODS_IMAGE_WIDTH)
               .height(commonConst.LAYOUT_WIDTH_OR_HEIGHT)
+              .justifyContent(FlexAlign.Center)
+              .alignItems(HorizontalAlign.Center)
 
               // 商品信息区域
               Column() {
                 // 商品名称
                 Text(item?.goodsName)
                   .fontSize(commonConst.NORMAL_FONT_SIZE)
+                  .fontWeight(FontWeight.Medium)
+                  .maxLines(2)
+                  .textOverflow({ overflow: TextOverflow.Ellipsis })
+                  .margin({ bottom: 4 })
 
                 // 广告语
                 Text(item?.advertisingLanguage)
                   .fontColor($r('app.color.gray'))
                   .fontSize(commonConst.GOODS_EVALUATE_FONT_SIZE)
-                  .margin({ right: commonConst.MARGIN_RIGHT })
+                  .maxLines(1)
+                  .textOverflow({ overflow: TextOverflow.Ellipsis })
+                  .margin({ bottom: 8, right: commonConst.MARGIN_RIGHT })
 
                 // 评价和价格信息行
                 Row() {
@@ -69,10 +81,16 @@ export default struct GoodsList {
                     .fontSize(commonConst.GOODS_EVALUATE_FONT_SIZE)
                     .fontColor($r('app.color.deepGray'))
                     .width(commonConst.EVALUATE_WIDTH)
+                    .maxLines(1)
+                    .textOverflow({ overflow: TextOverflow.Ellipsis })
+                  
                   // 价格信息（红色突出显示）
-                  Text(item?.price).fontSize(commonConst.NORMAL_FONT_SIZE).fontColor($r('app.color.freshRed'))
+                  Text(item?.price)
+                    .fontSize(commonConst.NORMAL_FONT_SIZE)
+                    .fontColor($r('app.color.freshRed'))
+                    .fontWeight(FontWeight.Bold)
                 }
-                .justifyContent(FlexAlign.SpaceAround)
+                .justifyContent(FlexAlign.SpaceBetween)
                 .width(commonConst.GOODS_LIST_WIDTH)
               }
               .padding(commonConst.GOODS_LIST_PADDING) // 设置内边距
@@ -83,6 +101,10 @@ export default struct GoodsList {
             .justifyContent(FlexAlign.SpaceBetween) // 商品图片和信息区域两端对齐
             .height(commonConst.GOODS_LIST_HEIGHT)
             .width(commonConst.LAYOUT_WIDTH_OR_HEIGHT)
+            // .backgroundColor($r('app.color.white'))
+            // .borderRadius(12)
+            // .margin({ left: 12, right: 12 })
+            // .shadow({ radius: 6, color: '#20000000', offsetX: 1, offsetY: 2 })
           }
           // 监听触摸事件，实现触底加载更多
           .onTouch((event?: TouchEvent) => {
@@ -93,22 +115,45 @@ export default struct GoodsList {
               case TouchType.Down: // 触摸按下
                 this.startTouchOffsetY = event.touches[0].y;
                 break;
-              case TouchType.Up: // 触摸抬起
-                this.startTouchOffsetY = event.touches[0].y;
-                break;
               case TouchType.Move: // 触摸移动
-                // 判断是否向上滑动，如果是则加载更多数据
-                if (this.startTouchOffsetY - this.endTouchOffsetY > 0) {
+                this.endTouchOffsetY = event.touches[0].y;
+                // 判断是否向上滑动且接近底部，如果是则加载更多数据
+                if (this.startTouchOffsetY - this.endTouchOffsetY > 100 && !this.isLoading) {
+                  this.isLoading = true;
                   this.goodsListData.pushData();
+                  setTimeout(() => {
+                    this.isLoading = false;
+                  }, 500);
                 }
                 break;
             }
           })
-        })
+        }, (item: GoodsListItemType) => item.id.toString())
       }
-      .width(commonConst.GOODS_LIST_WIDTH)
+      .width('100%')
+      .height('100%')
+      .edgeEffect(EdgeEffect.Spring) // 使用弹簧效果
+      
+      // 加载更多提示
+      if (this.isLoading) {
+        Text('正在加载更多...')
+          .fontSize(commonConst.NORMAL_FONT_SIZE)
+          .fontColor($r('app.color.gray'))
+          .textAlign(TextAlign.Center)
+          .width('100%')
+          .margin({ top: 20, bottom: 40 })
+      } else {
+        Text($r('app.string.to_bottom'))
+          .fontSize(commonConst.NORMAL_FONT_SIZE)
+          .fontColor($r('app.color.gray'))
+          .textAlign(TextAlign.Center)
+          .width('100%')
+          .margin({ top: 20, bottom: 40 })
+      }
     }
     .justifyContent(FlexAlign.Center)
     .width(commonConst.LAYOUT_WIDTH_OR_HEIGHT)
+    .height('100%')
+    .backgroundColor($r('app.color.primaryBgColor'))
   }
 }

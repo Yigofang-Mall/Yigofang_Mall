@@ -205,3 +205,22 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# HarmonyOS DevEco Studio
+.hvigor/
+.idea/
+*.iml
+.DS_Store
+
+# Build files
+build/
+*.log
+
+# DevEco generated files
+.ohpm/
+.oh_modules/
+node_modules/
+
+# OS generated files
+.DS_Store
+Thumbs.db
