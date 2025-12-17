@@ -24,8 +24,11 @@ import { ListDataSource } from '../viewmodel/ListDataSource';
  */
 @Component
 export default struct GoodsList {
-  // 提供列表数据源
-  @Provide goodsListData: ListDataSource = new ListDataSource();
+  // 接收分类ID参数
+  @Prop categoryId: number = 1;
+
+  // 根据分类过滤数据源
+  @Provide goodsListData: ListDataSource = new ListDataSource(this.categoryId);
   // 记录触摸起始点Y坐标
   private startTouchOffsetY: number = 0;
   // 记录触摸结束点Y坐标

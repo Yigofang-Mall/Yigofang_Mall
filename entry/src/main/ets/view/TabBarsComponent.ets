@@ -204,12 +204,31 @@ export default struct TabBar {
       // 循环创建其他标签页
       ForEach(initTabBarData(), (item: Resource, index?: number) => {
         TabContent() {
+          // 使用相同结构实现次标签页内容
           Column() {
-            Text(item).fontSize(MAX_FONT_SIZE)
+            // 下拉刷新区域（与主标签页保持一致）
+            if (this.refreshStatus || this.pullDownOffset > 0) {
+              this.buildRefreshView()
+            }
+
+            // 商品列表组件
+            Scroll() {
+              Column() {
+                GoodsList()
+              }
+              .width('100%')
+            }
+            .scrollBar(BarState.Off)
+            .edgeEffect(EdgeEffect.Spring)
+            .width('100%')
+            .height('100%')
           }
-          .justifyContent(FlexAlign.Center)
-          .width(LAYOUT_WIDTH_OR_HEIGHT)
-          .height(LAYOUT_WIDTH_OR_HEIGHT)
+          .width('100%')
+          .height('100%')
+          // 共用下拉刷新逻辑
+          .onTouch((event?: TouchEvent) => {
+            this.putDownRefresh(event);
+          })
         }
         .tabBar(this.otherTabBar(item, index !== undefined ? index : 0))
       })

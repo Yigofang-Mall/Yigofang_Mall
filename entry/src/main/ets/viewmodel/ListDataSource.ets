@@ -22,11 +22,13 @@ import { MAX_DATA_LENGTH, MAGNIFICATION } from '../common/CommonConstants';
 export class ListDataSource implements IDataSource {
   private listeners: DataChangeListener[] = [];
   private dataArray: GoodsListItemType[] = [];
-  private currentIndex: number = 0;
+  private categoryId: number;
+  private currentIndex: number;
 
-  constructor() {
-    // 初始化数据
-    this.dataArray = initGoodsData();
+  constructor(categoryId: number = 1) {
+    this.categoryId = categoryId;
+    // 根据分类过滤初始化数据
+    this.dataArray = initGoodsData().filter(item => item.category === this.categoryId);
     this.currentIndex = this.dataArray.length;
   }
 
@@ -63,18 +65,21 @@ export class ListDataSource implements IDataSource {
     setTimeout(() => {
       const newData: GoodsListItemType[] = [];
       const startId = this.currentIndex + 1;
+      const categories = 4;
       
-      // 每次加载10个新商品
-      for (let i = 0; i < 10 && this.dataArray.length < MAX_DATA_LENGTH; i++) {
+      // 每次加载5个新商品
+      for (let i = 0; i < 5 && this.dataArray.length < MAX_DATA_LENGTH; i++) {
         const id = startId + i;
         const imageIndex = (id % 4);
+        const categoryId = this.categoryId;
         newData.push({
           id: id,
           goodsName: id % 2 === 0 ? $r('app.string.goodsName') : $r('app.string.another_goodsName'),
           price: getPriceByIndex(id),
           goodsImg: getImageByIndex(imageIndex),
           advertisingLanguage: $r('app.string.advertising_language'),
-          evaluate: $r('app.string.evaluate')
+          evaluate: $r('app.string.evaluate'),
+          category: categoryId
         });
       }
       

@@ -21,6 +21,7 @@ export interface GoodsListItemType {
   goodsImg: Resource;
   advertisingLanguage: ResourceStr;
   evaluate: ResourceStr;
+  category: number;
 }
 
 // 初始化标签栏数据
@@ -36,12 +37,15 @@ export function initTabBarData(): Resource[] {
 // 初始化商品数据
 export function initGoodsData(): GoodsListItemType[] {
   const goodsList: GoodsListItemType[] = [];
-  
-  // 生成20个初始商品
-  for (let i = 1; i <= 20; i++) {
+
+  // 生成5个初始商品
+  const categories = 4; // 总分类数
+  for (let i = 1; i <= 5; i++) {
     const imageIndex = (i % 4) + 1;
+    const categoryId = (i % categories) + 1; // 分配商品到不同分类
     goodsList.push({
       id: i,
+      category: categoryId, // 设置分类ID
       goodsName: i % 2 === 0 ? $r('app.string.goodsName') : $r('app.string.another_goodsName'),
       price: getPriceByIndex(i),
       goodsImg: getImageByIndex(imageIndex),
@@ -49,7 +53,7 @@ export function initGoodsData(): GoodsListItemType[] {
       evaluate: $r('app.string.evaluate')
     });
   }
-  
+
   return goodsList;
 }
 

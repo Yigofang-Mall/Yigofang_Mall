@@ -1,0 +1,735 @@
+Ôr@Ÿªassertions¤code´customTransformCache¬dependencies¢id¤meta±moduleSideEffects¬originalCode±originalSourcemap«resolvedIds®sourcemapChainµsyntheticNamedExportsµtransformDependencies®transformFiles¨cacheAstÔrAÚNif (!("finalizeConstruction" in ViewPU.prototype)) {
+    Reflect.set(ViewPU.prototype, "finalizeConstruction", () => { });
+}
+/*
+ * Copyright (c) 2023 Huawei Device Co., Ltd.
+ * Licensed under the Apache License,Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import { initTabBarData } from '../viewmodel/InitialData';
+import { LAYOUT_WIDTH_OR_HEIGHT, NORMAL_FONT_SIZE, BIGGER_FONT_SIZE, MAX_OFFSET_Y, REFRESH_TIME, GOODS_EVALUATE_FONT_SIZE, MAX_LINES_TEXT } from '../common/CommonConstants';
+import GoodsList from './GoodsListComponent';
+export default class TabBar extends ViewPU {
+    constructor(parent, params, __localStorage, elmtId = -1, paramsLambda = undefined, extraInfo) {
+        super(parent, __localStorage, elmtId, extraInfo);
+        if (typeof paramsLambda === "function") {
+            this.paramsGenerator_ = paramsLambda;
+        }
+        this.currentOffsetY = 0;
+        this.timer = 0;
+        this.__tabsIndex = new ObservedPropertySimplePU(0, this, "tabsIndex");
+        this.__refreshStatus = new ObservedPropertySimplePU(false, this, "refreshStatus");
+        this.__refreshText = new ObservedPropertyObjectPU({ "id": 16777233, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" }, this, "refreshText");
+        this.__pullDownOffset = new ObservedPropertySimplePU(0, this, "pullDownOffset");
+        this.setInitiallyProvidedValue(params);
+        this.finalizeConstruction();
+    }
+    setInitiallyProvidedValue(params) {
+        if (params.currentOffsetY !== undefined) {
+            this.currentOffsetY = params.currentOffsetY;
+        }
+        if (params.timer !== undefined) {
+            this.timer = params.timer;
+        }
+        if (params.tabsIndex !== undefined) {
+            this.tabsIndex = params.tabsIndex;
+        }
+        if (params.refreshStatus !== undefined) {
+            this.refreshStatus = params.refreshStatus;
+        }
+        if (params.refreshText !== undefined) {
+            this.refreshText = params.refreshText;
+        }
+        if (params.pullDownOffset !== undefined) {
+            this.pullDownOffset = params.pullDownOffset;
+        }
+    }
+    updateStateVars(params) {
+    }
+    purgeVariableDependenciesOnElmtId(rmElmtId) {
+        this.__tabsIndex.purgeDependencyOnElmtId(rmElmtId);
+        this.__refreshStatus.purgeDependencyOnElmtId(rmElmtId);
+        this.__refreshText.purgeDependencyOnElmtId(rmElmtId);
+        this.__pullDownOffset.purgeDependencyOnElmtId(rmElmtId);
+    }
+    aboutToBeDeleted() {
+        this.__tabsIndex.aboutToBeDeleted();
+        this.__refreshStatus.aboutToBeDeleted();
+        this.__refreshText.aboutToBeDeleted();
+        this.__pullDownOffset.aboutToBeDeleted();
+        SubscriberManager.Get().delete(this.id__());
+        this.aboutToBeDeletedInternal();
+    }
+    get tabsIndex() {
+        return this.__tabsIndex.get();
+    }
+    set tabsIndex(newValue) {
+        this.__tabsIndex.set(newValue);
+    }
+    get refreshStatus() {
+        return this.__refreshStatus.get();
+    }
+    set refreshStatus(newValue) {
+        this.__refreshStatus.set(newValue);
+    }
+    get refreshText() {
+        return this.__refreshText.get();
+    }
+    set refreshText(newValue) {
+        this.__refreshText.set(newValue);
+    }
+    get pullDownOffset() {
+        return this.__pullDownOffset.get();
+    }
+    set pullDownOffset(newValue) {
+        this.__pullDownOffset.set(newValue);
+    }
+    /**
+     * æž„å»ºç¬¬ä¸€ä¸ªæ ‡ç­¾é¡µï¼ˆé»˜è®¤é€‰ä¸­æ ‡ç­¾ï¼‰
+     * æ ¹æ®å½“å‰æ ‡ç­¾é¡µç´¢å¼•è°ƒæ•´å­—ä½“å¤§å°å’Œé¢œè‰²
+     */
+    firstTabBar(parent = null) {
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Column.create();
+            Column.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(55:5)", "entry");
+            Column.width(LAYOUT_WIDTH_OR_HEIGHT);
+            Column.height(LAYOUT_WIDTH_OR_HEIGHT);
+            Column.justifyContent(FlexAlign.Center);
+        }, Column);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Text.create({ "id": 16777234, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" });
+            Text.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(56:7)", "entry");
+            Text.fontSize(this.tabsIndex === 0 ? BIGGER_FONT_SIZE : NORMAL_FONT_SIZE);
+            Text.fontColor(this.tabsIndex === 0 ? Color.Black : { "id": 16777242, "type": 10001, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" });
+            Text.maxLines(MAX_LINES_TEXT);
+            Text.minFontSize(this.tabsIndex === 0 ? NORMAL_FONT_SIZE : GOODS_EVALUATE_FONT_SIZE);
+            Text.maxFontSize(this.tabsIndex === 0 ? BIGGER_FONT_SIZE : NORMAL_FONT_SIZE);
+        }, Text);
+        Text.pop();
+        Column.pop();
+    }
+    /**
+     * æž„å»ºå…¶ä»–æ ‡ç­¾é¡µ
+     * @param content æ ‡ç­¾é¡µå†…å®¹
+     * @param index æ ‡ç­¾é¡µç´¢å¼•
+     */
+    otherTabBar(content, index, parent = null) {
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Column.create();
+            Column.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(77:5)", "entry");
+            Column.width(LAYOUT_WIDTH_OR_HEIGHT);
+            Column.height(LAYOUT_WIDTH_OR_HEIGHT);
+            Column.justifyContent(FlexAlign.Center);
+        }, Column);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Text.create(content);
+            Text.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(78:7)", "entry");
+            Text.fontSize(this.tabsIndex === index + 1 ? BIGGER_FONT_SIZE : NORMAL_FONT_SIZE);
+            Text.fontColor(this.tabsIndex === index + 1 ? Color.Black : { "id": 16777242, "type": 10001, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" });
+            Text.maxLines(MAX_LINES_TEXT);
+            Text.minFontSize(this.tabsIndex === index + 1 ? NORMAL_FONT_SIZE : GOODS_EVALUATE_FONT_SIZE);
+            Text.maxFontSize(this.tabsIndex === index + 1 ? BIGGER_FONT_SIZE : NORMAL_FONT_SIZE);
+        }, Text);
+        Text.pop();
+        Column.pop();
+    }
+    /**
+     * æž„å»ºä¸‹æ‹‰åˆ·æ–°ç»„ä»¶
+     */
+    buildRefreshView(parent = null) {
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Column.create();
+            Column.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(97:5)", "entry");
+            Column.width('100%');
+            Column.height(60);
+            Column.offset({ y: this.pullDownOffset });
+        }, Column);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Row.create();
+            Row.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(98:7)", "entry");
+            Row.justifyContent(FlexAlign.Center);
+            Row.width('100%');
+            Row.height(60);
+            Row.backgroundColor({ "id": 16777244, "type": 10001, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" });
+        }, Row);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Image.create({ "id": 16777247, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" });
+            Image.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(99:9)", "entry");
+            Image.width(40);
+            Image.height(40);
+            Image.margin({ right: 20 });
+        }, Image);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Text.create(this.refreshText);
+            Text.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(103:9)", "entry");
+            Text.fontSize(NORMAL_FONT_SIZE);
+            Text.fontColor({ "id": 16777242, "type": 10001, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" });
+        }, Text);
+        Text.pop();
+        Row.pop();
+        Column.pop();
+    }
+    /**
+     * å¤„ç†ä¸‹æ‹‰åˆ·æ–°é€»è¾‘
+     * @param event è§¦æ‘¸äº‹ä»¶
+     */
+    putDownRefresh(event) {
+        if (event === undefined) {
+            return;
+        }
+        switch (event.type) {
+            // è®°å½•æ‰‹æŒ‡æŒ‰ä¸‹çš„yåæ ‡
+            case TouchType.Down:
+                this.currentOffsetY = event.touches[0].y;
+                break;
+            case TouchType.Move:
+                const moveY = event.touches[0].y;
+                const deltaY = moveY - this.currentOffsetY;
+                // å¦‚æžœæ˜¯å‘ä¸‹æ»‘åŠ¨
+                if (deltaY > 0) {
+                    this.pullDownOffset = Math.min(deltaY, MAX_OFFSET_Y);
+                    // å½“ä¸‹æ‹‰è·ç¦»è¶…è¿‡é˜ˆå€¼æ—¶ï¼Œæ˜¾ç¤ºåˆ·æ–°çŠ¶æ€
+                    if (deltaY > MAX_OFFSET_Y) {
+                        this.refreshStatus = true;
+                    }
+                }
+                break;
+            case TouchType.Up:
+                // å¦‚æžœå·²ç»è§¦å‘åˆ·æ–°çŠ¶æ€
+                if (this.refreshStatus) {
+                    this.refreshText = { "id": 16777233, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+                    // æ¨¡æ‹Ÿåˆ·æ–°æ•ˆæžœï¼Œä¸å®žé™…è¯·æ±‚æ•°æ®
+                    this.timer = setTimeout(() => {
+                        this.refreshStatus = false;
+                        this.pullDownOffset = 0;
+                        this.refreshText = { "id": 16777233, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+                    }, REFRESH_TIME);
+                }
+                else {
+                    // æœªè§¦å‘åˆ·æ–°ï¼Œå›žå¼¹
+                    this.pullDownOffset = 0;
+                }
+                break;
+        }
+    }
+    /**
+     * ç»„ä»¶é”€æ¯å‰æ¸…ç†å·¥ä½œ
+     * æ¸…é™¤åˆ·æ–°å®šæ—¶å™¨
+     */
+    aboutToDisappear() {
+        if (this.timer) {
+            clearTimeout(this.timer);
+        }
+    }
+    initialRender() {
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // æ ‡ç­¾é¡µå®¹å™¨
+            Tabs.create();
+            Tabs.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(173:5)", "entry");
+            // æ ‡ç­¾é¡µå®¹å™¨
+            Tabs.onChange((index) => {
+                this.tabsIndex = index;
+            });
+            // æ ‡ç­¾é¡µå®¹å™¨
+            Tabs.vertical(false);
+            // æ ‡ç­¾é¡µå®¹å™¨
+            Tabs.barMode(BarMode.Fixed);
+            // æ ‡ç­¾é¡µå®¹å™¨
+            Tabs.barHeight(60);
+            // æ ‡ç­¾é¡µå®¹å™¨
+            Tabs.width(LAYOUT_WIDTH_OR_HEIGHT);
+            // æ ‡ç­¾é¡µå®¹å™¨
+            Tabs.height(LAYOUT_WIDTH_OR_HEIGHT);
+        }, Tabs);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            TabContent.create(() => {
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    // ä½¿ç”¨ColumnåŒ…è£¹ä»¥ä¾¿å®žçŽ°ä¸‹æ‹‰åˆ·æ–°
+                    Column.create();
+                    Column.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(177:9)", "entry");
+                    // ä½¿ç”¨ColumnåŒ…è£¹ä»¥ä¾¿å®žçŽ°ä¸‹æ‹‰åˆ·æ–°
+                    Column.width('100%');
+                    // ä½¿ç”¨ColumnåŒ…è£¹ä»¥ä¾¿å®žçŽ°ä¸‹æ‹‰åˆ·æ–°
+                    Column.height('100%');
+                    // ä½¿ç”¨ColumnåŒ…è£¹ä»¥ä¾¿å®žçŽ°ä¸‹æ‹‰åˆ·æ–°
+                    Column.onTouch((event) => {
+                        this.putDownRefresh(event);
+                    });
+                }, Column);
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    If.create();
+                    // ä¸‹æ‹‰åˆ·æ–°åŒºåŸŸ
+                    if (this.refreshStatus || this.pullDownOffset > 0) {
+                        this.ifElseBranchUpdateFunction(0, () => {
+                            this.buildRefreshView.bind(this)();
+                        });
+                    }
+                    // å•†å“åˆ—è¡¨ç»„ä»¶
+                    else {
+                        this.ifElseBranchUpdateFunction(1, () => {
+                        });
+                    }
+                }, If);
+                If.pop();
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    // å•†å“åˆ—è¡¨ç»„ä»¶
+                    Scroll.create();
+                    Scroll.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(184:11)", "entry");
+                    // å•†å“åˆ—è¡¨ç»„ä»¶
+                    Scroll.scrollBar(BarState.Off);
+                    // å•†å“åˆ—è¡¨ç»„ä»¶
+                    Scroll.edgeEffect(EdgeEffect.Spring);
+                    // å•†å“åˆ—è¡¨ç»„ä»¶
+                    Scroll.width('100%');
+                    // å•†å“åˆ—è¡¨ç»„ä»¶
+                    Scroll.height('100%');
+                }, Scroll);
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    Column.create();
+                    Column.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(185:13)", "entry");
+                    Column.width('100%');
+                }, Column);
+                {
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        if (isInitialRender) {
+                            let componentCall = new GoodsList(this, {}, undefined, elmtId, () => { }, { page: "entry/src/main/ets/view/TabBarsComponent.ets", line: 186, col: 15 });
+                            ViewPU.create(componentCall);
+                            let paramsLambda = () => {
+                                return {};
+                            };
+                            componentCall.paramsGenerator_ = paramsLambda;
+                        }
+                        else {
+                            this.updateStateVarsOfChildByElmtId(elmtId, {});
+                        }
+                    }, { name: "GoodsList" });
+                }
+                Column.pop();
+                // å•†å“åˆ—è¡¨ç»„ä»¶
+                Scroll.pop();
+                // ä½¿ç”¨ColumnåŒ…è£¹ä»¥ä¾¿å®žçŽ°ä¸‹æ‹‰åˆ·æ–°
+                Column.pop();
+            });
+            TabContent.tabBar({ builder: this.firstTabBar.bind(this) });
+            TabContent.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(175:7)", "entry");
+        }, TabContent);
+        TabContent.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // å¾ªçŽ¯åˆ›å»ºå…¶ä»–æ ‡ç­¾é¡µ
+            ForEach.create();
+            const forEachItemGenFunction = (_item, index) => {
+                const item = _item;
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    TabContent.create(() => {
+                        this.observeComponentCreation2((elmtId, isInitialRender) => {
+                            // ä½¿ç”¨ç›¸åŒç»“æž„å®žçŽ°æ¬¡æ ‡ç­¾é¡µå†…å®¹
+                            Column.create();
+                            Column.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(208:11)", "entry");
+                            // ä½¿ç”¨ç›¸åŒç»“æž„å®žçŽ°æ¬¡æ ‡ç­¾é¡µå†…å®¹
+                            Column.width('100%');
+                            // ä½¿ç”¨ç›¸åŒç»“æž„å®žçŽ°æ¬¡æ ‡ç­¾é¡µå†…å®¹
+                            Column.height('100%');
+                            // ä½¿ç”¨ç›¸åŒç»“æž„å®žçŽ°æ¬¡æ ‡ç­¾é¡µå†…å®¹
+                            Column.onTouch((event) => {
+                                this.putDownRefresh(event);
+                            });
+                        }, Column);
+                        this.observeComponentCreation2((elmtId, isInitialRender) => {
+                            If.create();
+                            // ä¸‹æ‹‰åˆ·æ–°åŒºåŸŸï¼ˆä¸Žä¸»æ ‡ç­¾é¡µä¿æŒä¸€è‡´ï¼‰
+                            if (this.refreshStatus || this.pullDownOffset > 0) {
+                                this.ifElseBranchUpdateFunction(0, () => {
+                                    this.buildRefreshView.bind(this)();
+                                });
+                            }
+                            // å•†å“åˆ—è¡¨ç»„ä»¶
+                            else {
+                                this.ifElseBranchUpdateFunction(1, () => {
+                                });
+                            }
+                        }, If);
+                        If.pop();
+                        this.observeComponentCreation2((elmtId, isInitialRender) => {
+                            // å•†å“åˆ—è¡¨ç»„ä»¶
+                            Scroll.create();
+                            Scroll.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(215:13)", "entry");
+                            // å•†å“åˆ—è¡¨ç»„ä»¶
+                            Scroll.scrollBar(BarState.Off);
+                            // å•†å“åˆ—è¡¨ç»„ä»¶
+                            Scroll.edgeEffect(EdgeEffect.Spring);
+                            // å•†å“åˆ—è¡¨ç»„ä»¶
+                            Scroll.width('100%');
+                            // å•†å“åˆ—è¡¨ç»„ä»¶
+                            Scroll.height('100%');
+                        }, Scroll);
+                        this.observeComponentCreation2((elmtId, isInitialRender) => {
+                            Column.create();
+                            Column.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(216:15)", "entry");
+                            Column.width('100%');
+                        }, Column);
+                        {
+                            this.observeComponentCreation2((elmtId, isInitialRender) => {
+                                if (isInitialRender) {
+                                    let componentCall = new GoodsList(this, {}, undefined, elmtId, () => { }, { page: "entry/src/main/ets/view/TabBarsComponent.ets", line: 217, col: 17 });
+                                    ViewPU.create(componentCall);
+                                    let paramsLambda = () => {
+                                        return {};
+                                    };
+                                    componentCall.paramsGenerator_ = paramsLambda;
+                                }
+                                else {
+                                    this.updateStateVarsOfChildByElmtId(elmtId, {});
+                                }
+                            }, { name: "GoodsList" });
+                        }
+                        Column.pop();
+                        // å•†å“åˆ—è¡¨ç»„ä»¶
+                        Scroll.pop();
+                        // ä½¿ç”¨ç›¸åŒç»“æž„å®žçŽ°æ¬¡æ ‡ç­¾é¡µå†…å®¹
+                        Column.pop();
+                    });
+                    TabContent.tabBar({ builder: () => {
+                            this.otherTabBar.call(this, item, index !== undefined ? index : 0);
+                        } });
+                    TabContent.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(206:9)", "entry");
+                }, TabContent);
+                TabContent.pop();
+            };
+            this.forEachUpdateFunction(elmtId, initTabBarData(), forEachItemGenFunction, undefined, true, false);
+        }, ForEach);
+        // å¾ªçŽ¯åˆ›å»ºå…¶ä»–æ ‡ç­¾é¡µ
+        ForEach.pop();
+        // æ ‡ç­¾é¡µå®¹å™¨
+        Tabs.pop();
+    }
+    rerender() {
+        this.updateDirtyElements();
+    }
+}
+//# sourceMappingURL=TabBarsComponent.js.mapÂ“ÙPC:\Users\24505\DevecostudioProjects\entry\src\main\ets\viewmodel\InitialData.etsÙQC:\Users\24505\DevecostudioProjects\entry\src\main\ets\common\CommonConstants.etsÙRC:\Users\24505\DevecostudioProjects\entry\src\main\ets\view\GoodsListComponent.etsÙPC:\Users\24505\DevecostudioProjects\entry\src\main\ets\view\TabBarsComponent.etsÔrBœªmoduleName±isLocalDependency¯isNodeEntryFile§pkgPath±belongProjectPath§pkgNameªpkgVersion±dependencyPkgInfo¯hostModulesInfo°belongModulePath§checker¬shouldEmitJs¥entryÃÂÙ)C:\Users\24505\DevecostudioProjects\entryÙ#C:\Users\24505\DevecostudioProjects¥entry¥1.0.0Ô  ‘ÔrC’²hostDependencyName®hostModuleName¸../view/TabBarsComponent¥entryÙ)C:\Users\24505\DevecostudioProjects\entryÔrDÜ ®¬getNodeCount²getIdentifierCount®getSymbolCount¬getTypeCountµgetInstantiationCountµgetRelationCacheSizes±isUndefinedSymbol±isArgumentsSymbol¯isUnknownSymbol¯getMergedSymbol®getDiagnostics´getGlobalDiagnostics´getRecursionIdentity¶getUnmatchedProperties¹getTypeOfSymbolAtLocation¯getTypeOfSymbolÙ(getSymbolsOfParameterPropertyDeclaration·getDeclaredTypeOfSymbol³getPropertiesOfType±getPropertyOfTypeÙ"getPrivateIdentifierPropertyOfType·getTypeOfPropertyOfType²getIndexInfoOfType³getIndexInfosOfTypeºgetIndexInfosOfIndexSymbol³getSignaturesOfType²getIndexTypeOfType¬getIndexType¬getBaseTypes¸getBaseTypeOfLiteralType®getWidenedType³getTypeFromTypeNode°getParameterTypeÙ$getParameterIdentifierNameAtPosition¸getPromisedTypeOfPromise®getAwaitedType¸getReturnTypeOfSignature®isNullableType¯getNullableType²getNonNullableType²getNonOptionalType°getTypeArguments®typeToTypeNodeÙ$indexInfoToIndexSignatureDeclaration¿signatureToSignatureDeclaration²symbolToEntityName²symbolToExpression¬symbolToNodeÙ!symbolToTypeParameterDeclarations¼symbolToParameterDeclarationºtypeParameterToDeclaration±getSymbolsInScope³getSymbolAtLocation·getIndexInfosAtLocationÙ!getShorthandAssignmentValueSymbolÙ#getExportSpecifierLocalTargetSymbol·getExportSymbolOfSymbol±getTypeAtLocationºgetTypeAtLocationForLinterÙ tryGetTypeAtLocationWithoutCheckºgetTypeOfAssignmentPatternÙ*getPropertySymbolOfDestructuringAssignment±signatureToString¬typeToString®symbolToStringµtypePredicateToString®writeSignature©writeType«writeSymbol²writeTypePredicate¼getAugmentedPropertiesOfType®getRootSymbols²getSymbolOfExpando±getContextualTypeÙ(getContextualTypeForObjectLiteralElementÙ#getContextualTypeForArgumentAtIndexÙ getContextualTypeForJsxAttribute²isContextSensitiveÙ!getTypeOfPropertyOfContextualTypeµgetFullyQualifiedNameÙ#tryGetResolvedSignatureWithoutCheck´getResolvedSignatureÙ/getResolvedSignatureForStringLiteralCompletionsÙ$getResolvedSignatureForSignatureHelpµgetExpandedParameters¹hasEffectiveRestParameterºcontainsArgumentsReference°getConstantValueµisValidPropertyAccessÙ#isValidPropertyAccessForCompletions»getSignatureFromDeclarationºisImplementationOfOverload¹getImmediateAliasedSymbol°getAliasedSymbol¯getEmitResolver²getExportsOfModule¿getExportsAndPropertiesOfModuleÙ forEachExportAndPropertyOfModule¯getSymbolWalker±getAmbientModules¹getJsxIntrinsicTagNamesAt³isOptionalParameter»tryGetMemberInModuleExportsÙ(tryGetMemberInModuleExportsAndProperties´tryFindAmbientModuleÙ(tryFindAmbientModuleWithoutAugmentations¯getApparentType¬getUnionType²isTypeAssignableTo³createAnonymousType¯createSignature¬createSymbol¯createIndexInfoªgetAnyType­getStringType­getNumberType±createPromiseType¯createArrayType¹getElementTypeOfArrayType®getBooleanType¬getFalseType«getTrueType«getVoidType°getUndefinedType«getNullType¯getESSymbolType¬getNeverType¯getOptionalType®getPromiseType²getPromiseLikeType´getAsyncIterableType²isSymbolAccessible«isArrayType«isTupleType¯isArrayLikeTypeÙ#isTypeInvalidDueToUnionDiscriminantºgetExactOptionalProperties¿getAllPossiblePropertiesOfTypesÙ(getSuggestedSymbolForNonexistentPropertyÙ#getSuggestionForNonexistentPropertyÙ,getSuggestedSymbolForNonexistentJSXAttributeÙ&getSuggestedSymbolForNonexistentSymbolÙ!getSuggestionForNonexistentSymbolÙ&getSuggestedSymbolForNonexistentModuleÙ!getSuggestionForNonexistentExportÙ+getSuggestedSymbolForNonexistentClassMember·getBaseConstraintOfType»getDefaultFromTypeParameter«resolveName¯getJsxNamespaceµgetJsxFragmentFactory¸getAccessibleSymbolChain»getTypePredicateOfSignature¹resolveExternalModuleName»resolveExternalModuleSymbol°tryGetThisTypeAt¹getTypeArgumentConstraint¸getSuggestionDiagnostics¸runWithCancellationTokenÙ3getLocalTypeParametersOfClassOrInterfaceOrTypeAlias´isDeclarationVisible´isPropertyAccessible»getTypeOnlyAliasDeclaration¿getMemberOverrideModifierStatusÙ!isTypeParameterPossiblyReferenced²getConstEnumRelate´clearConstEnumRelateµdeleteConstEnumRelateÙ$getTypeArgumentsForResolvedSignatureµgetCheckedSourceFilesÙ"collectHaveTsNoCheckFilesForLinter·clearQualifiedNameCache®isStaticRecord²isStaticSourceFileÔ  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  ÃÃÚ}/*
+ * Copyright (c) 2023 Huawei Device Co., Ltd.
+ * Licensed under the Apache License,Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import { initTabBarData } from '../viewmodel/InitialData';
+import {
+  LAYOUT_WIDTH_OR_HEIGHT,
+  NORMAL_FONT_SIZE,
+  BIGGER_FONT_SIZE,
+  MAX_FONT_SIZE,
+  MAX_OFFSET_Y,
+  REFRESH_TIME,
+  GOODS_EVALUATE_FONT_SIZE,
+  MAX_LINES_TEXT
+} from '../common/CommonConstants';
+import GoodsList from './GoodsListComponent';
+
+/**
+ * æ ‡ç­¾é¡µç»„ä»¶
+ * å®žçŽ°å•†å“åˆ†ç±»æ ‡ç­¾åˆ‡æ¢åŠŸèƒ½
+ * æ”¯æŒä¸‹æ‹‰åˆ·æ–°å’Œé¡µé¢åˆ‡æ¢
+ */
+@Component
+export default struct TabBar {
+  // è®°å½•å½“å‰è§¦æ‘¸ç‚¹Yåæ ‡
+  private currentOffsetY: number = 0;
+  // åˆ·æ–°å®šæ—¶å™¨
+  private timer: number = 0;
+  // å½“å‰æ ‡ç­¾é¡µç´¢å¼•
+  @State tabsIndex: number = 0;
+  // åˆ·æ–°çŠ¶æ€æ ‡è¯†
+  @State refreshStatus: boolean = false;
+  // åˆ·æ–°æ–‡æœ¬
+  @State refreshText: Resource = $r('app.string.refresh_text');
+  // ä¸‹æ‹‰åç§»é‡
+  @State pullDownOffset: number = 0;
+
+  /**
+   * æž„å»ºç¬¬ä¸€ä¸ªæ ‡ç­¾é¡µï¼ˆé»˜è®¤é€‰ä¸­æ ‡ç­¾ï¼‰
+   * æ ¹æ®å½“å‰æ ‡ç­¾é¡µç´¢å¼•è°ƒæ•´å­—ä½“å¤§å°å’Œé¢œè‰²
+   */
+  @Builder
+  firstTabBar() {
+    Column() {
+      Text($r('app.string.selected'))
+        // æ ¹æ®æ˜¯å¦é€‰ä¸­è°ƒæ•´å­—ä½“å¤§å°
+        .fontSize(this.tabsIndex === 0 ? BIGGER_FONT_SIZE : NORMAL_FONT_SIZE)
+        // æ ¹æ®æ˜¯å¦é€‰ä¸­è°ƒæ•´å­—ä½“é¢œè‰²
+        .fontColor(this.tabsIndex === 0 ? Color.Black : $r('app.color.gray'))
+        .maxLines(MAX_LINES_TEXT)
+        .minFontSize(this.tabsIndex === 0 ? NORMAL_FONT_SIZE : GOODS_EVALUATE_FONT_SIZE)
+        .maxFontSize(this.tabsIndex === 0 ? BIGGER_FONT_SIZE : NORMAL_FONT_SIZE)
+    }
+    .width(LAYOUT_WIDTH_OR_HEIGHT)
+    .height(LAYOUT_WIDTH_OR_HEIGHT)
+    .justifyContent(FlexAlign.Center)
+  }
+
+  /**
+   * æž„å»ºå…¶ä»–æ ‡ç­¾é¡µ
+   * @param content æ ‡ç­¾é¡µå†…å®¹
+   * @param index æ ‡ç­¾é¡µç´¢å¼•
+   */
+  @Builder
+  otherTabBar(content: Resource, index: number) {
+    Column() {
+      Text(content)
+        // æ ¹æ®æ˜¯å¦é€‰ä¸­è°ƒæ•´å­—ä½“å¤§å°
+        .fontSize(this.tabsIndex === index + 1 ? BIGGER_FONT_SIZE : NORMAL_FONT_SIZE)
+        // æ ¹æ®æ˜¯å¦é€‰ä¸­è°ƒæ•´å­—ä½“é¢œè‰²
+        .fontColor(this.tabsIndex === index + 1 ? Color.Black : $r('app.color.gray'))
+        .maxLines(MAX_LINES_TEXT)
+        .minFontSize(this.tabsIndex === index + 1 ? NORMAL_FONT_SIZE : GOODS_EVALUATE_FONT_SIZE)
+        .maxFontSize(this.tabsIndex === index + 1 ? BIGGER_FONT_SIZE : NORMAL_FONT_SIZE)
+    }
+    .width(LAYOUT_WIDTH_OR_HEIGHT)
+    .height(LAYOUT_WIDTH_OR_HEIGHT)
+    .justifyContent(FlexAlign.Center)
+  }
+
+  /**
+   * æž„å»ºä¸‹æ‹‰åˆ·æ–°ç»„ä»¶
+   */
+  @Builder
+  buildRefreshView() {
+    Column() {
+      Row() {
+        Image($r('app.media.refreshing'))
+          .width(40)
+          .height(40)
+          .margin({ right: 20 })
+        Text(this.refreshText)
+          .fontSize(NORMAL_FONT_SIZE)
+          .fontColor($r('app.color.gray'))
+      }
+      .justifyContent(FlexAlign.Center)
+      .width('100%')
+      .height(60)
+      .backgroundColor($r('app.color.white'))
+    }
+    .width('100%')
+    .height(60)
+    .offset({ y: this.pullDownOffset })
+  }
+
+  /**
+   * å¤„ç†ä¸‹æ‹‰åˆ·æ–°é€»è¾‘
+   * @param event è§¦æ‘¸äº‹ä»¶
+   */
+  putDownRefresh(event?: TouchEvent): void {
+    if (event === undefined) {
+      return;
+    }
+    switch (event.type) {
+      // è®°å½•æ‰‹æŒ‡æŒ‰ä¸‹çš„yåæ ‡
+      case TouchType.Down:
+        this.currentOffsetY = event.touches[0].y;
+        break;
+      case TouchType.Move:
+        const moveY = event.touches[0].y;
+        const deltaY = moveY - this.currentOffsetY;
+        
+        // å¦‚æžœæ˜¯å‘ä¸‹æ»‘åŠ¨
+        if (deltaY > 0) {
+          this.pullDownOffset = Math.min(deltaY, MAX_OFFSET_Y);
+          // å½“ä¸‹æ‹‰è·ç¦»è¶…è¿‡é˜ˆå€¼æ—¶ï¼Œæ˜¾ç¤ºåˆ·æ–°çŠ¶æ€
+          if (deltaY > MAX_OFFSET_Y) {
+            this.refreshStatus = true;
+          }
+        }
+        break;
+      case TouchType.Up:
+        // å¦‚æžœå·²ç»è§¦å‘åˆ·æ–°çŠ¶æ€
+        if (this.refreshStatus) {
+          this.refreshText = $r('app.string.refresh_text');
+          // æ¨¡æ‹Ÿåˆ·æ–°æ•ˆæžœï¼Œä¸å®žé™…è¯·æ±‚æ•°æ®
+          this.timer = setTimeout(() => {
+            this.refreshStatus = false;
+            this.pullDownOffset = 0;
+            this.refreshText = $r('app.string.refresh_text');
+          }, REFRESH_TIME);
+        } else {
+          // æœªè§¦å‘åˆ·æ–°ï¼Œå›žå¼¹
+          this.pullDownOffset = 0;
+        }
+        break;
+    }
+  }
+
+  /**
+   * ç»„ä»¶é”€æ¯å‰æ¸…ç†å·¥ä½œ
+   * æ¸…é™¤åˆ·æ–°å®šæ—¶å™¨
+   */
+  aboutToDisappear() {
+    if (this.timer) {
+      clearTimeout(this.timer);
+    }
+  }
+
+  build() {
+    // æ ‡ç­¾é¡µå®¹å™¨
+    Tabs() {
+      // ç¬¬ä¸€ä¸ªæ ‡ç­¾å†…å®¹ï¼ˆå•†å“åˆ—è¡¨é¡µï¼‰
+      TabContent() {
+        // ä½¿ç”¨ColumnåŒ…è£¹ä»¥ä¾¿å®žçŽ°ä¸‹æ‹‰åˆ·æ–°
+        Column() {
+          // ä¸‹æ‹‰åˆ·æ–°åŒºåŸŸ
+          if (this.refreshStatus || this.pullDownOffset > 0) {
+            this.buildRefreshView()
+          }
+          
+          // å•†å“åˆ—è¡¨ç»„ä»¶
+          Scroll() {
+            Column() {
+              GoodsList()
+            }
+            .width('100%')
+          }
+          .scrollBar(BarState.Off) // éšè—æ»šåŠ¨æ¡
+          .edgeEffect(EdgeEffect.Spring) // è®¾ç½®è¾¹ç¼˜å¼¹æ€§æ•ˆæžœ
+          .width('100%')
+          .height('100%')
+        }
+        .width('100%')
+        .height('100%')
+        // ç›‘å¬è§¦æ‘¸äº‹ä»¶å¤„ç†ä¸‹æ‹‰åˆ·æ–°
+        .onTouch((event?: TouchEvent) => {
+          this.putDownRefresh(event);
+        })
+      }
+      .tabBar(this.firstTabBar) // è®¾ç½®æ ‡ç­¾æ 
+
+      // å¾ªçŽ¯åˆ›å»ºå…¶ä»–æ ‡ç­¾é¡µ
+      ForEach(initTabBarData(), (item: Resource, index?: number) => {
+        TabContent() {
+          // ä½¿ç”¨ç›¸åŒç»“æž„å®žçŽ°æ¬¡æ ‡ç­¾é¡µå†…å®¹
+          Column() {
+            // ä¸‹æ‹‰åˆ·æ–°åŒºåŸŸï¼ˆä¸Žä¸»æ ‡ç­¾é¡µä¿æŒä¸€è‡´ï¼‰
+            if (this.refreshStatus || this.pullDownOffset > 0) {
+              this.buildRefreshView()
+            }
+
+            // å•†å“åˆ—è¡¨ç»„ä»¶
+            Scroll() {
+              Column() {
+                GoodsList()
+              }
+              .width('100%')
+            }
+            .scrollBar(BarState.Off)
+            .edgeEffect(EdgeEffect.Spring)
+            .width('100%')
+            .height('100%')
+          }
+          .width('100%')
+          .height('100%')
+          // å…±ç”¨ä¸‹æ‹‰åˆ·æ–°é€»è¾‘
+          .onTouch((event?: TouchEvent) => {
+            this.putDownRefresh(event);
+          })
+        }
+        .tabBar(this.otherTabBar(item, index !== undefined ? index : 0))
+      })
+    }
+    // æ ‡ç­¾é¡µåˆ‡æ¢å›žè°ƒ
+    .onChange((index: number) => {
+      this.tabsIndex = index;
+    })
+    .vertical(false) // æ°´å¹³æŽ’åˆ—æ ‡ç­¾é¡µ
+    .barMode(BarMode.Fixed) // å›ºå®šæ ‡ç­¾æ 
+    .barHeight(60) // æ ‡ç­¾æ é«˜åº¦
+    .width(LAYOUT_WIDTH_OR_HEIGHT)
+    .height(LAYOUT_WIDTH_OR_HEIGHT)
+  }
+}ÀÔrE“¹../common/CommonConstants¸../viewmodel/InitialData´./GoodsListComponentÔrF—ªassertions¨external¢id¤meta±moduleSideEffectsªresolvedByµsyntheticNamedExportsAÂÙQC:\Users\24505\DevecostudioProjects\entry\src\main\ets\common\CommonConstants.etsAÃªoh-resolveÂFAÂÙPC:\Users\24505\DevecostudioProjects\entry\src\main\ets\viewmodel\InitialData.etsAÃªoh-resolveÂFAÂÙRC:\Users\24505\DevecostudioProjects\entry\src\main\ets\view\GoodsListComponent.etsAÃªoh-resolveÂ“ÔrG–§version¤fileªsourceRoot§sources¥names¨mappings³TabBarsComponent.js ‘´TabBarsComponent.etsÜ‘”    ‘” ˜”   ” ”	 	” ” ” ”9 9”: :Ü ”   ” ”	 ” ”! ”1 ”3 ”ÌC ”ÌE ”ÌQ ”ÌS ”Ì_ ”Ìa ”Ìy ”Ì{ ”Ì‰ ”Ì‹ ”Ì‘ ”Ì¬ "”Ì­ #–”   ” ” ” ”, ,”- -–”  " ” "” "” "” "” "‘” ! ’” $#” $$’” &” &’”8 (”9 (’”< *"”ÌA *'’”= ."”> .#‘” -’” (	” (’” (	” (’” *	” *’” *	” *’” ,	” ,’” ,	” ,’” .	” .’” .	” .‘” 0‘” 3’” 5” 5’” 6” 6
+–” 6” 6
+” Ì@” Ì@
+” Ì@”/ Ì@!–” 6” 6
+” ÌA” ÌA” ÌA”0 ÌA"˜” 6” 6
+” ÌB”! ÌB”" ÌB”+ ÌB”, ÌB”2 ÌB$’” 7” 7
+Ü ” 7” 7
+” 9	” 9” 9” 9” 9”( 9 ”- 9%”. 9&”/ 9'”0 9(”1 9)”ÌA 99”ÌB 9:”ÌC 9;”ÌD 9<”ÌT 9ÌLÜ ” 7” 7
+” ;	” ;” ;” ;”  ;”) ;!”. ;&”/ ;'”0 ;(”1 ;)”2 ;*”7 ;/”8 ;0”= ;5”> ;6”? ;7”Ì® ;ÌL–” 7” 7
+” <	” <” <”( < Ü ” 7” 7
+” =	” =” =”! =”" =”+ =#”0 =(”1 =)”2 =*”3 =+”4 =,”ÌD =<”ÌE ==”ÌF =>”ÌG =?”Ì_ =ÌWÜ ” 7” 7
+” >	” >” >”! >”" >”+ >#”0 >(”1 >)”2 >*”3 >+”4 >,”ÌD ><”ÌE >=”ÌF >>”ÌG >?”ÌW >ÌO’” 7” 7
+’” 6” 6
+‘” ÌC‘” ÌE‘” ÌI–” ÌK” ÌK” ÌK” ÌK” ÌK!” ÌK.’” ÌL” ÌL
+–” ÌL” ÌL
+” ÌV” ÌV
+” ÌV”/ ÌV!–” ÌL” ÌL
+” ÌW” ÌW” ÌW”0 ÌW"˜” ÌL” ÌL
+” ÌX”! ÌX”" ÌX”+ ÌX”, ÌX”2 ÌX$”” ÌM” ÌM
+” ÌM” ÌMÜ ” ÌM” ÌM
+” ÌO	” ÌO” ÌO” ÌO” ÌO”( ÌO ”- ÌO%”2 ÌO*”5 ÌO-”6 ÌO.”7 ÌO/”8 ÌO0”9 ÌO1”ÌI ÌOÌA”ÌJ ÌOÌB”ÌK ÌOÌC”ÌL ÌOÌD”Ì\ ÌOÌTÜ ” ÌM” ÌM
+” ÌQ	” ÌQ” ÌQ” ÌQ”  ÌQ”) ÌQ!”. ÌQ&”3 ÌQ+”6 ÌQ.”7 ÌQ/”8 ÌQ0”9 ÌQ1”: ÌQ2”? ÌQ7”Ì@ ÌQ8”ÌE ÌQ=”ÌF ÌQ>”ÌG ÌQ?”Ì¶ ÌQÌT–” ÌM” ÌM
+” ÌR	” ÌR” ÌR”( ÌR Ü ” ÌM” ÌM
+” ÌS	” ÌS” ÌS”! ÌS”" ÌS”+ ÌS#”0 ÌS(”5 ÌS-”8 ÌS0”9 ÌS1”: ÌS2”; ÌS3”< ÌS4”ÌL ÌSÌD”ÌM ÌSÌE”ÌN ÌSÌF”ÌO ÌSÌG”Ìg ÌSÌ_Ü ” ÌM” ÌM
+” ÌT	” ÌT” ÌT”! ÌT”" ÌT”+ ÌT#”0 ÌT(”5 ÌT-”8 ÌT0”9 ÌT1”: ÌT2”; ÌT3”< ÌT4”ÌL ÌTÌD”ÌM ÌTÌE”ÌN ÌTÌF”ÌO ÌTÌG”Ì_ ÌTÌW’” ÌM” ÌM
+’” ÌL” ÌL
+‘” ÌY‘” Ì[‘” Ì]’” Ì_” Ì_’” Ì`” Ì`
+–” Ì`” Ì`
+” Ìo” Ìo
+” Ìo” Ìo–” Ì`” Ì`
+” Ìp” Ìp” Ìp” Ìpœ” Ì`” Ì`
+” Ìq” Ìq” Ìq” Ìq” Ìq” Ìq”# Ìq”$ Ìq”2 Ìq$”4 Ìq&’” Ìa” Ìa	˜” Ìa” Ìa	” Ìj” Ìj” Ìj”( Ìj”) Ìj ”/ Ìj&–” Ìa” Ìa	” Ìk” Ìk” Ìk” Ìk–” Ìa” Ìa	” Ìl” Ìl” Ìl” Ìl”” Ìa” Ìa	” Ìm” Ìm’” Ìb” Ìb–” Ìb” Ìb” Ìc” Ìc” Ìc” Ìc–” Ìb” Ìb” Ìd” Ìd” Ìd” Ìdš” Ìb” Ìb” Ìe” Ìe” Ìe” Ìe”  Ìe”" Ìe”$ Ìe”& Ìe–” Ìf” Ìf” Ìf” Ìf” Ìf”( Ìf–” Ìf” Ìf” Ìg” Ìg” Ìg”* Ìg$”” Ìf” Ìf” Ìh” Ìh’” Ìf” Ìf’” Ìa” Ìa	’” Ì`” Ì`
+‘” Ìr‘” Ìt‘” Ìw”” Ìx” Ìx” Ìx” Ìx#–” Ìy” Ìy” Ìy” Ìy” Ìy”! Ìy’” Ìz” Ìz‘”	 Ì{–” Ì|” Ì|” Ì|” Ì|” Ì|” Ì|’” Ì}” Ì}•” Ì~” Ì~” Ì~” Ì~” Ì~ž” Ì” Ì” Ì”# Ì”& Ì”+ Ì#”, Ì$”3 Ì+”4 Ì,”5 Ì-”6 Ì.”7 Ì/”8 Ì0”9 Ì1’” Ì€” Ì€•” Ì” Ì” Ì” Ì” Ì” Ì‚” Ì‚” Ì‚” Ì‚”# Ì‚”$ Ì‚”+ Ì‚#”, Ì‚$”- Ì‚%”. Ì‚&”/ Ì‚'”0 Ì‚(”1 Ì‚)š” Ìƒ” Ìƒ” Ìƒ” Ìƒ”$ Ìƒ”' Ìƒ”+ Ìƒ#”, Ìƒ$”: Ìƒ2”; Ìƒ3’” Ì…” Ì…–” Ì†” Ì†” Ì†” Ì†” Ì†”  Ì†ž” Ì‡
+” Ì‡” Ì‡”' Ì‡”* Ì‡ ”. Ì‡$”/ Ì‡%”2 Ì‡(”3 Ì‡)”9 Ì‡/”; Ì‡1”ÌG Ì‡=”ÌH Ì‡>”ÌI Ì‡?’” Ìˆ
+”( Ìˆ–” Ì‰
+” Ì‰” Ì‰”! Ì‰”- Ì‰#”/ Ì‰%—” ÌŠ” ÌŠ” ÌŠ”* ÌŠ”- ÌŠ!”1 ÌŠ%”2 ÌŠ&‘” Ì‹‘” ÌŒ	’” Ì” Ì•” ÌŽ” ÌŽ” ÌŽ” ÌŽ” ÌŽ’” Ì” Ì–” Ì” Ì” Ì” Ì”& Ì”( Ì –” Ì‘
+” Ì‘” Ì‘”$ Ì‘”Ì• Ì‘:”Ì– Ì‘;’” Ì’
+”% Ì’™” Ì“
+” Ì“” Ì“” Ì“”! Ì“”+ Ì“!”, Ì“"”/ Ì“%”1 Ì“'—” Ì”” Ì”” Ì””* Ì””- Ì”!”2 Ì”&”3 Ì”'—” Ì•” Ì•” Ì•”+ Ì•”. Ì•"”/ Ì•#”0 Ì•$–” Ì–” Ì–” Ì–”( Ì–”Ì™ Ì–<”Ìš Ì–=–” Ì—
+” Ì—” Ì—”# Ì—”$ Ì—”% Ì—‘” Ì˜	‘” Ì˜’” Ì™
+” Ì™—” Ìš
+” Ìš” Ìš”' Ìš”* Ìš ”+ Ìš!”, Ìš"‘” Ì›	’” Ìœ” Ìœ‘”	 Ì’” Ìž” Ìž‘” Ì ‘” Ì£’” Ì¤” Ì¤–” Ì¥” Ì¥” Ì¥” Ì¥” Ì¥” Ì¥˜” Ì¦” Ì¦” Ì¦” Ì¦” Ì¦”# Ì¦”$ Ì¦”% Ì¦‘”	 Ì§’” Ì¨” Ì¨‘” Ìª’” Ì«” Ì«’” Ì¬” Ì¬’” Ì«” Ì«™” Ì¬” Ì¬” Ìì” Ìì” Ìì” Ìì”  Ìì”" Ìì”$ Ìì —” Ìí” Ìí
+” Ìí” Ìí”! Ìí”& Ìí”' Ìí’” Ìî” Ìî’” Ì«” Ì«–” Ì¬” Ì¬” Ìï” Ìï” Ìï” Ìï’” Ì«” Ì«˜” Ì¬” Ì¬” Ìð” Ìð” Ìð”  Ìð”! Ìð”& Ìð’” Ì«” Ì«–” Ì¬” Ì¬” Ìñ” Ìñ” Ìñ” Ìñ’” Ì«” Ì«–” Ì¬” Ì¬” Ìò” Ìò
+” Ìò”- Ìò!’” Ì«” Ì«–” Ì¬” Ì¬” Ìó” Ìó” Ìó”. Ìó"’” Ì¯”) Ì¯’” Ì°” Ì°’” Ì¯”) Ì¯–” Ì°” Ì°” ÌÂ	”  ÌÂ”! ÌÂ”' ÌÂ’” Ì¯”) Ì¯–” Ì°” Ì°” ÌÃ	”! ÌÃ”" ÌÃ”( ÌÃ’” Ì¯”) Ì¯™” Ì°” Ì°” ÌÅ	”" ÌÅ”# ÌÅ”$ ÌÅ”) ÌÅ$”+ ÌÅ&”- ÌÅ(˜” ÌÆ
+” ÌÆ” ÌÆ”+ ÌÆ”, ÌÆ”1 ÌÆ#”2 ÌÆ$”3 ÌÆ%’” ÌÇ” ÌÇ	’” Ì±
+” Ì±œ” Ì²
+” Ì²” Ì²” Ì²”* Ì² ”. Ì²$”2 Ì²(”3 Ì²)”ÌA Ì²7”ÌD Ì²:”ÌE Ì²;”ÌG Ì²=•” Ì³”  Ì³”! Ì³”1 Ì³!”> Ì³#‘” Ì´’” Ì¶
+” Ì¶‘” Ì´’” Ì¶
+” Ì¶’” Ì·
+” Ì·’” Ì¶
+” Ì¶˜” Ì·
+” Ì·” Ì½”$ Ì½”% Ì½”- Ì½”. Ì½”1 Ì½!’” Ì¶
+” Ì¶˜” Ì·
+” Ì·” Ì¾”% Ì¾”& Ì¾”0 Ì¾ ”1 Ì¾!”7 Ì¾'’” Ì¶
+” Ì¶–” Ì·
+” Ì·” Ì¿”  Ì¿”! Ì¿”' Ì¿’” Ì¶
+” Ì¶–” Ì·
+” Ì·” ÌÀ”! ÌÀ”" ÌÀ”( ÌÀ’” Ì¸” Ì¸–” Ì¸” Ì¸” Ì»”  Ì»”! Ì»”' Ì»’”4 Ì¹”= Ì¹’” Ì¸” Ì¸’” Ì¶
+” Ì¶’” Ì·
+” Ì·’” Ì¯”% Ì¯’” Ì°” Ì°–” ÌÉ” ÌÉ”) ÌÉ”- ÌÉ”. ÌÉ”9 ÌÉ’” ÌË” ÌË’” ÌÌ” ÌÌ’”3 ÌÌ1”8 ÌÌ?’” ÌÎ
+”- ÌÎ’” ÌÏ
+”" ÌÏ’” ÌÎ
+”- ÌÎ–” ÌÏ
+”" ÌÏ”# Ìá”( Ìá”) Ìá”/ Ìá’” ÌÎ
+”- ÌÎ–” ÌÏ
+”" ÌÏ”# Ìâ”) Ìâ”* Ìâ”0 Ìâ’” ÌÎ
+”- ÌÎ™” ÌÏ
+”" ÌÏ”# Ìä”* Ìä”+ Ìä”, Ìä”1 Ìä&”3 Ìä(”5 Ìä*˜”  Ìå”$ Ìå”% Ìå”3 Ìå”4 Ìå ”9 Ìå%”: Ìå&”; Ìå'’” Ìæ
+” Ìæ’” ÌÐ”0 ÌÐ œ” ÌÑ”  ÌÑ”$ ÌÑ”% ÌÑ”2 ÌÑ"”6 ÌÑ&”: ÌÑ*”; ÌÑ+”ÌI ÌÑ9”ÌL ÌÑ<”ÌM ÌÑ=”ÌO ÌÑ?•”$ ÌÒ”( ÌÒ”) ÌÒ”9 ÌÒ#”ÌF ÌÒ%‘” ÌÓ’” ÌÕ”% ÌÕ‘” ÌÓ’” ÌÕ”% ÌÕ’” ÌÖ”" ÌÖ’” ÌÕ”% ÌÕ˜” ÌÖ”" ÌÖ”# ÌÜ”, ÌÜ”- ÌÜ”5 ÌÜ”6 ÌÜ ”9 ÌÜ#’” ÌÕ”% ÌÕ˜” ÌÖ”" ÌÖ”# ÌÝ”- ÌÝ”. ÌÝ”8 ÌÝ"”9 ÌÝ#”? ÌÝ)’” ÌÕ”% ÌÕ–” ÌÖ”" ÌÖ”# ÌÞ”( ÌÞ”) ÌÞ”/ ÌÞ’” ÌÕ”% ÌÕ–” ÌÖ”" ÌÖ”# Ìß”) Ìß”* Ìß”0 Ìß’” Ì×”" Ì×–” Ì×”" Ì×”# ÌÚ”( ÌÚ”) ÌÚ”/ ÌÚ’”< ÌØ”ÌE ÌØ’” Ì×” Ì×’” ÌÕ”! ÌÕ’” ÌÖ” ÌÖ’” ÌÎ
+”) ÌÎ’” ÌÏ
+” ÌÏ’” Ìè	”% ÌèÜ ” Ìè”  Ìè”! Ìè”, Ìè ”8 Ìè!”< Ìè%”> Ìè'”ÌC Ìè,”ÌH Ìè1”ÌQ Ìè:”ÌR Ìè;”ÌS Ìè<”ÌT Ìè=”ÌY ÌèÌB”ÌZ ÌèÌC”Ì[ ÌèÌD”Ì\ ÌèÌE”Ì] ÌèÌF“”/ ÌÌ”= ÌÌ”? ÌÌ’” ÌË” ÌË’” ÌÌ” ÌÌ’” Ì«” Ì«’” Ì¬” Ì¬‘” ÌôÔrH–§version¤file§sources®sourcesContent¥names¨mappingsÀ‘À‘ÀÜ¢‘”    ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”  	 ‘”  
+ ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”    ‘”  ! ‘”  " ‘”  # ‘”  $ ‘”  % ‘”  & ‘”  ' ‘”  ( ‘”  ) ‘”  * ‘”  + ‘”  , ‘”  - ‘”  . ‘”  / ‘”  0 ‘”  1 ‘”  2 ‘”  3 ‘”  4 ‘”  5 ‘”  6 ‘”  7 ‘”  8 ‘”  9 ‘”  : ‘”  ; ‘”  < ‘”  = ‘”  > ‘”  ? ‘”  Ì@ ‘”  ÌA ‘”  ÌB ‘”  ÌC ‘”  ÌD ‘”  ÌE ‘”  ÌF ‘”  ÌG ‘”  ÌH ‘”  ÌI ‘”  ÌJ ‘”  ÌK ‘”  ÌL ‘”  ÌM ‘”  ÌN ‘”  ÌO ‘”  ÌP ‘”  ÌQ ‘”  ÌR ‘”  ÌS ‘”  ÌT ‘”  ÌU ‘”  ÌV ‘”  ÌW ‘”  ÌX ‘”  ÌY ‘”  ÌZ ‘”  Ì[ ‘”  Ì\ ‘”  Ì] ‘”  Ì^ ‘”  Ì_ ‘”  Ì` ‘”  Ìa ‘”  Ìb ‘”  Ìc ‘”  Ìd ‘”  Ìe ‘”  Ìf ‘”  Ìg ‘”  Ìh ‘”  Ìi ‘”  Ìj ‘”  Ìk ‘”  Ìl ‘”  Ìm ‘”  Ìn ‘”  Ìo ‘”  Ìp ‘”  Ìq ‘”  Ìr ‘”  Ìs ‘”  Ìt ‘”  Ìu ‘”  Ìv ‘”  Ìw ‘”  Ìx ‘”  Ìy ‘”  Ìz ‘”  Ì{ ‘”  Ì| ‘”  Ì} ‘”  Ì~ ‘”  Ì ‘”  Ì€ ‘”  Ì ‘”  Ì‚ ‘”  Ìƒ ‘”  Ì„ ‘”  Ì… ‘”  Ì† ‘”  Ì‡ ‘”  Ìˆ ‘”  Ì‰ ‘”  ÌŠ ‘”  Ì‹ ‘”  ÌŒ ‘”  Ì ‘”  ÌŽ ‘”  Ì ‘”  Ì ‘”  Ì‘ ‘”  Ì’ ‘”  Ì“ ‘”  Ì” ‘”  Ì• ‘”  Ì– ‘”  Ì— ‘”  Ì˜ ‘”  Ì™ ‘”  Ìš ‘”  Ì› ‘”  Ìœ ‘”  Ì ‘”  Ìž ‘”  ÌŸ ‘”  Ì  ‘”  Ì¡ ‘”  Ì¢ ‘”  Ì£ ‘”  Ì¤ ‘”  Ì¥ ‘”  Ì¦ ‘”  Ì§ ‘”  Ì¨ ‘”  Ì© ‘”  Ìª ‘”  Ì« ‘”  Ì¬ ‘”  Ì­ ‘”  Ì® ‘”  Ì¯ ‘”  Ì° ‘”  Ì± ‘”  Ì² ‘”  Ì³ ‘”  Ì´ ‘”  Ìµ ‘”  Ì¶ ‘”  Ì· ‘”  Ì¸ ‘”  Ì¹ ‘”  Ìº ‘”  Ì» ‘”  Ì¼ ‘”  Ì½ ‘”  Ì¾ ‘”  Ì¿ ‘”  ÌÀ ‘”  ÌÁ ‘”  ÌÂ ‘”  ÌÃ ‘”  ÌÄ ‘”  ÌÅ ‘”  ÌÆ ‘”  ÌÇ ‘”  ÌÈ ‘”  ÌÉ ‘”  ÌÊ ‘”  ÌË ‘”  ÌÌ ‘”  ÌÍ ‘”  ÌÎ ‘”  ÌÏ ‘”  ÌÐ ‘”  ÌÑ ‘”  ÌÒ ‘”  ÌÓ ‘”  ÌÔ ‘”  ÌÕ ‘”  ÌÖ ‘”  Ì× ‘”  ÌØ ‘”  ÌÙ ‘”  ÌÚ ‘”  ÌÛ ‘”  ÌÜ ‘”  ÌÝ ‘”  ÌÞ ‘”  Ìß ‘”  Ìà ‘”  Ìá ‘”  Ìâ ‘”  Ìã ‘”  Ìä ‘”  Ìå ‘”  Ìæ ‘”  Ìç ‘”  Ìè ‘”  Ìé ‘”  Ìê ‘”  Ìë ‘”  Ìì ‘”  Ìí ‘”  Ìî ‘”  Ìï ‘”  Ìð ‘”  Ìñ ‘”  Ìò ‘”  Ìó ‘”  Ìô ‘”  Ìõ ‘”  Ìö ‘”  Ì÷ ‘”  Ìø ‘”  Ìù ‘”  Ìú ‘”  Ìû ‘”  Ìü ‘”  Ìý ‘”  Ìþ ‘”  Ìÿ ‘”  Í  ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í	 ‘”  Í
+ ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í  ‘”  Í! ‘”  Í" ‘”  Í# ‘”  Í$ ‘”  Í% ‘”  Í& ‘”  Í' ‘”  Í( ‘”  Í) ‘”  Í* ‘”  Í+ ‘”  Í, ‘”  Í- ‘”  Í. ‘”  Í/ ‘”  Í0 ‘”  Í1 ‘”  Í2 ‘”  Í3 ‘”  Í4 ‘”  Í5 ‘”  Í6 ‘”  Í7 ‘”  Í8 ‘”  Í9 ‘”  Í: ‘”  Í; ‘”  Í< ‘”  Í= ‘”  Í> ‘”  Í? ‘”  Í@ ‘”  ÍA ‘”  ÍB ‘”  ÍC ‘”  ÍD ‘”  ÍE ‘”  ÍF ‘”  ÍG ‘”  ÍH ‘”  ÍI ‘”  ÍJ ‘”  ÍK ‘”  ÍL ‘”  ÍM ‘”  ÍN ‘”  ÍO ‘”  ÍP ‘”  ÍQ ‘”  ÍR ‘”  ÍS ‘”  ÍT ‘”  ÍU ‘”  ÍV ‘”  ÍW ‘”  ÍX ‘”  ÍY ‘”  ÍZ ‘”  Í[ ‘”  Í\ ‘”  Í] ‘”  Í^ ‘”  Í_ ‘”  Í` ‘”  Ía ‘”  Íb ‘”  Íc ‘”  Íd ‘”  Íe ‘”  Íf ‘”  Íg ‘”  Íh ‘”  Íi ‘”  Íj ‘”  Ík ‘”  Íl ‘”  Ím ‘”  Ín ‘”  Ío ‘”  Íp ‘”  Íq ‘”  Ír ‘”  Ís ‘”  Ít ‘”  Íu ‘”  Ív ‘”  Íw ‘”  Íx ‘”  Íy ‘”  Íz ‘”  Í{ ‘”  Í| ‘”  Í} ‘”  Í~ ‘”  Í ‘”  Í€ ‘”  Í ‘”  Í‚ ‘”  Íƒ ‘”  Í„ ‘”  Í… ‘”  Í† ‘”  Í‡ ‘”  Íˆ ‘”  Í‰ ‘”  ÍŠ ‘”  Í‹ ‘”  ÍŒ ‘”  Í ‘”  ÍŽ ‘”  Í ‘”  Í ‘”  Í‘ ‘”  Í’ ‘”  Í“ ‘”  Í” ‘”  Í• ‘”  Í– ‘”  Í— ‘”  Í˜ ‘”  Í™ ‘”  Íš ‘”  Í› ‘”  Íœ ‘”  Í ‘”  Íž ‘”  ÍŸ ‘”  Í  ‘”  Í¡ ÔrI’§missing¦pluginÃ¦genAbcÂÔ  ÔrJ”²dynamicImportCache¹exportAllDeclarationCache»exportNamedDeclarationCache«importCache“ÔrK•¤type¥start£endªspecifiers¦source±ImportDeclarationÍéÍ#‘ÔrL•¤type¥start£end¨imported¥local¯ImportSpecifierÍòÍ ÔrM”¤type¥start£end¤nameªIdentifierÍòÍ ®initTabBarDataMªIdentifierÍòÍ ®initTabBarDataÔrN•¤type¥start£end¥value£raw§LiteralÍÍ"¸../viewmodel/InitialDataº'../viewmodel/InitialData'K±ImportDeclarationÍ%ÍÒ—L¯ImportSpecifierÍ.ÍDMªIdentifierÍ.ÍD¶LAYOUT_WIDTH_OR_HEIGHTMªIdentifierÍ.ÍD¶LAYOUT_WIDTH_OR_HEIGHTL¯ImportSpecifierÍFÍVMªIdentifierÍFÍV°NORMAL_FONT_SIZEMªIdentifierÍFÍV°NORMAL_FONT_SIZEL¯ImportSpecifierÍXÍhMªIdentifierÍXÍh°BIGGER_FONT_SIZEMªIdentifierÍXÍh°BIGGER_FONT_SIZEL¯ImportSpecifierÍjÍvMªIdentifierÍjÍv¬MAX_OFFSET_YMªIdentifierÍjÍv¬MAX_OFFSET_YL¯ImportSpecifierÍxÍ„MªIdentifierÍxÍ„¬REFRESH_TIMEMªIdentifierÍxÍ„¬REFRESH_TIMEL¯ImportSpecifierÍ†ÍžMªIdentifierÍ†Íž¸GOODS_EVALUATE_FONT_SIZEMªIdentifierÍ†Íž¸GOODS_EVALUATE_FONT_SIZEL¯ImportSpecifierÍ Í®MªIdentifierÍ Í®®MAX_LINES_TEXTMªIdentifierÍ Í®®MAX_LINES_TEXTN§LiteralÍ¶ÍÑ¹../common/CommonConstants»'../common/CommonConstants'K±ImportDeclarationÍÔÍ‘ÔrO”¤type¥start£end¥local¶ImportDefaultSpecifierÍÛÍäMªIdentifierÍÛÍä©GoodsListN§LiteralÍêÍ ´./GoodsListComponent¶'./GoodsListComponent'
