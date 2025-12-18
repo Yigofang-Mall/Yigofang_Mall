@@ -25,7 +25,7 @@ import { ListDataSource } from '../viewmodel/ListDataSource';
 @Component
 export default struct GoodsList {
   // 接收分类ID参数
-  @Prop categoryId: number = 1;
+  @Prop categoryId: number;
 
   // 根据分类过滤数据源
   @Provide goodsListData: ListDataSource = new ListDataSource(this.categoryId);

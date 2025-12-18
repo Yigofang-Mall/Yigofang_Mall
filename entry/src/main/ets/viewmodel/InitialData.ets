@@ -41,8 +41,8 @@ export function initGoodsData(): GoodsListItemType[] {
   // 生成5个初始商品
   const categories = 4; // 总分类数
   for (let i = 1; i <= 5; i++) {
-    const imageIndex = (i % 4) + 1;
-    const categoryId = i%categories + 1; // 分配商品到不同分类
+    const imageIndex = (i - 1 % 4) + 1;
+    const categoryId = (i-1) % categories + 1; // 分配商品到不同分类
     goodsList.push({
       id: i,
       category: categoryId, // 设置分类ID

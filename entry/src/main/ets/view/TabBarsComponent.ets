@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { initTabBarData } from '../viewmodel/InitialData';
+import { GoodsListItemType, initTabBarData } from '../viewmodel/InitialData';
 import {
   LAYOUT_WIDTH_OR_HEIGHT,
   NORMAL_FONT_SIZE,
@@ -25,6 +25,7 @@ import {
   MAX_LINES_TEXT
 } from '../common/CommonConstants';
 import GoodsList from './GoodsListComponent';
+import { ListDataSource } from '../viewmodel/ListDataSource';
 
 /**
  * 标签页组件
@@ -201,37 +202,89 @@ export default struct TabBar {
       }
       .tabBar(this.firstTabBar) // 设置标签栏
 
-      // 循环创建其他标签页
-      ForEach(initTabBarData(), (item: Resource, index?: number) => {
-        TabContent() {
-          // 使用相同结构实现次标签页内容
-          Column() {
-            // 下拉刷新区域（与主标签页保持一致）
-            if (this.refreshStatus || this.pullDownOffset > 0) {
-              this.buildRefreshView()
-            }
-
-            // 商品列表组件
-            Scroll() {
-              Column() {
-                GoodsList({categoryId : (item.id % 4) + 1} )
-              }
-              .width('100%')
-            }
-            .scrollBar(BarState.Off)
-            .edgeEffect(EdgeEffect.Spring)
-            .width('100%')
-            .height('100%')
+      // 手机分类页
+      TabContent() {
+        Column() {
+          if (this.refreshStatus || this.pullDownOffset > 0) {
+            this.buildRefreshView()
           }
-          .width('100%')
-          .height('100%')
-          // 共用下拉刷新逻辑
-          .onTouch((event?: TouchEvent) => {
-            this.putDownRefresh(event);
-          })
+          Scroll() {
+            Column() {
+              GoodsList({categoryId: 1})
+            }
+            .width('100%')
+          }
+          .scrollBar(BarState.Off)
+          .edgeEffect(EdgeEffect.Spring)
         }
-        .tabBar(this.otherTabBar(item, index !== undefined ? index : 0))
-      })
+        .width('100%')
+        .height('100%')
+        .onTouch((event?: TouchEvent) => { this.putDownRefresh(event) })
+      }
+      .tabBar(this.otherTabBar($r('app.string.mobile_phone'), 0))
+
+      // 服装分类页
+      TabContent() {
+        Column() {
+          if (this.refreshStatus || this.pullDownOffset > 0) {
+            this.buildRefreshView()
+          }
+          Scroll() {
+            Column() {
+              GoodsList({categoryId: 2})
+            }
+            .width('100%')
+          }
+          .scrollBar(BarState.Off)
+          .edgeEffect(EdgeEffect.Spring)
+        }
+        .width('100%')
+        .height('100%')
+        .onTouch((event?: TouchEvent) => { this.putDownRefresh(event) })
+      }
+      .tabBar(this.otherTabBar($r('app.string.clothes'), 1))
+
+      // 穿戴分类页
+      TabContent() {
+        Column() {
+          if (this.refreshStatus || this.pullDownOffset > 0) {
+            this.buildRefreshView()
+          }
+          Scroll() {
+            Column() {
+              GoodsList({categoryId: 3})
+            }
+            .width('100%')
+          }
+          .scrollBar(BarState.Off)
+          .edgeEffect(EdgeEffect.Spring)
+        }
+        .width('100%')
+        .height('100%')
+        .onTouch((event?: TouchEvent) => { this.putDownRefresh(event) })
+      }
+      .tabBar(this.otherTabBar($r('app.string.wear'), 2))
+
+      // 家居分类页
+      TabContent() {
+        Column() {
+          if (this.refreshStatus || this.pullDownOffset > 0) {
+            this.buildRefreshView()
+          }
+          Scroll() {
+            Column() {
+              GoodsList({categoryId: 4})
+            }
+            .width('100%')
+          }
+          .scrollBar(BarState.Off)
+          .edgeEffect(EdgeEffect.Spring)
+        }
+        .width('100%')
+        .height('100%')
+        .onTouch((event?: TouchEvent) => { this.putDownRefresh(event) })
+      }
+      .tabBar(this.otherTabBar($r('app.string.home_furnishing'), 3))
     }
     // 标签页切换回调
     .onChange((index: number) => {

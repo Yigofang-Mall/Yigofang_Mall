@@ -74,7 +74,8 @@ export class ListDataSource implements IDataSource {
     /**
      * 刷新数据
      */
-    refreshData(): void {
+    refreshData(newData: GoodsListItemType[]): void {
+        this.dataArray = newData;
         // 模拟网络延迟
         setTimeout(() => {
             this.dataArray = initGoodsData();

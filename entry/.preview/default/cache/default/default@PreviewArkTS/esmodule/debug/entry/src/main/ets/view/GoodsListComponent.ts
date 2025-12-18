@@ -27,9 +27,6 @@ export default class GoodsList extends ViewPU {
         this.finalizeConstruction();
     }
     setInitiallyProvidedValue(params: GoodsList_Params) {
-        if (params.categoryId === undefined) {
-            this.__categoryId.set(1);
-        }
         if (params.goodsListData !== undefined) {
             this.goodsListData = params.goodsListData;
         }
