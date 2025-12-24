@@ -133,63 +133,67 @@
 			"id":	"0x01000020"
 		}, {
 			"type":	"media",
-			"name":	"goodsImg_Phone_1",
+			"name":	"goodsImg_wear_1",
 			"id":	"0x01000021"
 		}, {
 			"type":	"media",
-			"name":	"goodsImg_Phone_2",
+			"name":	"goodsImg_wear_4",
 			"id":	"0x01000022"
 		}, {
 			"type":	"media",
-			"name":	"goodsImg_Phone_3",
+			"name":	"goodsImg_wear_3",
 			"id":	"0x01000023"
 		}, {
 			"type":	"media",
-			"name":	"goodsImg_Wear_4",
+			"name":	"goodsImg_wear_2",
 			"id":	"0x01000024"
 		}, {
 			"type":	"media",
-			"name":	"goodsImg_Clothes_3",
+			"name":	"goodsImg_clothes_1",
 			"id":	"0x01000025"
 		}, {
 			"type":	"media",
-			"name":	"goodsImg_Clothes_1",
+			"name":	"goodsImg_clothes_3",
 			"id":	"0x01000026"
 		}, {
 			"type":	"media",
-			"name":	"goodsImg_Clothes_4",
+			"name":	"goodsImg_home_1",
 			"id":	"0x01000027"
 		}, {
 			"type":	"media",
-			"name":	"goodsImg_Wear_2",
+			"name":	"goodsImg_clothes_2",
 			"id":	"0x01000028"
 		}, {
 			"type":	"media",
-			"name":	"goodsImg_Wear_1",
+			"name":	"goodsImg_home_2",
 			"id":	"0x01000029"
 		}, {
 			"type":	"media",
-			"name":	"goodsImg_Wear_3",
+			"name":	"goodsImg_clothes_4",
 			"id":	"0x0100002A"
 		}, {
 			"type":	"media",
-			"name":	"goodsImg_Clothes_2",
+			"name":	"goodsImg_home_4",
 			"id":	"0x0100002B"
 		}, {
 			"type":	"media",
-			"name":	"goodsImg_HF_2",
+			"name":	"goodsImg_home_3",
 			"id":	"0x0100002C"
 		}, {
 			"type":	"media",
-			"name":	"goodsImg_HF_1",
-			"id":	"0x0100002D"
+			"name":	"goodsImg_phone_2",
+			"id":	"0x01000030"
 		}, {
 			"type":	"media",
-			"name":	"goodsImg_HF_3",
-			"id":	"0x0100002E"
+			"name":	"goodsImg_phone_3",
+			"id":	"0x01000031"
 		}, {
 			"type":	"media",
-			"name":	"goodsImg_HF_4",
-			"id":	"0x0100002F"
+			"name":	"goodsImg_phone_4",
+			"id":	"0x01000032"
+		}, {
+			"type":	"media",
+			"name":	"goodsImg_phone_1",
+			"id":	"0x01000033"
 		}]
 }

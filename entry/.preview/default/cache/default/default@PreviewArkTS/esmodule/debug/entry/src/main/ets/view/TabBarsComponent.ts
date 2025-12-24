@@ -306,7 +306,7 @@ export default class TabBar extends ViewPU {
                 {
                     this.observeComponentCreation2((elmtId, isInitialRender) => {
                         if (isInitialRender) {
-                            let componentCall = new GoodsList(this, { categoryId: 0 }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/view/TabBarsComponent.ets", line: 187, col: 17 });
+                            let componentCall = new GoodsList(this, { categoryId: 0 }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/view/TabBarsComponent.ets", line: 187, col: 15 });
                             ViewPU.create(componentCall);
                             let paramsLambda = () => {
                                 return {
