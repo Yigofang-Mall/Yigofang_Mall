@@ -106,7 +106,7 @@ const namePhone:ResourceStr[] = [
   "【至高24期分期免息】小米17 Pro手机新品上市小米徕卡联合研发小米官方旗舰店官网小米澎湃OS小米17pro",
 ];
 
-const pricePhone:ResourceStr[] = ['4799','5199','9999','4499'];
+const pricePhone:ResourceStr[] = ['¥4799','¥5199','¥9999','¥4499'];
 
 function getImageByIndexPhone(index: number): Resource {
   const images = [
@@ -145,7 +145,7 @@ const nameClothes:ResourceStr[] = [
   "高知感舒芙蕾休闲复古慵懒羊毛混纺毛织开衫外套",
 ];
 
-const priceClothes:ResourceStr[] = ['236','3300','149','403'];
+const priceClothes:ResourceStr[] = ['¥236','¥3300','¥149','¥403'];
 
 function getImageByIndexClothes(index: number): Resource {
   const images = [
@@ -185,7 +185,7 @@ const nameWear:ResourceStr[] = [
   "三星/Samsung Galaxy Watch8 智能手表 运动AI心率监测睡眠监测血氧血压心率适配三星三折叠",
 ];
 
-const priceWear:ResourceStr[] = ['5799','1388','269','1824'];
+const priceWear:ResourceStr[] = ['¥5799','¥1388','¥269','¥1824'];
 
 function getImageByIndexWear(index: number): Resource {
   const images = [
@@ -224,7 +224,7 @@ const nameHomeFurnishing:ResourceStr[] = [
   "原木奶油风客厅装饰画趣味猫咪沙发背景墙挂画立体砂岩高级感壁画",
 ];
 
-const priceHomeFurnishing:ResourceStr[] = ['333','38','127','345'];
+const priceHomeFurnishing:ResourceStr[] = ['¥333','¥38','¥127','¥345'];
 
 function getImageByIndexHomeFurnishing(index: number): Resource {
   const images = [
