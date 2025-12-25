@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { GoodsListItemType, initGoodsData } from './InitialData';
+import { GoodsListItemType, initGoodsData, initMobilePhoneGoodsData, initClothesGoodsData, initWearGoodsData, initHomeFurnishingGoodsData, shuffleArray } from './InitialData';
 import { MAX_DATA_LENGTH, MAGNIFICATION } from '../common/CommonConstants';
 
 /**
@@ -22,11 +22,32 @@ import { MAX_DATA_LENGTH, MAGNIFICATION } from '../common/CommonConstants';
 export class ListDataSource implements IDataSource {
   private listeners: DataChangeListener[] = [];
   private dataArray: GoodsListItemType[] = [];
-  private currentIndex: number = 0;
+  private categoryId: number;
+  private currentIndex: number;
 
-  constructor() {
-    // 初始化数据
-    this.dataArray = initGoodsData();
+  constructor(categoryId: number) {
+    this.categoryId = categoryId;
+    // 根据分类ID选择对应的初始化函数
+    let initData: GoodsListItemType[] = [];
+    switch (this.categoryId) {
+      case 1:
+        initData = initMobilePhoneGoodsData();
+        break;
+      case 2:
+        initData = initClothesGoodsData();
+        break;
+      case 3:
+        initData = initWearGoodsData();
+        break;
+      case 4:
+        initData = initHomeFurnishingGoodsData();
+        break;
+      default:
+        initData = initGoodsData();
+    }
+    
+    // initData已经通过getNextGoodsId()设置了全局唯一ID，这里不需要再修改
+    this.dataArray = shuffleArray(initData); // 随机打乱初始数据顺序
     this.currentIndex = this.dataArray.length;
   }
 
@@ -64,24 +85,35 @@ export class ListDataSource implements IDataSource {
       const newData: GoodsListItemType[] = [];
       const startId = this.currentIndex + 1;
       
-      // 每次加载10个新商品
-      for (let i = 0; i < 10 && this.dataArray.length < MAX_DATA_LENGTH; i++) {
-        const id = startId + i;
-        const imageIndex = (id % 4);
-        newData.push({
-          id: id,
-          goodsName: id % 2 === 0 ? $r('app.string.goodsName') : $r('app.string.another_goodsName'),
-          price: getPriceByIndex(id),
-          goodsImg: getImageByIndex(imageIndex),
-          advertisingLanguage: $r('app.string.advertising_language'),
-          evaluate: $r('app.string.evaluate')
-        });
+      // 根据分类ID调用对应的初始化函数获取新数据
+      let moreData: GoodsListItemType[] = [];
+      switch (this.categoryId) {
+        case 1:
+          moreData = initMobilePhoneGoodsData();
+          break;
+        case 2:
+          moreData = initClothesGoodsData();
+          break;
+        case 3:
+          moreData = initWearGoodsData();
+          break;
+        case 4:
+          moreData = initHomeFurnishingGoodsData();
+          break;
+        default:
+          moreData = initGoodsData();
       }
+
       
-      if (newData.length > 0) {
+      // 限制每次加载的数量
+      const limitedData = moreData.slice(0, 5);
+      // 随机打乱加载更多的数据顺序
+      const shuffledData = shuffleArray(limitedData);
+      
+      if (shuffledData.length > 0) {
         const startIndex = this.dataArray.length;
-        this.dataArray.push(...newData);
-        this.currentIndex += newData.length;
+        this.dataArray.push(...shuffledData);
+        this.currentIndex += shuffledData.length;
         
         // 通知数据变化
         this.listeners.forEach(listener => {
@@ -95,10 +127,32 @@ export class ListDataSource implements IDataSource {
   /**
    * 刷新数据
    */
-  refreshData(): void {
+  refreshData(newData: GoodsListItemType[]): void {
+    this.dataArray = newData;
     // 模拟网络延迟
     setTimeout(() => {
-      this.dataArray = initGoodsData();
+      // 根据分类ID选择对应的初始化函数进行刷新
+      switch (this.categoryId) {
+        case 0:
+          this.dataArray = shuffleArray(initGoodsData());
+          break;
+        case 1:
+          this.dataArray = shuffleArray(initMobilePhoneGoodsData());
+          break;
+        case 2:
+          this.dataArray = shuffleArray(initClothesGoodsData());
+          break;
+        case 3:
+          this.dataArray = shuffleArray(initWearGoodsData());
+          break;
+        case 4:
+          this.dataArray = shuffleArray(initHomeFurnishingGoodsData());
+          break;
+        default:
+          this.dataArray = shuffleArray(initGoodsData());
+      }
+      
+      // 刷新后的数据已经通过init*GoodsData()函数设置了全局唯一ID，这里不需要再修改
       this.currentIndex = this.dataArray.length;
       
       // 通知数据刷新
