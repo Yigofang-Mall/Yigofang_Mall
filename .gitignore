@@ -5,6 +5,7 @@ entry/.preview/
 entry/build/
 build/
 .hvigor/
+.github/
 
 # DevEco / package management
 .ohpm/
