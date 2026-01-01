@@ -1,0 +1,618 @@
+Ôr@Ÿªassertions¤code´customTransformCache¬dependencies¢id¤meta±moduleSideEffects¬originalCode±originalSourcemap«resolvedIds®sourcemapChainµsyntheticNamedExportsµtransformDependencies®transformFiles¨cacheAstÔrAÚ2H/*
+ * Copyright (c) 2023 Huawei Device Co., Ltd.
+ * Licensed under the Apache License,Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import { getRefreshedGoodsByCategory, CATEGORIES } from './InitialData';
+import { searchGoodsByKeyword } from './SearchUtils';
+import { MAX_DATA_LENGTH } from '../common/CommonConstants';
+/**
+ * Listæ•°æ®æºç±»ï¼Œç”¨äºLazyForEachæ‡’åŠ è½½
+ */
+export class ListDataSource {
+    constructor(category = CATEGORIES.SELECTED) {
+        this.listeners = [];
+        this.dataArray = [];
+        this.currentIndex = 0;
+        this.category = CATEGORIES.SELECTED;
+        this.category = category;
+        // åˆå§‹åŒ–æ•°æ®
+        this.dataArray = getRefreshedGoodsByCategory(category);
+        this.currentIndex = this.dataArray.length;
+    }
+    totalCount() {
+        return MAX_DATA_LENGTH;
+    }
+    getData(index) {
+        // å¦‚æœç´¢å¼•è¶…å‡ºå½“å‰æ•°æ®èŒƒå›´ï¼Œé¢„åŠ è½½æ›´å¤šæ•°æ®
+        if (index >= this.dataArray.length - 6 && this.dataArray.length < MAX_DATA_LENGTH) {
+            this.pushData();
+        }
+        // å¦‚æœç´¢å¼•æœ‰æ•ˆï¼Œè¿”å›æ•°æ®ï¼Œå¦åˆ™è¿”å›æœ€åä¸€ä¸ªæ•°æ®
+        return index < this.dataArray.length ? this.dataArray[index] : this.dataArray[this.dataArray.length - 1];
+    }
+    registerDataChangeListener(listener) {
+        this.listeners.push(listener);
+    }
+    unregisterDataChangeListener(listener) {
+        const index = this.listeners.indexOf(listener);
+        if (index >= 0) {
+            this.listeners.splice(index, 1);
+        }
+    }
+    /**
+     * æ¨é€æ›´å¤šæ•°æ®ï¼ˆåŠ è½½æ›´å¤šï¼‰
+     */
+    pushData() {
+        // æ¨¡æ‹Ÿç½‘ç»œå»¶è¿Ÿ
+        setTimeout(() => {
+            const newData = [];
+            const startId = this.currentIndex + 1;
+            // æ¯æ¬¡åŠ è½½10ä¸ªæ–°å•†å“
+            for (let i = 0; i < 10 && this.dataArray.length < MAX_DATA_LENGTH; i++) {
+                const id = startId + i;
+                const imageIndex = id % 4; // 0-3ï¼Œåˆšå¥½åŒ¹é…æ¯ä¸ªåˆ†ç±»çš„4å¼ å›¾ç‰‡
+                let goodsName = { "id": 16777241, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" }.toString();
+                let price = getPriceByIndex(id);
+                // æ ¹æ®å½“å‰åˆ†ç±»ï¼ŒåŒ¹é…å¯¹åº”åˆ†ç±»çš„ã€ä¸“å±å•†å“åç§°+ä¸“å±ä»·æ ¼ã€‘
+                switch (this.category) {
+                    case CATEGORIES.MOBILE_PHONE:
+                        goodsName = { "id": -1, "type": -1, params: [`app.string.goods_name_phone_${imageIndex + 1}`], "bundleName": "com.example.list_harmony", "moduleName": "entry" }.toString();
+                        price = { "id": -1, "type": -1, params: [`app.string.goods_price_phone_${imageIndex + 1}`], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+                        break;
+                    case CATEGORIES.CLOTHES:
+                        goodsName = { "id": -1, "type": -1, params: [`app.string.goods_name_clothes_${imageIndex + 1}`], "bundleName": "com.example.list_harmony", "moduleName": "entry" }.toString();
+                        price = { "id": -1, "type": -1, params: [`app.string.goods_price_clothes_${imageIndex + 1}`], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+                        break;
+                    case CATEGORIES.WEAR:
+                        goodsName = { "id": -1, "type": -1, params: [`app.string.goods_name_wear_${imageIndex + 1}`], "bundleName": "com.example.list_harmony", "moduleName": "entry" }.toString();
+                        price = { "id": -1, "type": -1, params: [`app.string.goods_price_wear_${imageIndex + 1}`], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+                        break;
+                    case CATEGORIES.HOME_FURNISHING:
+                        goodsName = { "id": -1, "type": -1, params: [`app.string.goods_name_home_${imageIndex + 1}`], "bundleName": "com.example.list_harmony", "moduleName": "entry" }.toString();
+                        price = { "id": -1, "type": -1, params: [`app.string.goods_price_home_${imageIndex + 1}`], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+                        break;
+                    default:
+                        // é»˜è®¤åˆ†ç±»ç”¨åŸæ¥çš„é€šç”¨åç§°
+                        goodsName = (id % 2 === 0 ? { "id": 16777241, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" } : { "id": 16777237, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" }).toString();
+                        break;
+                }
+                newData.push({
+                    id: id,
+                    goodsName: goodsName,
+                    price: price,
+                    goodsImg: getImageByCategoryAndIndex(this.category, imageIndex),
+                    advertisingLanguage: { "id": 16777236, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" },
+                    evaluate: { "id": 16777240, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" },
+                    category: this.category
+                });
+            }
+            if (newData.length > 0) {
+                const startIndex = this.dataArray.length;
+                this.dataArray.push(...newData);
+                this.currentIndex += newData.length;
+                // é€šçŸ¥æ•°æ®å˜åŒ–
+                this.listeners.forEach(listener => {
+                    listener.onDataAdd?.(startIndex);
+                    listener.onDataReloaded?.();
+                });
+            }
+        }, 500);
+    }
+    /**
+     * åˆ·æ–°æ•°æ®
+     */
+    refreshData() {
+        // æ¨¡æ‹Ÿç½‘ç»œå»¶è¿Ÿ
+        setTimeout(() => {
+            this.dataArray = getRefreshedGoodsByCategory(this.category);
+            this.currentIndex = this.dataArray.length;
+            // é€šçŸ¥æ•°æ®åˆ·æ–°
+            this.listeners.forEach(listener => {
+                listener.onDataReloaded?.();
+            });
+        }, 1000);
+    }
+    /**
+     * è®¾ç½®åˆ†ç±»
+     */
+    setCategory(category) {
+        if (this.category !== category) {
+            this.category = category;
+            this.dataArray = getRefreshedGoodsByCategory(category);
+            this.currentIndex = this.dataArray.length;
+            // é€šçŸ¥æ•°æ®åˆ·æ–°
+            this.listeners.forEach(listener => {
+                listener.onDataReloaded?.();
+            });
+        }
+    }
+    /**
+     * æœç´¢å•†å“
+     */
+    searchGoods(keyword) {
+        if (keyword.trim() === '') {
+            // å¦‚æœæœç´¢å…³é”®è¯ä¸ºç©ºï¼Œæ˜¾ç¤ºå½“å‰åˆ†ç±»çš„æ‰€æœ‰å•†å“
+            this.dataArray = getRefreshedGoodsByCategory(this.category);
+        }
+        else {
+            // æ ¹æ®å…³é”®è¯æœç´¢å•†å“
+            this.dataArray = searchGoodsByKeyword(this.category, keyword.trim());
+        }
+        this.currentIndex = this.dataArray.length;
+        // é€šçŸ¥æ•°æ®åˆ·æ–°
+        this.listeners.forEach(listener => {
+            listener.onDataReloaded?.();
+        });
+    }
+}
+// æ ¹æ®ç´¢å¼•è·å–ä»·æ ¼
+function getPriceByIndex(index) {
+    const prices = [
+        { "id": 16777276, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" },
+        { "id": 16777277, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" },
+        { "id": 16777278, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" },
+        { "id": 16777279, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" }
+    ];
+    return prices[index % 4];
+}
+// æ ¹æ®è·å–å›¾ç‰‡
+function getImageByCategoryAndIndex(category, index) {
+    const imageIndex = (index % 4) + 1;
+    switch (category) {
+        case CATEGORIES.SELECTED:
+            return getSelectedImage(imageIndex);
+        case CATEGORIES.MOBILE_PHONE:
+            return getPhoneImage(imageIndex);
+        case CATEGORIES.CLOTHES:
+            return getClothesImage(imageIndex);
+        case CATEGORIES.WEAR:
+            return getWearImage(imageIndex);
+        case CATEGORIES.HOME_FURNISHING:
+            return getHomeImage(imageIndex);
+        default:
+            return { "id": 16777219, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+    }
+}
+// å®šä¹‰æ¯ä¸ªåˆ†ç±»çš„å›¾ç‰‡è·å–å‡½æ•°
+function getSelectedImage(index) {
+    switch (index) {
+        case 1: return { "id": 16777219, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        case 2: return { "id": 16777292, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        case 3: return { "id": 16777291, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        case 4: return { "id": 16777226, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        default: return { "id": 16777219, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+    }
+}
+function getPhoneImage(index) {
+    switch (index) {
+        case 1: return { "id": 16777227, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        case 2: return { "id": 16777220, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        case 3: return { "id": 16777286, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        case 4: return { "id": 16777296, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        default: return { "id": 16777227, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+    }
+}
+function getClothesImage(index) {
+    switch (index) {
+        case 1: return { "id": 16777225, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        case 2: return { "id": 16777287, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        case 3: return { "id": 16777288, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        case 4: return { "id": 16777221, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        default: return { "id": 16777225, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+    }
+}
+function getWearImage(index) {
+    switch (index) {
+        case 1: return { "id": 16777223, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        case 2: return { "id": 16777293, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        case 3: return { "id": 16777222, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        case 4: return { "id": 16777294, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        default: return { "id": 16777223, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+    }
+}
+function getHomeImage(index) {
+    switch (index) {
+        case 1: return { "id": 16777289, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        case 2: return { "id": 16777224, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        case 3: return { "id": 16777218, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        case 4: return { "id": 16777290, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        default: return { "id": 16777289, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+    }
+}
+//# sourceMappingURL=ListDataSource.js.mapÂ“ÙZC:\Users\24505\Documents\GitHub\Yigofang_Mall\entry\src\main\ets\viewmodel\InitialData.etsÙZC:\Users\24505\Documents\GitHub\Yigofang_Mall\entry\src\main\ets\viewmodel\SearchUtils.etsÙ[C:\Users\24505\Documents\GitHub\Yigofang_Mall\entry\src\main\ets\common\CommonConstants.etsÙ]C:\Users\24505\Documents\GitHub\Yigofang_Mall\entry\src\main\ets\viewmodel\ListDataSource.etsÔrBœªmoduleName±isLocalDependency¯isNodeEntryFile§pkgPath±belongProjectPath§pkgNameªpkgVersion±dependencyPkgInfo¯hostModulesInfo°belongModulePath§checker¬shouldEmitJs¥entryÃÂÙ3C:\Users\24505\Documents\GitHub\Yigofang_Mall\entryÙ-C:\Users\24505\Documents\GitHub\Yigofang_Mall¥entry¥1.0.0Ô  ‘ÔrC’²hostDependencyName®hostModuleName»../viewmodel/ListDataSource¥entryÙ3C:\Users\24505\Documents\GitHub\Yigofang_Mall\entryÔrDÜ ®¬getNodeCount²getIdentifierCount®getSymbolCount¬getTypeCountµgetInstantiationCountµgetRelationCacheSizes±isUndefinedSymbol±isArgumentsSymbol¯isUnknownSymbol¯getMergedSymbol®getDiagnostics´getGlobalDiagnostics´getRecursionIdentity¶getUnmatchedProperties¹getTypeOfSymbolAtLocation¯getTypeOfSymbolÙ(getSymbolsOfParameterPropertyDeclaration·getDeclaredTypeOfSymbol³getPropertiesOfType±getPropertyOfTypeÙ"getPrivateIdentifierPropertyOfType·getTypeOfPropertyOfType²getIndexInfoOfType³getIndexInfosOfTypeºgetIndexInfosOfIndexSymbol³getSignaturesOfType²getIndexTypeOfType¬getIndexType¬getBaseTypes¸getBaseTypeOfLiteralType®getWidenedType³getTypeFromTypeNode°getParameterTypeÙ$getParameterIdentifierNameAtPosition¸getPromisedTypeOfPromise®getAwaitedType¸getReturnTypeOfSignature®isNullableType¯getNullableType²getNonNullableType²getNonOptionalType°getTypeArguments®typeToTypeNodeÙ$indexInfoToIndexSignatureDeclaration¿signatureToSignatureDeclaration²symbolToEntityName²symbolToExpression¬symbolToNodeÙ!symbolToTypeParameterDeclarations¼symbolToParameterDeclarationºtypeParameterToDeclaration±getSymbolsInScope³getSymbolAtLocation·getIndexInfosAtLocationÙ!getShorthandAssignmentValueSymbolÙ#getExportSpecifierLocalTargetSymbol·getExportSymbolOfSymbol±getTypeAtLocationºgetTypeAtLocationForLinterÙ tryGetTypeAtLocationWithoutCheckºgetTypeOfAssignmentPatternÙ*getPropertySymbolOfDestructuringAssignment±signatureToString¬typeToString®symbolToStringµtypePredicateToString®writeSignature©writeType«writeSymbol²writeTypePredicate¼getAugmentedPropertiesOfType®getRootSymbols²getSymbolOfExpando±getContextualTypeÙ(getContextualTypeForObjectLiteralElementÙ#getContextualTypeForArgumentAtIndexÙ getContextualTypeForJsxAttribute²isContextSensitiveÙ!getTypeOfPropertyOfContextualTypeµgetFullyQualifiedNameÙ#tryGetResolvedSignatureWithoutCheck´getResolvedSignatureÙ/getResolvedSignatureForStringLiteralCompletionsÙ$getResolvedSignatureForSignatureHelpµgetExpandedParameters¹hasEffectiveRestParameterºcontainsArgumentsReference°getConstantValueµisValidPropertyAccessÙ#isValidPropertyAccessForCompletions»getSignatureFromDeclarationºisImplementationOfOverload¹getImmediateAliasedSymbol°getAliasedSymbol¯getEmitResolver²getExportsOfModule¿getExportsAndPropertiesOfModuleÙ forEachExportAndPropertyOfModule¯getSymbolWalker±getAmbientModules¹getJsxIntrinsicTagNamesAt³isOptionalParameter»tryGetMemberInModuleExportsÙ(tryGetMemberInModuleExportsAndProperties´tryFindAmbientModuleÙ(tryFindAmbientModuleWithoutAugmentations¯getApparentType¬getUnionType²isTypeAssignableTo³createAnonymousType¯createSignature¬createSymbol¯createIndexInfoªgetAnyType­getStringType­getNumberType±createPromiseType¯createArrayType¹getElementTypeOfArrayType®getBooleanType¬getFalseType«getTrueType«getVoidType°getUndefinedType«getNullType¯getESSymbolType¬getNeverType¯getOptionalType®getPromiseType²getPromiseLikeType´getAsyncIterableType²isSymbolAccessible«isArrayType«isTupleType¯isArrayLikeTypeÙ#isTypeInvalidDueToUnionDiscriminantºgetExactOptionalProperties¿getAllPossiblePropertiesOfTypesÙ(getSuggestedSymbolForNonexistentPropertyÙ#getSuggestionForNonexistentPropertyÙ,getSuggestedSymbolForNonexistentJSXAttributeÙ&getSuggestedSymbolForNonexistentSymbolÙ!getSuggestionForNonexistentSymbolÙ&getSuggestedSymbolForNonexistentModuleÙ!getSuggestionForNonexistentExportÙ+getSuggestedSymbolForNonexistentClassMember·getBaseConstraintOfType»getDefaultFromTypeParameter«resolveName¯getJsxNamespaceµgetJsxFragmentFactory¸getAccessibleSymbolChain»getTypePredicateOfSignature¹resolveExternalModuleName»resolveExternalModuleSymbol°tryGetThisTypeAt¹getTypeArgumentConstraint¸getSuggestionDiagnostics¸runWithCancellationTokenÙ3getLocalTypeParametersOfClassOrInterfaceOrTypeAlias´isDeclarationVisible´isPropertyAccessible»getTypeOnlyAliasDeclaration¿getMemberOverrideModifierStatusÙ!isTypeParameterPossiblyReferenced²getConstEnumRelate´clearConstEnumRelateµdeleteConstEnumRelateÙ$getTypeArgumentsForResolvedSignatureµgetCheckedSourceFilesÙ"collectHaveTsNoCheckFilesForLinter·clearQualifiedNameCache®isStaticRecord²isStaticSourceFileÔ  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  ÃÃÚ _/*
+ * Copyright (c) 2023 Huawei Device Co., Ltd.
+ * Licensed under the Apache License,Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import { GoodsListItemType, getRefreshedGoodsByCategory, CATEGORIES } from './InitialData';
+import { searchGoodsByKeyword } from './SearchUtils';
+import { MAX_DATA_LENGTH, MAGNIFICATION } from '../common/CommonConstants';
+
+/**
+ * Listæ•°æ®æºç±»ï¼Œç”¨äºLazyForEachæ‡’åŠ è½½
+ */
+export class ListDataSource implements IDataSource {
+  private listeners: DataChangeListener[] = [];
+  private dataArray: GoodsListItemType[] = [];
+  private currentIndex: number = 0;
+  private category: string = CATEGORIES.SELECTED;
+
+  constructor(category: string = CATEGORIES.SELECTED) {
+    this.category = category;
+    // åˆå§‹åŒ–æ•°æ®
+    this.dataArray = getRefreshedGoodsByCategory(category);
+    this.currentIndex = this.dataArray.length;
+  }
+
+  totalCount(): number {
+    return MAX_DATA_LENGTH;
+  }
+
+  getData(index: number): GoodsListItemType {
+    // å¦‚æœç´¢å¼•è¶…å‡ºå½“å‰æ•°æ®èŒƒå›´ï¼Œé¢„åŠ è½½æ›´å¤šæ•°æ®
+    if (index >= this.dataArray.length - 6 && this.dataArray.length < MAX_DATA_LENGTH) {
+      this.pushData();
+    }
+
+    // å¦‚æœç´¢å¼•æœ‰æ•ˆï¼Œè¿”å›æ•°æ®ï¼Œå¦åˆ™è¿”å›æœ€åä¸€ä¸ªæ•°æ®
+    return index < this.dataArray.length ? this.dataArray[index] : this.dataArray[this.dataArray.length - 1];
+  }
+
+  registerDataChangeListener(listener: DataChangeListener): void {
+    this.listeners.push(listener);
+  }
+
+  unregisterDataChangeListener(listener: DataChangeListener): void {
+    const index = this.listeners.indexOf(listener);
+    if (index >= 0) {
+      this.listeners.splice(index, 1);
+    }
+  }
+
+  /**
+   * æ¨é€æ›´å¤šæ•°æ®ï¼ˆåŠ è½½æ›´å¤šï¼‰
+   */
+  pushData(): void {
+    // æ¨¡æ‹Ÿç½‘ç»œå»¶è¿Ÿ
+    setTimeout(() => {
+      const newData: GoodsListItemType[] = [];
+      const startId = this.currentIndex + 1;
+
+      // æ¯æ¬¡åŠ è½½10ä¸ªæ–°å•†å“
+      for (let i = 0; i < 10 && this.dataArray.length < MAX_DATA_LENGTH; i++) {
+        const id = startId + i;
+        const imageIndex = id % 4; // 0-3ï¼Œåˆšå¥½åŒ¹é…æ¯ä¸ªåˆ†ç±»çš„4å¼ å›¾ç‰‡
+        let goodsName: string = $r('app.string.goodsName').toString();
+        let price: ResourceStr = getPriceByIndex(id);
+
+        // æ ¹æ®å½“å‰åˆ†ç±»ï¼ŒåŒ¹é…å¯¹åº”åˆ†ç±»çš„ã€ä¸“å±å•†å“åç§°+ä¸“å±ä»·æ ¼ã€‘
+        switch (this.category) {
+          case CATEGORIES.MOBILE_PHONE:
+            goodsName = $r(`app.string.goods_name_phone_${imageIndex + 1}`).toString();
+            price = $r(`app.string.goods_price_phone_${imageIndex + 1}`);
+            break;
+          case CATEGORIES.CLOTHES:
+            goodsName = $r(`app.string.goods_name_clothes_${imageIndex + 1}`).toString();
+            price = $r(`app.string.goods_price_clothes_${imageIndex + 1}`);
+            break;
+          case CATEGORIES.WEAR:
+            goodsName = $r(`app.string.goods_name_wear_${imageIndex + 1}`).toString();
+            price = $r(`app.string.goods_price_wear_${imageIndex + 1}`);
+            break;
+          case CATEGORIES.HOME_FURNISHING:
+            goodsName = $r(`app.string.goods_name_home_${imageIndex + 1}`).toString();
+            price = $r(`app.string.goods_price_home_${imageIndex + 1}`);
+            break;
+          default:
+          // é»˜è®¤åˆ†ç±»ç”¨åŸæ¥çš„é€šç”¨åç§°
+            goodsName = (id % 2 === 0 ? $r('app.string.goodsName') : $r('app.string.another_goodsName')).toString();
+            break;
+        }
+
+
+
+        newData.push({
+          id: id,
+          goodsName: goodsName,
+          price: price,
+          goodsImg: getImageByCategoryAndIndex(this.category, imageIndex), // ç”¨åˆ†ç±»ä¸“å±å›¾ç‰‡
+          advertisingLanguage: $r('app.string.advertising_language'),
+          evaluate: $r('app.string.evaluate'),
+          category: this.category
+        });
+      }
+
+      if (newData.length > 0) {
+        const startIndex = this.dataArray.length;
+        this.dataArray.push(...newData);
+        this.currentIndex += newData.length;
+
+        // é€šçŸ¥æ•°æ®å˜åŒ–
+        this.listeners.forEach(listener => {
+          listener.onDataAdd?.(startIndex);
+          listener.onDataReloaded?.();
+        });
+      }
+    }, 500);
+  }
+
+  /**
+   * åˆ·æ–°æ•°æ®
+   */
+  refreshData(): void {
+    // æ¨¡æ‹Ÿç½‘ç»œå»¶è¿Ÿ
+    setTimeout(() => {
+      this.dataArray = getRefreshedGoodsByCategory(this.category);
+      this.currentIndex = this.dataArray.length;
+
+      // é€šçŸ¥æ•°æ®åˆ·æ–°
+      this.listeners.forEach(listener => {
+        listener.onDataReloaded?.();
+      });
+    }, 1000);
+  }
+
+  /**
+   * è®¾ç½®åˆ†ç±»
+   */
+  setCategory(category: string): void {
+    if (this.category !== category) {
+      this.category = category;
+      this.dataArray = getRefreshedGoodsByCategory(category);
+      this.currentIndex = this.dataArray.length;
+
+      // é€šçŸ¥æ•°æ®åˆ·æ–°
+      this.listeners.forEach(listener => {
+        listener.onDataReloaded?.();
+      });
+    }
+  }
+
+  /**
+   * æœç´¢å•†å“
+   */
+  searchGoods(keyword: string): void {
+    if (keyword.trim() === '') {
+      // å¦‚æœæœç´¢å…³é”®è¯ä¸ºç©ºï¼Œæ˜¾ç¤ºå½“å‰åˆ†ç±»çš„æ‰€æœ‰å•†å“
+      this.dataArray = getRefreshedGoodsByCategory(this.category);
+    } else {
+      // æ ¹æ®å…³é”®è¯æœç´¢å•†å“
+      this.dataArray = searchGoodsByKeyword(this.category, keyword.trim());
+    }
+    this.currentIndex = this.dataArray.length;
+
+    // é€šçŸ¥æ•°æ®åˆ·æ–°
+    this.listeners.forEach(listener => {
+      listener.onDataReloaded?.();
+    });
+  }
+}
+
+// æ ¹æ®ç´¢å¼•è·å–ä»·æ ¼
+function getPriceByIndex(index: number): ResourceStr {
+  const prices = [
+    $r('app.string.price_199'),
+    $r('app.string.price_265'),
+    $r('app.string.price_810'),
+    $r('app.string.price_999')
+  ];
+  return prices[index % 4];
+}
+
+// æ ¹æ®è·å–å›¾ç‰‡
+function getImageByCategoryAndIndex(category: string, index: number): Resource {
+  const imageIndex = (index % 4) + 1;
+
+  switch (category) {
+    case CATEGORIES.SELECTED:
+      return getSelectedImage(imageIndex);
+    case CATEGORIES.MOBILE_PHONE:
+      return getPhoneImage(imageIndex);
+    case CATEGORIES.CLOTHES:
+      return getClothesImage(imageIndex);
+    case CATEGORIES.WEAR:
+      return getWearImage(imageIndex);
+    case CATEGORIES.HOME_FURNISHING:
+      return getHomeImage(imageIndex);
+    default:
+      return $r('app.media.goodsImg');
+  }
+}
+
+// å®šä¹‰æ¯ä¸ªåˆ†ç±»çš„å›¾ç‰‡è·å–å‡½æ•°
+function getSelectedImage(index: number): Resource {
+  switch (index) {
+    case 1: return $r('app.media.goodsImg');
+    case 2: return $r('app.media.goodsImg_2');
+    case 3: return $r('app.media.goodsImg_3');
+    case 4: return $r('app.media.goodsImg_4');
+    default: return $r('app.media.goodsImg');
+  }
+}
+
+function getPhoneImage(index: number): Resource {
+  switch (index) {
+    case 1: return $r('app.media.phone1');
+    case 2: return $r('app.media.phone2');
+    case 3: return $r('app.media.phone3');
+    case 4: return $r('app.media.phone4');
+    default: return $r('app.media.phone1');
+  }
+}
+function getClothesImage(index: number): Resource {
+  switch (index) {
+    case 1: return $r('app.media.clothes1');
+    case 2: return $r('app.media.clothes2');
+    case 3: return $r('app.media.clothes3');
+    case 4: return $r('app.media.clothes4');
+    default: return $r('app.media.clothes1');
+  }
+}
+function getWearImage(index: number): Resource {
+  switch (index) {
+    case 1: return $r('app.media.wear1');
+    case 2: return $r('app.media.wear2');
+    case 3: return $r('app.media.wear3');
+    case 4: return $r('app.media.wear4');
+    default: return $r('app.media.wear1');
+  }
+}
+function getHomeImage(index: number): Resource {
+  switch (index) {
+    case 1: return $r('app.media.home1');
+    case 2: return $r('app.media.home2');
+    case 3: return $r('app.media.home3');
+    case 4: return $r('app.media.home4');
+    default: return $r('app.media.home1');
+  }
+}
+
+ÀÔrE“­./InitialData­./SearchUtils¹../common/CommonConstantsÔrF—ªassertions¨external¢id¤meta±moduleSideEffectsªresolvedByµsyntheticNamedExportsAÂÙZC:\Users\24505\Documents\GitHub\Yigofang_Mall\entry\src\main\ets\viewmodel\InitialData.etsAÃªoh-resolveÂFAÂÙZC:\Users\24505\Documents\GitHub\Yigofang_Mall\entry\src\main\ets\viewmodel\SearchUtils.etsAÃªoh-resolveÂFAÂÙ[C:\Users\24505\Documents\GitHub\Yigofang_Mall\entry\src\main\ets\common\CommonConstants.etsAÃªoh-resolveÂ“ÔrG–§version¤fileªsourceRoot§sources¥names¨mappings±ListDataSource.js ‘²ListDataSource.etsÜ ç‘”    ‘” š”   ” ”	 ”$ 7”& 9”0 ÌC”2 ÌE”8 ÌK”ÌG ÌZ”ÌH Ì[˜”   ” ”	 	” ” ”% %”4 4”5 5˜”   ” ”	 	” ” )”  /”; ÌJ”< ÌK‘”   ‘” ””   ” ” ” –” ” ” !”% +”& ,”. 4•” 
+” ” ,” .” /•” 
+” ” +” -” .•” 
+” ” !” "” #—” 
+” ” ”" '”# (”+ 0”, 1—” ” ” 	” ” ”  ”! ’” ” š” ” ” 	” ” ”4 0”5 1”= 9”> :”? ;›”  ”  ”  	”  ”  ”   ”!  ”*  &”+  '”1  -”2  .’” !” !’” #” #”” $” $” $” $’” %” %”” '” '	” '
+” '’” (” (Ü ” )” )” )” )” )” )”# )”$ ) ”* )&”- ))”. )*”2 ).”6 )2”7 )3”Ì@ )<”ÌA )=”ÌG )ÌC”ÌJ )ÌF”ÌY )ÌU”Ì[ )ÌW–” *” *
+” *” *” *” *‘”	 +’” -”! -Ü "” .” .” .” .” .” .”% .!”& ."”, .(”- .)”. .*”/ .+”3 ./”4 .0”= .9”> .:”ÌC .?”ÌD .Ì@”ÌE .ÌA”ÌF .ÌB”ÌG .ÌC”ÌK .ÌG”ÌL .ÌH”ÌU .ÌQ”ÌV .ÌR”ÌZ .ÌV”Ì[ .ÌW”Ìd .Ì`”Ìe .Ìa”Ìk .Ìg”Ìn .Ìj”Ìo .Ìk”Ìp .Ìl”Ìq .Ìm’” /” /”” 1” 1” 1”' 19š” 2” 2” 2	” 2” 2” 2” 2”$ 2 ”% 2!”& 2"’” 3” 3”” 5”  5”! 5”) 5;” 6” 6
+” 6” 6” 6” 6”$ 6 ”% 6!”, 6(”- 6)”5 61”6 62”7 63–” 7” 7” 7” 7” 7” 7œ” 8” 8
+” 8” 8” 8”! 8”" 8”' 8!”) 8#”* 8$”+ 8%”, 8&‘”	 9’” :” :‘” <‘” >’” ?” ?
+’” Ì@” Ì@•” ÌA” ÌA” ÌA” ÌA” ÌA–” ÌB” ÌB” ÌB” ÌB+” ÌB-” ÌB.š” ÌC” ÌC” ÌC” ÌC”  ÌC”! ÌC”- ÌC'”0 ÌC*”1 ÌC+”2 ÌC,’” ÌE” ÌEÜ ” ÌF” ÌF” ÌF” ÌF” ÌF” ÌF” ÌF” ÌF”  ÌF”" ÌF”& ÌF ”* ÌF$”+ ÌF%”4 ÌF.”5 ÌF/”; ÌF5”> ÌF8”ÌM ÌFÌG”ÌO ÌFÌI”ÌP ÌFÌJ”ÌR ÌFÌL”ÌT ÌFÌN˜” ÌG” ÌG” ÌG” ÌG”" ÌG”% ÌG”& ÌG”' ÌGš” ÌH” ÌH”  ÌH”# ÌH”% ÌH”( ÌH ”) ÌH!”* ÌH"”+ ÌH#”? ÌH7˜” ÌI” ÌI” ÌI”  ÌI ”Ì ÌI;”Ì— ÌIÌC”Ì™ ÌIÌE”Ìš ÌIÌF™” ÌJ” ÌJ” ÌJ” ÌJ!”+ ÌJ0”, ÌJ1”. ÌJ3”/ ÌJ4”0 ÌJ5’” ÌL”. ÌL&–” ÌM” ÌM” ÌM” ÌM”% ÌM”' ÌM•” ÌN
+” ÌN”# ÌN”$ ÌN”0 ÌN&” ÌO”! ÌO”$ ÌO”ÌE ÌO”Ìd ÌO:”Ìn ÌOÌD”Ìq ÌOÌG”Ìr ÌOÌH”Ìt ÌOÌJ”Ì¹ ÌOÌL”ÌÁ ÌOÌT”ÌÃ ÌOÌV”ÌÄ ÌOÌWš” ÌP” ÌP”ÌA ÌP”Ìa ÌP7”Ìk ÌPÌA”Ìn ÌPÌD”Ìo ÌPÌE”Ìq ÌPÌG”Ìµ ÌPÌH”Ì¶ ÌPÌI’” ÌQ” ÌQ•” ÌR
+” ÌR”# ÌR”$ ÌR”+ ÌR!” ÌS”! ÌS”$ ÌS”ÌE ÌS”Ìf ÌS<”Ìp ÌSÌF”Ìs ÌSÌI”Ìt ÌSÌJ”Ìv ÌSÌL”Ì» ÌSÌN”ÌÃ ÌSÌV”ÌÅ ÌSÌX”ÌÆ ÌSÌYš” ÌT” ÌT”ÌA ÌT”Ìc ÌT9”Ìm ÌTÌC”Ìp ÌTÌF”Ìq ÌTÌG”Ìs ÌTÌI”Ì· ÌTÌJ”Ì¸ ÌTÌK’” ÌU” ÌU•” ÌV
+” ÌV”# ÌV”$ ÌV”( ÌV” ÌW”! ÌW”$ ÌW”ÌE ÌW”Ìc ÌW9”Ìm ÌWÌC”Ìp ÌWÌF”Ìq ÌWÌG”Ìs ÌWÌI”Ì¸ ÌWÌK”ÌÀ ÌWÌS”ÌÂ ÌWÌU”ÌÃ ÌWÌVš” ÌX” ÌX”ÌA ÌX”Ì` ÌX6”Ìj ÌXÌ@”Ìm ÌXÌC”Ìn ÌXÌD”Ìp ÌXÌF”Ì´ ÌXÌG”Ìµ ÌXÌH’” ÌY” ÌY•” ÌZ
+” ÌZ”# ÌZ”$ ÌZ”3 ÌZ)” Ì[”! Ì[”$ Ì[”ÌE Ì[”Ìc Ì[9”Ìm Ì[ÌC”Ìp Ì[ÌF”Ìq Ì[ÌG”Ìs Ì[ÌI”Ì¸ Ì[ÌK”ÌÀ Ì[ÌS”ÌÂ Ì[ÌU”ÌÃ Ì[ÌVš” Ì\” Ì\”ÌA Ì\”Ì` Ì\6”Ìj Ì\Ì@”Ìm Ì\ÌC”Ìn Ì\ÌD”Ìp Ì\ÌF”Ì´ Ì\ÌG”Ìµ Ì\ÌH’” Ì]” Ì]‘” Ì^
+’” Ì_
+”' Ì_Ü ” Ì`”! Ì`”$ Ì`”% Ì`”' Ì`”* Ì`”+ Ì`”0 Ì`$”1 Ì`%”2 Ì`&”3 Ì`'”Ì£ Ì`ÌC”Ì¤ Ì`ÌD”Í Ì`Ìg”Í Ì`Ìh”Í Ì`Ìi”Í Ì`Ìq”Í Ì`Ìs”Í  Ì`Ìt’” Ìa” Ìa‘” Ìb	•” Ìf” Ìf” Ìf” Ìf” Ìf”” Ìg
+” Ìg” Ìg” Ìg”” Ìh
+” Ìh” Ìh”( Ìh”” Ìi
+” Ìi” Ìi”  Ìi›” Ìj
+” Ìj” Ìj”8 Ìj.”9 Ìj/”= Ìj3”> Ìj4”ÌF Ìj<”ÌH Ìj>”ÌR ÌjÌH”ÌS ÌjÌI“” Ìk
+”' Ìk”Ì— ÌkÌD“” Ìl
+” Ìl”ÌŒ Ìl-–” Ìm
+” Ìm” Ìm”" Ìm”# Ìm”+ Ìm!“” Ìn	” Ìn
+” Ìn‘” Ìo˜” Ìq” Ìq
+” Ìq” Ìq” Ìq”! Ìq”" Ìq”$ Ìqš” Ìr” Ìr”  Ìr”# Ìr”' Ìr”( Ìr ”1 Ìr)”2 Ìr*”8 Ìr0”9 Ìr1›” Ìs” Ìs” Ìs” Ìs” Ìs”# Ìs”$ Ìs”' Ìs”. Ìs&”/ Ìs'”0 Ìs(™” Ìt” Ìt” Ìt”! Ìt”% Ìt”, Ìt$”- Ìt%”3 Ìt+”4 Ìt,’” Ìv” Ìvš” Ìw” Ìw” Ìw” Ìw” Ìw”& Ìw”' Ìw”/ Ìw'”0 Ìw(”2 Ìw*™” Ìx
+” Ìx” Ìx”& Ìx”( Ìx”) Ìx”3 Ìx)”4 Ìx*”5 Ìx+—” Ìy
+” Ìy” Ìy”+ Ìy!”- Ìy#”/ Ìy%”0 Ìy&”” Ìz” Ìz	” Ìz
+” Ìz‘” Ì{–” Ì|”	 Ì|” Ì|” Ì|
+” Ì|” Ì|’” Ì}” Ì}‘” Ì‘” Ì’” Ì‚” Ì‚’” Ìƒ” Ìƒ•” Ì„” Ì„” Ì„” Ì„” Ì„œ” Ì…” Ì…
+” Ì…” Ì…” Ì…”8 Ì…2”9 Ì…3”= Ì…7”> Ì…8”ÌF Ì…Ì@”ÌG Ì…ÌA”ÌH Ì…ÌB›” Ì†” Ì†
+” Ì†” Ì†”  Ì†”$ Ì†”% Ì†”. Ì†(”/ Ì†)”5 Ì†/”6 Ì†0’” Ìˆ” Ìˆš” Ì‰” Ì‰
+” Ì‰” Ì‰” Ì‰”" Ì‰”# Ì‰”+ Ì‰%”, Ì‰&”. Ì‰(—” ÌŠ” ÌŠ” ÌŠ”' ÌŠ”) ÌŠ!”+ ÌŠ#”, ÌŠ$”” Ì‹” Ì‹” Ì‹” Ì‹	–” ÌŒ”	 ÌŒ” ÌŒ” ÌŒ” ÌŒ” ÌŒ’” Ì” Ì‘” Ì‘” Ì‘”” Ì’” Ì’” Ì’” Ì’˜” Ì“” Ì“” Ì“” Ì“” Ì“” Ì“”& Ì“"”( Ì“$—” Ì”” Ì”
+” Ì”” Ì”” Ì””$ Ì””% Ì”š” Ì•” Ì•
+” Ì•” Ì•” Ì•”8 Ì•2”9 Ì•3”ÌA Ì•;”ÌB Ì•<”ÌC Ì•=›” Ì–” Ì–
+” Ì–” Ì–”  Ì–”$ Ì–”% Ì–”. Ì–(”/ Ì–)”5 Ì–/”6 Ì–0’” Ì˜” Ì˜š” Ì™” Ì™
+” Ì™” Ì™” Ì™”" Ì™”# Ì™”+ Ì™%”, Ì™&”. Ì™(—” Ìš” Ìš” Ìš”' Ìš”) Ìš!”+ Ìš#”, Ìš$”” Ì›” Ì›” Ì›” Ì›	‘”	 Ìœ’” Ì” Ì‘” ÌŸ‘” Ì¡”” Ì¢” Ì¢” Ì¢” Ì¢™” Ì£” Ì£” Ì£” Ì£” Ì£” Ì£” Ì£”! Ì£”# Ì£’” Ì¤”$ Ì¤œ” Ì¥” Ì¥
+” Ì¥” Ì¥” Ì¥”8 Ì¥2”9 Ì¥3”= Ì¥7”> Ì¥8”ÌF Ì¥Ì@”ÌG Ì¥ÌA”ÌH Ì¥ÌB‘”	 Ì¦‘” Ì¦’” Ì§” Ì§Ü ” Ì¨” Ì¨
+” Ì¨” Ì¨” Ì¨”1 Ì¨+”2 Ì¨,”6 Ì¨0”7 Ì¨1”? Ì¨9”ÌA Ì¨;”ÌH Ì¨ÌB”ÌI Ì¨ÌC”ÌM Ì¨ÌG”ÌO Ì¨ÌI”ÌP Ì¨ÌJ”ÌQ Ì¨ÌK‘”	 Ì©›” Ìª” Ìª” Ìª	” Ìª” Ìª”  Ìª”! Ìª”* Ìª&”+ Ìª'”1 Ìª-”2 Ìª.’” Ì¬” Ì¬š” Ì­” Ì­” Ì­	” Ì­” Ì­” Ì­” Ì­”' Ì­#”( Ì­$”* Ì­&—” Ì®” Ì®” Ì®”# Ì®”% Ì®”' Ì®!”( Ì®"”” Ì¯”	 Ì¯”
+ Ì¯” Ì¯’” Ì°” Ì°‘” Ì±’”  Ì³ ” Ì³•”  Ì´ ”	 Ì´	” Ì´” Ì´” Ì´&”” Ìµ”
+ Ìµ” Ìµ” Ìµ’” Ìº” Ìº™” Ì»” Ì»	” Ì»” Ì»” Ì»” Ì»” Ì»” Ì»” Ì»’”  Ì¼ ” Ì¼’”  Ì¾ ”	 Ì¾	—”  Ì¿ ”	 Ì¿	”# Ì¿#”$ Ì¿$”, Ì¿4”. Ì¿6”3 Ì¿ÌCœ” ÌÀ”
+ ÌÀ” ÌÀ” ÌÀ” ÌÀ” ÌÀ”  ÌÀ”! ÌÀ”" ÌÀ ”% ÌÀ#”& ÌÀ$”' ÌÀ%”” ÌÂ” ÌÂ
+” ÌÂ” ÌÂ•” ÌÃ” ÌÃ	” ÌÃ” ÌÃ”  ÌÃ—” ÌÄ” ÌÄ”# ÌÄ”$ ÌÄ”. ÌÄ(”/ ÌÄ)”0 ÌÄ*•” ÌÅ” ÌÅ	” ÌÅ” ÌÅ”$ ÌÅ —” ÌÆ” ÌÆ”  ÌÆ”! ÌÆ”+ ÌÆ%”, ÌÆ&”- ÌÆ'•” ÌÇ” ÌÇ	” ÌÇ” ÌÇ” ÌÇ—” ÌÈ” ÌÈ”" ÌÈ”# ÌÈ”- ÌÈ'”. ÌÈ(”/ ÌÈ)•” ÌÉ” ÌÉ	” ÌÉ” ÌÉ” ÌÉ—” ÌÊ” ÌÊ” ÌÊ”  ÌÊ”* ÌÊ$”+ ÌÊ%”, ÌÊ&•” ÌË” ÌË	” ÌË” ÌË”' ÌË#—” ÌÌ” ÌÌ” ÌÌ”  ÌÌ”* ÌÌ$”+ ÌÌ%”, ÌÌ&‘” ÌÍ’” ÌÎ”Ì‚ ÌÎ&‘” ÌÏ’”  ÌĞ ” ÌĞ’”  ÌÒ ” ÌÒ•”  ÌÓ ”	 ÌÓ	” ÌÓ” ÌÓ” ÌÓ'”” ÌÔ” ÌÔ
+” ÌÔ” ÌÔ–” ÌÕ” ÌÕ	” ÌÕ
+” ÌÕ” ÌÕ”Ì† ÌÕ,–” ÌÖ” ÌÖ	” ÌÖ
+” ÌÖ” ÌÖ”Ì† ÌÖ.–” Ì×” Ì×	” Ì×
+” Ì×” Ì×”Ì† Ì×.–” ÌØ” ÌØ	” ÌØ
+” ÌØ” ÌØ”Ì† ÌØ.•” ÌÙ” ÌÙ” ÌÙ” ÌÙ”Ì‡ ÌÙ-‘” ÌÚ’”  ÌÛ ” ÌÛ•”  Ìİ ”	 Ìİ	” Ìİ” Ìİ” Ìİ$”” ÌŞ” ÌŞ
+” ÌŞ” ÌŞ–” Ìß” Ìß	” Ìß
+” Ìß” Ìß”Ì† Ìß*–” Ìà” Ìà	” Ìà
+” Ìà” Ìà”Ì† Ìà*–” Ìá” Ìá	” Ìá
+” Ìá” Ìá”Ì† Ìá*–” Ìâ” Ìâ	” Ìâ
+” Ìâ” Ìâ”Ì† Ìâ*•” Ìã” Ìã” Ìã” Ìã”Ì‡ Ìã+‘” Ìä’”  Ìå ” Ìå•”  Ìæ ”	 Ìæ	” Ìæ” Ìæ” Ìæ&”” Ìç” Ìç
+” Ìç” Ìç–” Ìè” Ìè	” Ìè
+” Ìè” Ìè”Ì† Ìè,–” Ìé” Ìé	” Ìé
+” Ìé” Ìé”Ì† Ìé,–” Ìê” Ìê	” Ìê
+” Ìê” Ìê”Ì† Ìê,–” Ìë” Ìë	” Ìë
+” Ìë” Ìë”Ì† Ìë,•” Ìì” Ìì” Ìì” Ìì”Ì‡ Ìì-‘” Ìí’”  Ìî ” Ìî•”  Ìï ”	 Ìï	” Ìï” Ìï” Ìï#”” Ìğ” Ìğ
+” Ìğ” Ìğ–” Ìñ” Ìñ	” Ìñ
+” Ìñ” Ìñ”Ì† Ìñ)–” Ìò” Ìò	” Ìò
+” Ìò” Ìò”Ì† Ìò)–” Ìó” Ìó	” Ìó
+” Ìó” Ìó”Ì† Ìó)–” Ìô” Ìô	” Ìô
+” Ìô” Ìô”Ì† Ìô)•” Ìõ” Ìõ” Ìõ” Ìõ”Ì‡ Ìõ*‘” Ìö’”  Ì÷ ” Ì÷•”  Ìø ”	 Ìø	” Ìø” Ìø” Ìø#”” Ìù” Ìù
+” Ìù” Ìù–” Ìú” Ìú	” Ìú
+” Ìú” Ìú”Ì† Ìú)–” Ìû” Ìû	” Ìû
+” Ìû” Ìû”Ì† Ìû)–” Ìü” Ìü	” Ìü
+” Ìü” Ìü”Ì† Ìü)–” Ìı” Ìı	” Ìı
+” Ìı” Ìı”Ì† Ìı)•” Ìş” Ìş” Ìş” Ìş”Ì‡ Ìş*‘” Ìÿ’”  Í  ” Í ÔrH–§version¤file§sources®sourcesContent¥names¨mappingsÀ‘À‘ÀÜ è‘”    ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”  	 ‘”  
+ ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”    ‘”  ! ‘”  " ‘”  # ‘”  $ ‘”  % ‘”  & ‘”  ' ‘”  ( ‘”  ) ‘”  * ‘”  + ‘”  , ‘”  - ‘”  . ‘”  / ‘”  0 ‘”  1 ‘”  2 ‘”  3 ‘”  4 ‘”  5 ‘”  6 ‘”  7 ‘”  8 ‘”  9 ‘”  : ‘”  ; ‘”  < ‘”  = ‘”  > ‘”  ? ‘”  Ì@ ‘”  ÌA ‘”  ÌB ‘”  ÌC ‘”  ÌD ‘”  ÌE ‘”  ÌF ‘”  ÌG ‘”  ÌH ‘”  ÌI ‘”  ÌJ ‘”  ÌK ‘”  ÌL ‘”  ÌM ‘”  ÌN ‘”  ÌO ‘”  ÌP ‘”  ÌQ ‘”  ÌR ‘”  ÌS ‘”  ÌT ‘”  ÌU ‘”  ÌV ‘”  ÌW ‘”  ÌX ‘”  ÌY ‘”  ÌZ ‘”  Ì[ ‘”  Ì\ ‘”  Ì] ‘”  Ì^ ‘”  Ì_ ‘”  Ì` ‘”  Ìa ‘”  Ìb ‘”  Ìc ‘”  Ìd ‘”  Ìe ‘”  Ìf ‘”  Ìg ‘”  Ìh ‘”  Ìi ‘”  Ìj ‘”  Ìk ‘”  Ìl ‘”  Ìm ‘”  Ìn ‘”  Ìo ‘”  Ìp ‘”  Ìq ‘”  Ìr ‘”  Ìs ‘”  Ìt ‘”  Ìu ‘”  Ìv ‘”  Ìw ‘”  Ìx ‘”  Ìy ‘”  Ìz ‘”  Ì{ ‘”  Ì| ‘”  Ì} ‘”  Ì~ ‘”  Ì ‘”  Ì€ ‘”  Ì ‘”  Ì‚ ‘”  Ìƒ ‘”  Ì„ ‘”  Ì… ‘”  Ì† ‘”  Ì‡ ‘”  Ìˆ ‘”  Ì‰ ‘”  ÌŠ ‘”  Ì‹ ‘”  ÌŒ ‘”  Ì ‘”  Ì ‘”  Ì ‘”  Ì ‘”  Ì‘ ‘”  Ì’ ‘”  Ì“ ‘”  Ì” ‘”  Ì• ‘”  Ì– ‘”  Ì— ‘”  Ì˜ ‘”  Ì™ ‘”  Ìš ‘”  Ì› ‘”  Ìœ ‘”  Ì ‘”  Ì ‘”  ÌŸ ‘”  Ì  ‘”  Ì¡ ‘”  Ì¢ ‘”  Ì£ ‘”  Ì¤ ‘”  Ì¥ ‘”  Ì¦ ‘”  Ì§ ‘”  Ì¨ ‘”  Ì© ‘”  Ìª ‘”  Ì« ‘”  Ì¬ ‘”  Ì­ ‘”  Ì® ‘”  Ì¯ ‘”  Ì° ‘”  Ì± ‘”  Ì² ‘”  Ì³ ‘”  Ì´ ‘”  Ìµ ‘”  Ì¶ ‘”  Ì· ‘”  Ì¸ ‘”  Ì¹ ‘”  Ìº ‘”  Ì» ‘”  Ì¼ ‘”  Ì½ ‘”  Ì¾ ‘”  Ì¿ ‘”  ÌÀ ‘”  ÌÁ ‘”  ÌÂ ‘”  ÌÃ ‘”  ÌÄ ‘”  ÌÅ ‘”  ÌÆ ‘”  ÌÇ ‘”  ÌÈ ‘”  ÌÉ ‘”  ÌÊ ‘”  ÌË ‘”  ÌÌ ‘”  ÌÍ ‘”  ÌÎ ‘”  ÌÏ ‘”  ÌĞ ‘”  ÌÑ ‘”  ÌÒ ‘”  ÌÓ ‘”  ÌÔ ‘”  ÌÕ ‘”  ÌÖ ‘”  Ì× ‘”  ÌØ ‘”  ÌÙ ‘”  ÌÚ ‘”  ÌÛ ‘”  ÌÜ ‘”  Ìİ ‘”  ÌŞ ‘”  Ìß ‘”  Ìà ‘”  Ìá ‘”  Ìâ ‘”  Ìã ‘”  Ìä ‘”  Ìå ‘”  Ìæ ‘”  Ìç ÔrI’§missing¦pluginÃ¦genAbcÂÔ  ÔrJ”²dynamicImportCache¹exportAllDeclarationCache»exportNamedDeclarationCache«importCache‘ÔrK–¤type¥start£end«declarationªspecifiers¦source¶ExportNamedDeclarationÍPÍˆÔrL–¤type¥start£end¢idªsuperClass¤body°ClassDeclarationÍWÍˆÔrM”¤type¥start£end¤nameªIdentifierÍ]Ík®ListDataSourceÀÔrN”¤type¥start£end¤body©ClassBodyÍlÍˆ™ÔrO˜¤type¥start£end¦static¨computed£key¤kind¥value°MethodDefinitionÍsÍÛÂÂMªIdentifierÍsÍ~«constructor«constructorÔrP™¤type¥start£end¢idªexpression©generator¥async¦params¤body²FunctionExpressionÍ~ÍÛÀÂÂÂ‘ÔrQ•¤type¥start£end¤left¥right±AssignmentPatternÍÍMªIdentifierÍÍ‡¨categoryÔrR—¤type¥start£end¦object¨property¨computed¨optional°MemberExpressionÍŠÍMªIdentifierÍŠÍ”ªCATEGORIESMªIdentifierÍ•Í¨SELECTEDÂÂN®BlockStatementÍŸÍÛ—ÔrS”¤type¥start£endªexpression³ExpressionStatementÍªÍ¾ÔrT–¤type¥start£end¨operator¤left¥right´AssignmentExpressionÍªÍ½¡=R°MemberExpressionÍªÍ¸ÔrU“¤type¥start£end®ThisExpressionÍªÍ®MªIdentifierÍ¯Í¸©listenersÂÂÔrV”¤type¥start£end¨elements¯ArrayExpressionÍ»Í½S³ExpressionStatementÍÈÍÜT´AssignmentExpressionÍÈÍÛ¡=R°MemberExpressionÍÈÍÖU®ThisExpressionÍÈÍÌMªIdentifierÍÍÍÖ©dataArrayÂÂV¯ArrayExpressionÍÙÍÛS³ExpressionStatementÍæÍüT´AssignmentExpressionÍæÍû¡=R°MemberExpressionÍæÍ÷U®ThisExpressionÍæÍêMªIdentifierÍëÍ÷¬currentIndexÂÂÔrW•¤type¥start£end¥value£raw§LiteralÍúÍû ¡0S³ExpressionStatementÍÍ*T´AssignmentExpressionÍÍ)¡=R°MemberExpressionÍÍU®ThisExpressionÍÍ
+MªIdentifierÍÍ¨categoryÂÂR°MemberExpressionÍÍ)MªIdentifierÍÍ ªCATEGORIESMªIdentifierÍ!Í)¨SELECTEDÂÂS³ExpressionStatementÍ4ÍMT´AssignmentExpressionÍ4ÍL¡=R°MemberExpressionÍ4ÍAU®ThisExpressionÍ4Í8MªIdentifierÍ9ÍA¨categoryÂÂMªIdentifierÍDÍL¨categoryS³ExpressionStatementÍiÍ T´AssignmentExpressionÍiÍŸ¡=R°MemberExpressionÍiÍwU®ThisExpressionÍiÍmMªIdentifierÍnÍw©dataArrayÂÂÔrX–¤type¥start£end¦callee©arguments¨optional®CallExpressionÍzÍŸMªIdentifierÍzÍ•»getRefreshedGoodsByCategory‘MªIdentifierÍ–Í¨categoryÂS³ExpressionStatementÍªÍÔT´AssignmentExpressionÍªÍÓ¡=R°MemberExpressionÍªÍ»U®ThisExpressionÍªÍ®MªIdentifierÍ¯Í»¬currentIndexÂÂR°MemberExpressionÍ¾ÍÓR°MemberExpressionÍ¾ÍÌU®ThisExpressionÍ¾ÍÂMªIdentifierÍÃÍÌ©dataArrayÂÂMªIdentifierÍÍÍÓ¦lengthÂÂO°MethodDefinitionÍáÍÂÂMªIdentifierÍáÍëªtotalCount¦methodP²FunctionExpressionÍëÍÀÂÂÂN®BlockStatementÍîÍ‘ÔrY”¤type¥start£end¨argument¯ReturnStatementÍùÍMªIdentifierÍ Í¯MAX_DATA_LENGTHO°MethodDefinitionÍÍrÂÂMªIdentifierÍÍ$§getData¦methodP²FunctionExpressionÍ$ÍrÀÂÂÂ‘MªIdentifierÍ%Í*¥indexN®BlockStatementÍ,Ír’ÔrZ–¤type¥start£end¤testªconsequent©alternate«IfStatementÍXÍÕÔr[–¤type¥start£end¤left¨operator¥right±LogicalExpressionÍ\Í©[°BinaryExpressionÍ\Í~MªIdentifierÍ\Ía¥index¢>=[°BinaryExpressionÍeÍ~R°MemberExpressionÍeÍzR°MemberExpressionÍeÍsU®ThisExpressionÍeÍiMªIdentifierÍjÍs©dataArrayÂÂMªIdentifierÍtÍz¦lengthÂÂ¡-W§LiteralÍ}Í~¡6¢&&[°BinaryExpressionÍ‚Í©R°MemberExpressionÍ‚Í—R°MemberExpressionÍ‚ÍU®ThisExpressionÍ‚Í†MªIdentifierÍ‡Í©dataArrayÂÂMªIdentifierÍ‘Í—¦lengthÂÂ¡<MªIdentifierÍšÍ©¯MAX_DATA_LENGTHN®BlockStatementÍ«ÍÕ‘S³ExpressionStatementÍºÍÊX®CallExpressionÍºÍÉR°MemberExpressionÍºÍÇU®ThisExpressionÍºÍ¾MªIdentifierÍ¿ÍÇ¨pushDataÂÂÂÀY¯ReturnStatementÍÍkZµConditionalExpressionÍ	Íj[°BinaryExpressionÍ	Í&MªIdentifierÍ	Í¥index¡<R°MemberExpressionÍÍ&R°MemberExpressionÍÍU®ThisExpressionÍÍMªIdentifierÍÍ©dataArrayÂÂMªIdentifierÍ Í&¦lengthÂÂR°MemberExpressionÍ)Í>R°MemberExpressionÍ)Í7U®ThisExpressionÍ)Í-MªIdentifierÍ.Í7©dataArrayÂÂMªIdentifierÍ8Í=¥indexÃÂR°MemberExpressionÍAÍjR°MemberExpressionÍAÍOU®ThisExpressionÍAÍEMªIdentifierÍFÍO©dataArrayÂÂ[°BinaryExpressionÍPÍiR°MemberExpressionÍPÍeR°MemberExpressionÍPÍ^U®ThisExpressionÍPÍTMªIdentifierÍUÍ^©dataArrayÂÂMªIdentifierÍ_Íe¦lengthÂÂ¡-W§LiteralÍhÍi¡1ÃÂO°MethodDefinitionÍxÍÍÂÂMªIdentifierÍxÍ’ºregisterDataChangeListener¦methodP²FunctionExpressionÍ’ÍÍÀÂÂÂ‘MªIdentifierÍ“Í›¨listenerN®BlockStatementÍÍÍ‘S³ExpressionStatementÍ¨ÍÆX®CallExpressionÍ¨ÍÅR°MemberExpressionÍ¨Í»R°MemberExpressionÍ¨Í¶U®ThisExpressionÍ¨Í¬MªIdentifierÍ­Í¶©listenersÂÂMªIdentifierÍ·Í»¤pushÂÂ‘MªIdentifierÍ¼ÍÄ¨listenerÂO°MethodDefinitionÍÓÍÂÂMªIdentifierÍÓÍï¼unregisterDataChangeListener¦methodP²FunctionExpressionÍïÍÀÂÂÂ‘MªIdentifierÍğÍø¨listenerN®BlockStatementÍúÍ’Ôr\•¤type¥start£end¬declarations¤kind³VariableDeclarationÍÍ4‘Ôr]•¤type¥start£end¢id¤init²VariableDeclaratorÍÍ3MªIdentifierÍÍ¥indexX®CallExpressionÍÍ3R°MemberExpressionÍÍ)R°MemberExpressionÍÍ!U®ThisExpressionÍÍMªIdentifierÍÍ!©listenersÂÂMªIdentifierÍ"Í)§indexOfÂÂ‘MªIdentifierÍ*Í2¨listenerÂ¥constZ«IfStatementÍ>Íˆ[°BinaryExpressionÍBÍLMªIdentifierÍBÍG¥index¢>=W§LiteralÍKÍL ¡0N®BlockStatementÍNÍˆ‘S³ExpressionStatementÍ]Í}X®CallExpressionÍ]Í|R°MemberExpressionÍ]ÍrR°MemberExpressionÍ]ÍkU®ThisExpressionÍ]ÍaMªIdentifierÍbÍk©listenersÂÂMªIdentifierÍlÍr¦spliceÂÂ’MªIdentifierÍsÍx¥indexW§LiteralÍzÍ{¡1ÂÀO°MethodDefinitionÍ¼ÍBÂÂMªIdentifierÍ¼ÍÄ¨pushData¦methodP²FunctionExpressionÍÄÍBÀÂÂÂN®BlockStatementÍÇÍB‘S³ExpressionStatementÍåÍ;X®CallExpressionÍåÍ:MªIdentifierÍåÍïªsetTimeout’P·ArrowFunctionExpressionÍğÍ4ÀÂÂÂN®BlockStatementÍöÍ4”\³VariableDeclarationÍÍ‘]²VariableDeclaratorÍÍMªIdentifierÍÍ§newDataV¯ArrayExpressionÍÍ¥const\³VariableDeclarationÍ&ÍL‘]²VariableDeclaratorÍ,ÍKMªIdentifierÍ,Í3§startId[°BinaryExpressionÍ6ÍKR°MemberExpressionÍ6ÍGU®ThisExpressionÍ6Í:MªIdentifierÍ;ÍG¬currentIndexÂÂ¡+W§LiteralÍJÍK¡1¥constÔr^—¤type¥start£end¤init¤test¦update¤body¬ForStatementÍuÍ\³VariableDeclarationÍzÍƒ‘]²VariableDeclaratorÍ~ÍƒMªIdentifierÍ~Í¡iW§LiteralÍ‚Íƒ ¡0£let[±LogicalExpressionÍ…Í¶[°BinaryExpressionÍ…Í‹MªIdentifierÍ…Í†¡i¡<W§LiteralÍ‰Í‹
+¢10¢&&[°BinaryExpressionÍÍ¶R°MemberExpressionÍÍ¤R°MemberExpressionÍÍU®ThisExpressionÍÍ“MªIdentifierÍ”Í©dataArrayÂÂMªIdentifierÍÍ¤¦lengthÂÂ¡<MªIdentifierÍ§Í¶¯MAX_DATA_LENGTHÔr_–¤type¥start£end¨operator¦prefix¨argument°UpdateExpressionÍ¸Í»¢++ÂMªIdentifierÍ¸Í¹¡iN®BlockStatementÍ½Í–\³VariableDeclarationÍĞÍç‘]²VariableDeclaratorÍÖÍæMªIdentifierÍÖÍØ¢id[°BinaryExpressionÍÛÍæMªIdentifierÍÛÍâ§startId¡+MªIdentifierÍåÍæ¡i¥const\³VariableDeclarationÍùÍ	‘]²VariableDeclaratorÍÿÍ	MªIdentifierÍÿÍ		ªimageIndex[°BinaryExpressionÍ	Í	MªIdentifierÍ	Í	¢id¡%W§LiteralÍ	Í	¡4¥const\³VariableDeclarationÍ	:Í	Ä‘]²VariableDeclaratorÍ	>Í	ÃMªIdentifierÍ	>Í	G©goodsNameX®CallExpressionÍ	JÍ	ÃR°MemberExpressionÍ	JÍ	ÁÔr`”¤type¥start£endªproperties°ObjectExpressionÍ	JÍ	¸•Ôra™¤type¥start£end¦method©shorthand¨computed£key¥value¤kind¨PropertyÍ	LÍ	ZÂÂÂW§LiteralÍ	LÍ	P¢id¤"id"W§LiteralÍ	RÍ	ZÎ  ¨16777241¤inita¨PropertyÍ	\Í	iÂÂÂW§LiteralÍ	\Í	b¤type¦"type"W§LiteralÍ	dÍ	iÍ'¥10003¤inita¨PropertyÍ	kÍ	uÂÂÂMªIdentifierÍ	kÍ	q¦paramsV¯ArrayExpressionÍ	sÍ	u¤inita¨PropertyÍ	wÍ	ŸÂÂÂW§LiteralÍ	wÍ	ƒªbundleName¬"bundleName"W§LiteralÍ	…Í	Ÿ¸com.example.list_harmonyº"com.example.list_harmony"¤inita¨PropertyÍ	¡Í	¶ÂÂÂW§LiteralÍ	¡Í	­ªmoduleName¬"moduleName"W§LiteralÍ	¯Í	¶¥entry§"entry"¤initMªIdentifierÍ	¹Í	Á¨toStringÂÂÂ£let\³VariableDeclarationÍ	ÖÍ	ö‘]²VariableDeclaratorÍ	ÚÍ	õMªIdentifierÍ	ÚÍ	ß¥priceX®CallExpressionÍ	âÍ	õMªIdentifierÍ	âÍ	ñ¯getPriceByIndex‘MªIdentifierÍ	òÍ	ô¢idÂ£letÔrb•¤type¥start£end¬discriminant¥cases¯SwitchStatementÍ
+8Í&R°MemberExpressionÍ
+@Í
+MU®ThisExpressionÍ
+@Í
+DMªIdentifierÍ
+EÍ
+M¨categoryÂÂ•Ôrc•¤type¥start£endªconsequent¤testªSwitchCaseÍ
+fÍ!“S³ExpressionStatementÍ
+ÍIT´AssignmentExpressionÍ
+ÍH¡=MªIdentifierÍ
+Í
+¦©goodsNameX®CallExpressionÍ
+©ÍHR°MemberExpressionÍ
+©ÍF`°ObjectExpressionÍ
+©Í=•a¨PropertyÍ
+«Í
+³ÂÂÂW§LiteralÍ
+«Í
+¯¢id¤"id"_¯UnaryExpressionÍ
+±Í
+³¡-ÃW§LiteralÍ
+²Í
+³¡1¤inita¨PropertyÍ
+µÍ
+¿ÂÂÂW§LiteralÍ
+µÍ
+»¤type¦"type"_¯UnaryExpressionÍ
+½Í
+¿¡-ÃW§LiteralÍ
+¾Í
+¿¡1¤inita¨PropertyÍ
+ÁÍ
+úÂÂÂMªIdentifierÍ
+ÁÍ
+Ç¦paramsV¯ArrayExpressionÍ
+ÉÍ
+ú‘Ôrd•¤type¥start£end«expressions¦quasis¯TemplateLiteralÍ
+ÊÍ
+ù‘[°BinaryExpressionÍ
+éÍ
+÷MªIdentifierÍ
+éÍ
+óªimageIndex¡+W§LiteralÍ
+öÍ
+÷¡1’Ôre•¤type¥start£end¥value¤tail¯TemplateElementÍ
+ËÍ
+çÔrf’£raw¦cooked¼app.string.goods_name_phone_¼app.string.goods_name_phone_Âe¯TemplateElementÍ
+øÍ
+øf  Ã¤inita¨PropertyÍ
+üÍ$ÂÂÂW§LiteralÍ
+üÍªbundleName¬"bundleName"W§LiteralÍ
+Í$¸com.example.list_harmonyº"com.example.list_harmony"¤inita¨PropertyÍ&Í;ÂÂÂW§LiteralÍ&Í2ªmoduleName¬"moduleName"W§LiteralÍ4Í;¥entry§"entry"¤initMªIdentifierÍ>ÍF¨toStringÂÂÂS³ExpressionStatementÍcÍT´AssignmentExpressionÍcÍ ¡=MªIdentifierÍcÍh¥price`°ObjectExpressionÍkÍ •a¨PropertyÍmÍuÂÂÂW§LiteralÍmÍq¢id¤"id"_¯UnaryExpressionÍsÍu¡-ÃW§LiteralÍtÍu¡1¤inita¨PropertyÍwÍÂÂÂW§LiteralÍwÍ}¤type¦"type"_¯UnaryExpressionÍÍ¡-ÃW§LiteralÍ€Í¡1¤inita¨PropertyÍƒÍ½ÂÂÂMªIdentifierÍƒÍ‰¦paramsV¯ArrayExpressionÍ‹Í½‘d¯TemplateLiteralÍŒÍ¼‘[°BinaryExpressionÍ¬ÍºMªIdentifierÍ¬Í¶ªimageIndex¡+W§LiteralÍ¹Íº¡1’e¯TemplateElementÍÍªf½app.string.goods_price_phone_½app.string.goods_price_phone_Âe¯TemplateElementÍ»Í»f  Ã¤inita¨PropertyÍ¿ÍçÂÂÂW§LiteralÍ¿ÍËªbundleName¬"bundleName"W§LiteralÍÍÍç¸com.example.list_harmonyº"com.example.list_harmony"¤inita¨PropertyÍéÍşÂÂÂW§LiteralÍéÍõªmoduleName¬"moduleName"W§LiteralÍ÷Íş¥entry§"entry"¤initÔrg”¤type¥start£end¥label®BreakStatementÍÍ!ÀR°MemberExpressionÍ
+kÍ
+‚MªIdentifierÍ
+kÍ
+uªCATEGORIESMªIdentifierÍ
+vÍ
+‚¬MOBILE_PHONEÂÂcªSwitchCaseÍ7Íñ“S³ExpressionStatementÍiÍT´AssignmentExpressionÍiÍ¡=MªIdentifierÍiÍr©goodsNameX®CallExpressionÍuÍR°MemberExpressionÍuÍ`°ObjectExpressionÍuÍ•a¨PropertyÍwÍÂÂÂW§LiteralÍwÍ{¢id¤"id"_¯UnaryExpressionÍ}Í¡-ÃW§LiteralÍ~Í¡1¤inita¨PropertyÍÍ‹ÂÂÂW§LiteralÍÍ‡¤type¦"type"_¯UnaryExpressionÍ‰Í‹¡-ÃW§LiteralÍŠÍ‹¡1¤inita¨PropertyÍÍÈÂÂÂMªIdentifierÍÍ“¦paramsV¯ArrayExpressionÍ•ÍÈ‘d¯TemplateLiteralÍ–ÍÇ‘[°BinaryExpressionÍ·ÍÅMªIdentifierÍ·ÍÁªimageIndex¡+W§LiteralÍÄÍÅ¡1’e¯TemplateElementÍ—Íµf¾app.string.goods_name_clothes_¾app.string.goods_name_clothes_Âe¯TemplateElementÍÆÍÆf  Ã¤inita¨PropertyÍÊÍòÂÂÂW§LiteralÍÊÍÖªbundleName¬"bundleName"W§LiteralÍØÍò¸com.example.list_harmonyº"com.example.list_harmony"¤inita¨PropertyÍôÍ	ÂÂÂW§LiteralÍôÍ ªmoduleName¬"moduleName"W§LiteralÍÍ	¥entry§"entry"¤initMªIdentifierÍÍ¨toStringÂÂÂS³ExpressionStatementÍ1ÍÑT´AssignmentExpressionÍ1ÍĞ¡=MªIdentifierÍ1Í6¥price`°ObjectExpressionÍ9ÍĞ•a¨PropertyÍ;ÍCÂÂÂW§LiteralÍ;Í?¢id¤"id"_¯UnaryExpressionÍAÍC¡-ÃW§LiteralÍBÍC¡1¤inita¨PropertyÍEÍOÂÂÂW§LiteralÍEÍK¤type¦"type"_¯UnaryExpressionÍMÍO¡-ÃW§LiteralÍNÍO¡1¤inita¨PropertyÍQÍÂÂÂMªIdentifierÍQÍW¦paramsV¯ArrayExpressionÍYÍ‘d¯TemplateLiteralÍZÍŒ‘[°BinaryExpressionÍ|ÍŠMªIdentifierÍ|Í†ªimageIndex¡+W§LiteralÍ‰ÍŠ¡1’e¯TemplateElementÍ[Ízf¿app.string.goods_price_clothes_¿app.string.goods_price_clothes_Âe¯TemplateElementÍ‹Í‹f  Ã¤inita¨PropertyÍÍ·ÂÂÂW§LiteralÍÍ›ªbundleName¬"bundleName"W§LiteralÍÍ·¸com.example.list_harmonyº"com.example.list_harmony"¤inita¨PropertyÍ¹ÍÎÂÂÂW§LiteralÍ¹ÍÅªmoduleName¬"moduleName"W§LiteralÍÇÍÎ¥entry§"entry"¤initg®BreakStatementÍëÍñÀR°MemberExpressionÍ<ÍNMªIdentifierÍ<ÍFªCATEGORIESMªIdentifierÍGÍN§CLOTHESÂÂcªSwitchCaseÍÍ¸“S³ExpressionStatementÍ6ÍáT´AssignmentExpressionÍ6Íà¡=MªIdentifierÍ6Í?©goodsNameX®CallExpressionÍBÍàR°MemberExpressionÍBÍŞ`°ObjectExpressionÍBÍÕ•a¨PropertyÍDÍLÂÂÂW§LiteralÍDÍH¢id¤"id"_¯UnaryExpressionÍJÍL¡-ÃW§LiteralÍKÍL¡1¤inita¨PropertyÍNÍXÂÂÂW§LiteralÍNÍT¤type¦"type"_¯UnaryExpressionÍVÍX¡-ÃW§LiteralÍWÍX¡1¤inita¨PropertyÍZÍ’ÂÂÂMªIdentifierÍZÍ`¦paramsV¯ArrayExpressionÍbÍ’‘d¯TemplateLiteralÍcÍ‘‘[°BinaryExpressionÍÍMªIdentifierÍÍ‹ªimageIndex¡+W§LiteralÍÍ¡1’e¯TemplateElementÍdÍf»app.string.goods_name_wear_»app.string.goods_name_wear_Âe¯TemplateElementÍÍf  Ã¤inita¨PropertyÍ”Í¼ÂÂÂW§LiteralÍ”Í ªbundleName¬"bundleName"W§LiteralÍ¢Í¼¸com.example.list_harmonyº"com.example.list_harmony"¤inita¨PropertyÍ¾ÍÓÂÂÂW§LiteralÍ¾ÍÊªmoduleName¬"moduleName"W§LiteralÍÌÍÓ¥entry§"entry"¤initMªIdentifierÍÖÍŞ¨toStringÂÂÂS³ExpressionStatementÍûÍ˜T´AssignmentExpressionÍûÍ—¡=MªIdentifierÍûÍ ¥price`°ObjectExpressionÍÍ—•a¨PropertyÍÍÂÂÂW§LiteralÍÍ	¢id¤"id"_¯UnaryExpressionÍÍ¡-ÃW§LiteralÍÍ¡1¤inita¨PropertyÍÍÂÂÂW§LiteralÍÍ¤type¦"type"_¯UnaryExpressionÍÍ¡-ÃW§LiteralÍÍ¡1¤inita¨PropertyÍÍTÂÂÂMªIdentifierÍÍ!¦paramsV¯ArrayExpressionÍ#ÍT‘d¯TemplateLiteralÍ$ÍS‘[°BinaryExpressionÍCÍQMªIdentifierÍCÍMªimageIndex¡+W§LiteralÍPÍQ¡1’e¯TemplateElementÍ%ÍAf¼app.string.goods_price_wear_¼app.string.goods_price_wear_Âe¯TemplateElementÍRÍRf  Ã¤inita¨PropertyÍVÍ~ÂÂÂW§LiteralÍVÍbªbundleName¬"bundleName"W§LiteralÍdÍ~¸com.example.list_harmonyº"com.example.list_harmony"¤inita¨PropertyÍ€Í•ÂÂÂW§LiteralÍ€ÍŒªmoduleName¬"moduleName"W§LiteralÍÍ•¥entry§"entry"¤initg®BreakStatementÍ²Í¸ÀR°MemberExpressionÍÍMªIdentifierÍÍªCATEGORIESMªIdentifierÍÍ¤WEARÂÂcªSwitchCaseÍÎÍŠ“S³ExpressionStatementÍÍ³T´AssignmentExpressionÍÍ²¡=MªIdentifierÍÍ©goodsNameX®CallExpressionÍÍ²R°MemberExpressionÍÍ°`°ObjectExpressionÍÍ§•a¨PropertyÍÍÂÂÂW§LiteralÍÍ¢id¤"id"_¯UnaryExpressionÍÍ¡-ÃW§LiteralÍÍ¡1¤inita¨PropertyÍ Í*ÂÂÂW§LiteralÍ Í&¤type¦"type"_¯UnaryExpressionÍ(Í*¡-ÃW§LiteralÍ)Í*¡1¤inita¨PropertyÍ,ÍdÂÂÂMªIdentifierÍ,Í2¦paramsV¯ArrayExpressionÍ4Íd‘d¯TemplateLiteralÍ5Íc‘[°BinaryExpressionÍSÍaMªIdentifierÍSÍ]ªimageIndex¡+W§LiteralÍ`Ía¡1’e¯TemplateElementÍ6ÍQf»app.string.goods_name_home_»app.string.goods_name_home_Âe¯TemplateElementÍbÍbf  Ã¤inita¨PropertyÍfÍÂÂÂW§LiteralÍfÍrªbundleName¬"bundleName"W§LiteralÍtÍ¸com.example.list_harmonyº"com.example.list_harmony"¤inita¨PropertyÍÍ¥ÂÂÂW§LiteralÍÍœªmoduleName¬"moduleName"W§LiteralÍÍ¥¥entry§"entry"¤initMªIdentifierÍ¨Í°¨toStringÂÂÂS³ExpressionStatementÍÍÍjT´AssignmentExpressionÍÍÍi¡=MªIdentifierÍÍÍÒ¥price`°ObjectExpressionÍÕÍi•a¨PropertyÍ×ÍßÂÂÂW§LiteralÍ×ÍÛ¢id¤"id"_¯UnaryExpressionÍİÍß¡-ÃW§LiteralÍŞÍß¡1¤inita¨PropertyÍáÍëÂÂÂW§LiteralÍáÍç¤type¦"type"_¯UnaryExpressionÍéÍë¡-ÃW§LiteralÍêÍë¡1¤inita¨PropertyÍíÍ&ÂÂÂMªIdentifierÍíÍó¦paramsV¯ArrayExpressionÍõÍ&‘d¯TemplateLiteralÍöÍ%‘[°BinaryExpressionÍÍ#MªIdentifierÍÍªimageIndex¡+W§LiteralÍ"Í#¡1’e¯TemplateElementÍ÷Íf¼app.string.goods_price_home_¼app.string.goods_price_home_Âe¯TemplateElementÍ$Í$f  Ã¤inita¨PropertyÍ(ÍPÂÂÂW§LiteralÍ(Í4ªbundleName¬"bundleName"W§LiteralÍ6ÍP¸com.example.list_harmonyº"com.example.list_harmony"¤inita¨PropertyÍRÍgÂÂÂW§LiteralÍRÍ^ªmoduleName¬"moduleName"W§LiteralÍ`Íg¥entry§"entry"¤initg®BreakStatementÍ„ÍŠÀR°MemberExpressionÍÓÍíMªIdentifierÍÓÍİªCATEGORIESMªIdentifierÍŞÍí¯HOME_FURNISHINGÂÂcªSwitchCaseÍ Í’S³ExpressionStatementÍëÍóT´AssignmentExpressionÍëÍò¡=MªIdentifierÍëÍô©goodsNameX®CallExpressionÍ÷ÍòR°MemberExpressionÍ÷ÍğZµConditionalExpressionÍøÍæ[°BinaryExpressionÍøÍ[°BinaryExpressionÍøÍşMªIdentifierÍøÍú¢id¡%W§LiteralÍıÍş¡2£===W§LiteralÍÍ ¡0`°ObjectExpressionÍÍu•a¨PropertyÍ	ÍÂÂÂW§LiteralÍ	Í¢id¤"id"W§LiteralÍÍÎ  ¨16777241¤inita¨PropertyÍÍ&ÂÂÂW§LiteralÍÍ¤type¦"type"W§LiteralÍ!Í&Í'¥10003¤inita¨PropertyÍ(Í2ÂÂÂMªIdentifierÍ(Í.¦paramsV¯ArrayExpressionÍ0Í2¤inita¨PropertyÍ4Í\ÂÂÂW§LiteralÍ4Í@ªbundleName¬"bundleName"W§LiteralÍBÍ\¸com.example.list_harmonyº"com.example.list_harmony"¤inita¨PropertyÍ^ÍsÂÂÂW§LiteralÍ^ÍjªmoduleName¬"moduleName"W§LiteralÍlÍs¥entry§"entry"¤init`°ObjectExpressionÍxÍæ•a¨PropertyÍzÍˆÂÂÂW§LiteralÍzÍ~¢id¤"id"W§LiteralÍ€ÍˆÎ  ¨16777237¤inita¨PropertyÍŠÍ—ÂÂÂW§LiteralÍŠÍ¤type¦"type"W§LiteralÍ’Í—Í'¥10003¤inita¨PropertyÍ™Í£ÂÂÂMªIdentifierÍ™ÍŸ¦paramsV¯ArrayExpressionÍ¡Í£¤inita¨PropertyÍ¥ÍÍÂÂÂW§LiteralÍ¥Í±ªbundleName¬"bundleName"W§LiteralÍ³ÍÍ¸com.example.list_harmonyº"com.example.list_harmony"¤inita¨PropertyÍÏÍäÂÂÂW§LiteralÍÏÍÛªmoduleName¬"moduleName"W§LiteralÍİÍä¥entry§"entry"¤initMªIdentifierÍèÍğ¨toStringÂÂÂg®BreakStatementÍÍÀÀS³ExpressionStatementÍ8ÍrX®CallExpressionÍ8ÍqR°MemberExpressionÍ8ÍDMªIdentifierÍ8Í?§newDataMªIdentifierÍ@ÍD¤pushÂÂ‘`°ObjectExpressionÍEÍp—a¨PropertyÍ\ÍbÂÂÂMªIdentifierÍ\Í^¢idMªIdentifierÍ`Íb¢id¤inita¨PropertyÍyÍÂÂÂMªIdentifierÍyÍ‚©goodsNameMªIdentifierÍ„Í©goodsName¤inita¨PropertyÍ¤Í°ÂÂÂMªIdentifierÍ¤Í©¥priceMªIdentifierÍ«Í°¥price¤inita¨PropertyÍÇÍÂÂÂMªIdentifierÍÇÍÏ¨goodsImgX®CallExpressionÍÑÍMªIdentifierÍÑÍëºgetImageByCategoryAndIndex’R°MemberExpressionÍìÍùU®ThisExpressionÍìÍğMªIdentifierÍñÍù¨categoryÂÂMªIdentifierÍûÍªimageIndexÂ¤inita¨PropertyÍÍ ÂÂÂMªIdentifierÍÍ0³advertisingLanguage`°ObjectExpressionÍ2Í •a¨PropertyÍ4ÍBÂÂÂW§LiteralÍ4Í8¢id¤"id"W§LiteralÍ:ÍBÎ  ¨16777236¤inita¨PropertyÍDÍQÂÂÂW§LiteralÍDÍJ¤type¦"type"W§LiteralÍLÍQÍ'¥10003¤inita¨PropertyÍSÍ]ÂÂÂMªIdentifierÍSÍY¦paramsV¯ArrayExpressionÍ[Í]¤inita¨PropertyÍ_Í‡ÂÂÂW§LiteralÍ_ÍkªbundleName¬"bundleName"W§LiteralÍmÍ‡¸com.example.list_harmonyº"com.example.list_harmony"¤inita¨PropertyÍ‰ÍÂÂÂW§LiteralÍ‰Í•ªmoduleName¬"moduleName"W§LiteralÍ—Í¥entry§"entry"¤init¤inita¨PropertyÍ·Í/ÂÂÂMªIdentifierÍ·Í¿¨evaluate`°ObjectExpressionÍÁÍ/•a¨PropertyÍÃÍÑÂÂÂW§LiteralÍÃÍÇ¢id¤"id"W§LiteralÍÉÍÑÎ  ¨16777240¤inita¨PropertyÍÓÍàÂÂÂW§LiteralÍÓÍÙ¤type¦"type"W§LiteralÍÛÍàÍ'¥10003¤inita¨PropertyÍâÍìÂÂÂMªIdentifierÍâÍè¦paramsV¯ArrayExpressionÍêÍì¤inita¨PropertyÍîÍÂÂÂW§LiteralÍîÍúªbundleName¬"bundleName"W§LiteralÍüÍ¸com.example.list_harmonyº"com.example.list_harmony"¤inita¨PropertyÍÍ-ÂÂÂW§LiteralÍÍ$ªmoduleName¬"moduleName"W§LiteralÍ&Í-¥entry§"entry"¤init¤inita¨PropertyÍFÍ]ÂÂÂMªIdentifierÍFÍN¨categoryR°MemberExpressionÍPÍ]U®ThisExpressionÍPÍTMªIdentifierÍUÍ]¨categoryÂÂ¤initÂZ«IfStatementÍÍ)[°BinaryExpressionÍ“Í¥R°MemberExpressionÍ“Í¡MªIdentifierÍ“Íš§newDataMªIdentifierÍ›Í¡¦lengthÂÂ¡>W§LiteralÍ¤Í¥ ¡0N®BlockStatementÍ§Í)”\³VariableDeclarationÍºÍã‘]²VariableDeclaratorÍÀÍâMªIdentifierÍÀÍÊªstartIndexR°MemberExpressionÍÍÍâR°MemberExpressionÍÍÍÛU®ThisExpressionÍÍÍÑMªIdentifierÍÒÍÛ©dataArrayÂÂMªIdentifierÍÜÍâ¦lengthÂÂ¥constS³ExpressionStatementÍõÍX®CallExpressionÍõÍR°MemberExpressionÍõÍR°MemberExpressionÍõÍU®ThisExpressionÍõÍùMªIdentifierÍúÍ©dataArrayÂÂMªIdentifierÍÍ¤pushÂÂ‘Y­SpreadElementÍ	ÍMªIdentifierÍÍ§newDataÂS³ExpressionStatementÍ'ÍKT´AssignmentExpressionÍ'ÍJ¢+=R°MemberExpressionÍ'Í8U®ThisExpressionÍ'Í+MªIdentifierÍ,Í8¬currentIndexÂÂR°MemberExpressionÍ<ÍJMªIdentifierÍ<ÍC§newDataMªIdentifierÍDÍJ¦lengthÂÂS³ExpressionStatementÍxÍX®CallExpressionÍxÍR°MemberExpressionÍxÍR°MemberExpressionÍxÍ†U®ThisExpressionÍxÍ|MªIdentifierÍ}Í†©listenersÂÂMªIdentifierÍ‡Í§forEachÂÂ‘P·ArrowFunctionExpressionÍÍÀÂÂÂ‘MªIdentifierÍÍ—¨listenerN®BlockStatementÍ›Í’S³ExpressionStatementÍ²ÍÓS¯ChainExpressionÍ²ÍÒX®CallExpressionÍ²ÍÒR°MemberExpressionÍ²ÍÄMªIdentifierÍ²Íº¨listenerMªIdentifierÍ»ÍÄ©onDataAddÂÂ‘MªIdentifierÍÇÍÑªstartIndexÃS³ExpressionStatementÍéÍS¯ChainExpressionÍéÍX®CallExpressionÍéÍR°MemberExpressionÍéÍ MªIdentifierÍéÍñ¨listenerMªIdentifierÍòÍ ®onDataReloadedÂÂÃÂÀW§LiteralÍ6Í9Íô£500ÂO°MethodDefinitionÍgÍÉÂÂMªIdentifierÍgÍr«refreshData¦methodP²FunctionExpressionÍrÍÉÀÂÂÂN®BlockStatementÍuÍÉ‘S³ExpressionStatementÍ“ÍÂX®CallExpressionÍ“ÍÁMªIdentifierÍ“ÍªsetTimeout’P·ArrowFunctionExpressionÍÍºÀÂÂÂN®BlockStatementÍ¤Íº“S³ExpressionStatementÍ³ÍïT´AssignmentExpressionÍ³Íî¡=R°MemberExpressionÍ³ÍÁU®ThisExpressionÍ³Í·MªIdentifierÍ¸ÍÁ©dataArrayÂÂX®CallExpressionÍÄÍîMªIdentifierÍÄÍß»getRefreshedGoodsByCategory‘R°MemberExpressionÍàÍíU®ThisExpressionÍàÍäMªIdentifierÍåÍí¨categoryÂÂÂS³ExpressionStatementÍıÍ'T´AssignmentExpressionÍıÍ&¡=R°MemberExpressionÍıÍU®ThisExpressionÍıÍMªIdentifierÍÍ¬currentIndexÂÂR°MemberExpressionÍÍ&R°MemberExpressionÍÍU®ThisExpressionÍÍMªIdentifierÍÍ©dataArrayÂÂMªIdentifierÍ Í&¦lengthÂÂS³ExpressionStatementÍLÍ¯X®CallExpressionÍLÍ®R°MemberExpressionÍLÍbR°MemberExpressionÍLÍZU®ThisExpressionÍLÍPMªIdentifierÍQÍZ©listenersÂÂMªIdentifierÍ[Íb§forEachÂÂ‘P·ArrowFunctionExpressionÍcÍ­ÀÂÂÂ‘MªIdentifierÍcÍk¨listenerN®BlockStatementÍoÍ­‘S³ExpressionStatementÍ‚ÍS¯ChainExpressionÍ‚ÍX®CallExpressionÍ‚ÍR°MemberExpressionÍ‚Í™MªIdentifierÍ‚ÍŠ¨listenerMªIdentifierÍ‹Í™®onDataReloadedÂÂÃÂW§LiteralÍ¼ÍÀÍè¤1000ÂO°MethodDefinitionÍîÍnÂÂMªIdentifierÍîÍù«setCategory¦methodP²FunctionExpressionÍùÍnÀÂÂÂ‘MªIdentifierÍúÍ¨categoryN®BlockStatementÍÍn‘Z«IfStatementÍÍg[°BinaryExpressionÍÍ-R°MemberExpressionÍÍ U®ThisExpressionÍÍMªIdentifierÍÍ ¨categoryÂÂ£!==MªIdentifierÍ%Í-¨categoryN®BlockStatementÍ/Íg”S³ExpressionStatementÍ>ÍWT´AssignmentExpressionÍ>ÍV¡=R°MemberExpressionÍ>ÍKU®ThisExpressionÍ>ÍBMªIdentifierÍCÍK¨categoryÂÂMªIdentifierÍNÍV¨categoryS³ExpressionStatementÍeÍœT´AssignmentExpressionÍeÍ›¡=R°MemberExpressionÍeÍsU®ThisExpressionÍeÍiMªIdentifierÍjÍs©dataArrayÂÂX®CallExpressionÍvÍ›MªIdentifierÍvÍ‘»getRefreshedGoodsByCategory‘MªIdentifierÍ’Íš¨categoryÂS³ExpressionStatementÍªÍÔT´AssignmentExpressionÍªÍÓ¡=R°MemberExpressionÍªÍ»U®ThisExpressionÍªÍ®MªIdentifierÍ¯Í»¬currentIndexÂÂR°MemberExpressionÍ¾ÍÓR°MemberExpressionÍ¾ÍÌU®ThisExpressionÍ¾ÍÂMªIdentifierÍÃÍÌ©dataArrayÂÂMªIdentifierÍÍÍÓ¦lengthÂÂS³ExpressionStatementÍùÍ\X®CallExpressionÍùÍ[R°MemberExpressionÍùÍR°MemberExpressionÍùÍU®ThisExpressionÍùÍıMªIdentifierÍşÍ©listenersÂÂMªIdentifierÍÍ§forEachÂÂ‘P·ArrowFunctionExpressionÍÍZÀÂÂÂ‘MªIdentifierÍÍ¨listenerN®BlockStatementÍÍZ‘S³ExpressionStatementÍ/ÍKS¯ChainExpressionÍ/ÍJX®CallExpressionÍ/ÍJR°MemberExpressionÍ/ÍFMªIdentifierÍ/Í7¨listenerMªIdentifierÍ8ÍF®onDataReloadedÂÂÃÂÀO°MethodDefinitionÍ“Í…ÂÂMªIdentifierÍ“Í«searchGoods¦methodP²FunctionExpressionÍÍ…ÀÂÂÂ‘MªIdentifierÍŸÍ¦§keywordN®BlockStatementÍ¨Í…“Z«IfStatementÍ³ÍÒ[°BinaryExpressionÍ·ÍÌX®CallExpressionÍ·ÍÅR°MemberExpressionÍ·ÍÃMªIdentifierÍ·Í¾§keywordMªIdentifierÍ¿ÍÃ¤trimÂÂÂ£===W§LiteralÍÊÍÌ ¢''N®BlockStatementÍÎÍJ‘S³ExpressionStatementÍÍ?T´AssignmentExpressionÍÍ>¡=R°MemberExpressionÍÍU®ThisExpressionÍÍMªIdentifierÍÍ©dataArrayÂÂX®CallExpressionÍÍ>MªIdentifierÍÍ/»getRefreshedGoodsByCategory‘R°MemberExpressionÍ0Í=U®ThisExpressionÍ0Í4MªIdentifierÍ5Í=¨categoryÂÂÂN®BlockStatementÍYÍÒ‘S³ExpressionStatementÍ‚ÍÇT´AssignmentExpressionÍ‚ÍÆ¡=R°MemberExpressionÍ‚ÍU®ThisExpressionÍ‚Í†MªIdentifierÍ‡Í©dataArrayÂÂX®CallExpressionÍ“ÍÆMªIdentifierÍ“Í§´searchGoodsByKeyword’R°MemberExpressionÍ¨ÍµU®ThisExpressionÍ¨Í¬MªIdentifierÍ­Íµ¨categoryÂÂX®CallExpressionÍ·ÍÅR°MemberExpressionÍ·ÍÃMªIdentifierÍ·Í¾§keywordMªIdentifierÍ¿ÍÃ¤trimÂÂÂÂS³ExpressionStatementÍÜÍT´AssignmentExpressionÍÜÍ¡=R°MemberExpressionÍÜÍíU®ThisExpressionÍÜÍàMªIdentifierÍáÍí¬currentIndexÂÂR°MemberExpressionÍğÍR°MemberExpressionÍğÍşU®ThisExpressionÍğÍôMªIdentifierÍõÍş©dataArrayÂÂMªIdentifierÍÿÍ¦lengthÂÂS³ExpressionStatementÍ#Í~X®CallExpressionÍ#Í}R°MemberExpressionÍ#Í9R°MemberExpressionÍ#Í1U®ThisExpressionÍ#Í'MªIdentifierÍ(Í1©listenersÂÂMªIdentifierÍ2Í9§forEachÂÂ‘P·ArrowFunctionExpressionÍ:Í|ÀÂÂÂ‘MªIdentifierÍ:ÍB¨listenerN®BlockStatementÍFÍ|‘S³ExpressionStatementÍUÍqS¯ChainExpressionÍUÍpX®CallExpressionÍUÍpR°MemberExpressionÍUÍlMªIdentifierÍUÍ]¨listenerMªIdentifierÍ^Íl®onDataReloadedÂÂÃÂÀ“Ôrh•¤type¥start£endªspecifiers¦source±ImportDeclarationÍiÍ±’Ôri•¤type¥start£end¨imported¥local¯ImportSpecifierÍrÍMªIdentifierÍrÍ»getRefreshedGoodsByCategoryMªIdentifierÍrÍ»getRefreshedGoodsByCategoryi¯ImportSpecifierÍÍ™MªIdentifierÍÍ™ªCATEGORIESMªIdentifierÍÍ™ªCATEGORIESW§LiteralÍ¡Í°­./InitialData¯'./InitialData'h±ImportDeclarationÍ³Íè‘i¯ImportSpecifierÍ¼ÍĞMªIdentifierÍ¼ÍĞ´searchGoodsByKeywordMªIdentifierÍ¼ÍĞ´searchGoodsByKeywordW§LiteralÍØÍç­./SearchUtils¯'./SearchUtils'h±ImportDeclarationÍêÍ&‘i¯ImportSpecifierÍóÍMªIdentifierÍóÍ¯MAX_DATA_LENGTHMªIdentifierÍóÍ¯MAX_DATA_LENGTHW§LiteralÍ
+Í%¹../common/CommonConstants»'../common/CommonConstants'

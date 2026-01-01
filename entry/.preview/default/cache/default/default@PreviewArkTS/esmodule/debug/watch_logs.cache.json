@@ -1,0 +1,1 @@
+[{"time":"2026-01-01T20:46:21.726Z","category":"etsTransform","level":"warn","msg":"\u001b[33mArkTS:WARN File: C:/Users/24505/Documents/GitHub/Yigofang_Mall/entry/src/main/ets/view/SearchBoxComponent.ets:38:9\n The @Prop property 'callback' cannot be an optional parameter.\u001b[39m","type":"plugin_log"}]

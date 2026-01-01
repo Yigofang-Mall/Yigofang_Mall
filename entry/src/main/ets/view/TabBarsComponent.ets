@@ -13,7 +13,8 @@
  * limitations under the License.
  */
 
-import { initTabBarData } from '../viewmodel/InitialData';
+import { initTabBarData, CATEGORIES, GoodsListItemType } from '../viewmodel/InitialData';
+import { searchGoodsByKeyword } from '../viewmodel/SearchUtils';
 import {
   LAYOUT_WIDTH_OR_HEIGHT,
   NORMAL_FONT_SIZE,
@@ -25,6 +26,7 @@ import {
   MAX_LINES_TEXT
 } from '../common/CommonConstants';
 import GoodsList from './GoodsListComponent';
+import SearchBox from './SearchBoxComponent';
 
 /**
  * 标签页组件
@@ -45,6 +47,29 @@ export default struct TabBar {
   @State refreshText: Resource = $r('app.string.refresh_text');
   // 下拉偏移量
   @State pullDownOffset: number = 0;
+  // 标签页数据
+  @State tabData: Resource[] = [];
+
+  // 分类列表
+  private categoryList: string[] = [
+    CATEGORIES.SELECTED,
+    CATEGORIES.MOBILE_PHONE,
+    CATEGORIES.CLOTHES,
+    CATEGORIES.WEAR,
+    CATEGORIES.HOME_FURNISHING
+  ];
+
+  // 搜索关键词
+  @State searchKeyword: string = '';
+  // 是否显示搜索结果
+  @State isSearchMode: boolean = false;
+  // 搜索结果商品列表
+  @State searchResults: GoodsListItemType[] = [];
+
+  aboutToAppear() {
+    // 初始化标签数据
+    this.tabData = initTabBarData();
+  }
 
   /**
    * 构建第一个标签页（默认选中标签）
@@ -54,7 +79,7 @@ export default struct TabBar {
   firstTabBar() {
     Column() {
       Text($r('app.string.selected'))
-        // 根据是否选中调整字体大小
+      // 根据是否选中调整字体大小
         .fontSize(this.tabsIndex === 0 ? BIGGER_FONT_SIZE : NORMAL_FONT_SIZE)
         // 根据是否选中调整字体颜色
         .fontColor(this.tabsIndex === 0 ? Color.Black : $r('app.color.gray'))
@@ -76,7 +101,7 @@ export default struct TabBar {
   otherTabBar(content: Resource, index: number) {
     Column() {
       Text(content)
-        // 根据是否选中调整字体大小
+      // 根据是否选中调整字体大小
         .fontSize(this.tabsIndex === index + 1 ? BIGGER_FONT_SIZE : NORMAL_FONT_SIZE)
         // 根据是否选中调整字体颜色
         .fontColor(this.tabsIndex === index + 1 ? Color.Black : $r('app.color.gray'))
@@ -119,6 +144,11 @@ export default struct TabBar {
    * @param event 触摸事件
    */
   putDownRefresh(event?: TouchEvent): void {
+    // 如果处于搜索模式，不处理下拉刷新
+    if (this.isSearchMode) {
+      return;
+    }
+
     if (event === undefined) {
       return;
     }
@@ -130,7 +160,7 @@ export default struct TabBar {
       case TouchType.Move:
         const moveY = event.touches[0].y;
         const deltaY = moveY - this.currentOffsetY;
-        
+
         // 如果是向下滑动
         if (deltaY > 0) {
           this.pullDownOffset = Math.min(deltaY, MAX_OFFSET_Y);
@@ -159,6 +189,39 @@ export default struct TabBar {
   }
 
   /**
+   * 处理搜索
+   */
+  private handleSearch(keyword: string) {
+    this.searchKeyword = keyword;
+    this.isSearchMode = keyword.length > 0;
+    
+    // 根据当前分类进行搜索
+    const currentCategory = this.getCategoryByIndex(this.tabsIndex);
+    
+    if (this.isSearchMode) {
+      // 使用搜索功能
+      this.searchResults = searchGoodsByKeyword(currentCategory, keyword);
+    } else {
+      // 清空搜索结果
+      this.searchResults = [];
+    }
+    
+    console.log('搜索关键词:', keyword, '分类:', currentCategory, '结果数量:', this.searchResults.length);
+  }
+
+  /**
+   * 根据索引获取分类
+   * @param index 索引
+   * @returns 分类名称
+   */
+  private getCategoryByIndex(index: number): string {
+    if (index >= 0 && index < this.categoryList.length) {
+      return this.categoryList[index];
+    }
+    return CATEGORIES.SELECTED;
+  }
+
+  /**
    * 组件销毁前清理工作
    * 清除刷新定时器
    */
@@ -169,59 +232,76 @@ export default struct TabBar {
   }
 
   build() {
-    // 标签页容器
-    Tabs() {
-      // 第一个标签内容（商品列表页）
-      TabContent() {
-        // 使用Column包裹以便实现下拉刷新
-        Column() {
-          // 下拉刷新区域
-          if (this.refreshStatus || this.pullDownOffset > 0) {
-            this.buildRefreshView()
-          }
-          
-          // 商品列表组件
-          Scroll() {
-            Column() {
-              GoodsList()
+    Column() {
+      // 搜索框
+      SearchBox({
+        callback: {
+          onSearch: (keyword: string): void => this.handleSearch(keyword)
+        },
+        placeholder: '搜索商品...'
+      })
+
+      // 标签页容器
+      Tabs() {
+        // 第一个标签内容（商品列表页）
+        TabContent() {
+          // 使用Column包裹以便实现下拉刷新
+          Column() {
+            // 下拉刷新区域（仅在非搜索模式下显示）
+            if (!this.isSearchMode && (this.refreshStatus || this.pullDownOffset > 0)) {
+              this.buildRefreshView()
             }
-            .width('100%')
+
+            // 商品列表组件（精选页）
+            GoodsList({ 
+              category: this.getCategoryByIndex(0),
+              searchResults: this.searchResults,
+              isSearchMode: this.isSearchMode
+            })
           }
-          .scrollBar(BarState.Off) // 隐藏滚动条
-          .edgeEffect(EdgeEffect.Spring) // 设置边缘弹性效果
           .width('100%')
           .height('100%')
+          // 监听触摸事件处理下拉刷新
+          .onTouch((event?: TouchEvent) => {
+            this.putDownRefresh(event);
+          })
         }
-        .width('100%')
-        .height('100%')
-        // 监听触摸事件处理下拉刷新
-        .onTouch((event?: TouchEvent) => {
-          this.putDownRefresh(event);
+        .tabBar(this.firstTabBar) // 设置标签栏
+
+        // 循环创建其他标签页
+        ForEach(this.tabData, (item: Resource, index: number) => {
+          TabContent() {
+            Column() {
+              // 商品列表组件（其他分类页）
+              // 使用索引+1来对应分类数组中的位置
+              GoodsList({ 
+                category: this.getCategoryByIndex(index + 1),
+                searchResults: this.searchResults,
+                isSearchMode: this.isSearchMode
+              })
+            }
+            .width('100%')
+            .height('100%')
+          }
+          .tabBar(this.otherTabBar(item, index))
         })
       }
-      .tabBar(this.firstTabBar) // 设置标签栏
-
-      // 循环创建其他标签页
-      ForEach(initTabBarData(), (item: Resource, index?: number) => {
-        TabContent() {
-          Column() {
-            Text(item).fontSize(MAX_FONT_SIZE)
-          }
-          .justifyContent(FlexAlign.Center)
-          .width(LAYOUT_WIDTH_OR_HEIGHT)
-          .height(LAYOUT_WIDTH_OR_HEIGHT)
-        }
-        .tabBar(this.otherTabBar(item, index !== undefined ? index : 0))
+      // 标签页切换回调
+      .onChange((index: number) => {
+        this.tabsIndex = index;
+        
+        // 切换标签页时重置搜索状态
+        this.searchKeyword = '';
+        this.isSearchMode = false;
+        this.searchResults = [];
+        
+        console.log('切换到标签页:', index);
       })
+      .vertical(false) // 水平排列标签页
+      .barMode(BarMode.Fixed) // 固定标签栏
+      .barHeight(60) // 标签栏高度
+      .width('100%')
+      .height('100%')
     }
-    // 标签页切换回调
-    .onChange((index: number) => {
-      this.tabsIndex = index;
-    })
-    .vertical(false) // 水平排列标签页
-    .barMode(BarMode.Fixed) // 固定标签栏
-    .barHeight(60) // 标签栏高度
-    .width(LAYOUT_WIDTH_OR_HEIGHT)
-    .height(LAYOUT_WIDTH_OR_HEIGHT)
   }
 }

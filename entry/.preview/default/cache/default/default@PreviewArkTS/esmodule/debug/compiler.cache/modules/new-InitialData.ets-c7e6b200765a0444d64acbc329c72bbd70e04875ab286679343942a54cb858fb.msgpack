@@ -1,0 +1,618 @@
+Ôr@Ÿªassertions¤code´customTransformCache¬dependencies¢id¤meta±moduleSideEffects¬originalCode±originalSourcemap«resolvedIds®sourcemapChainµsyntheticNamedExportsµtransformDependencies®transformFiles¨cacheAstÔrAÚ1õ/*
+ * Copyright (c) 2023 Huawei Device Co., Ltd.
+ * Licensed under the Apache License,Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import { PAGE_SIZE, FEATURED_SIZE } from '../common/CommonConstants';
+export const CATEGORIES = {
+    SELECTED: 'selected',
+    MOBILE_PHONE: 'mobile_phone',
+    CLOTHES: 'clothes',
+    WEAR: 'wear',
+    HOME_FURNISHING: 'home_furnishing'
+};
+// åˆå§‹åŒ–æ ‡ç­¾æ æ•°æ®
+export function initTabBarData() {
+    return [
+        { "id": 16777275, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" },
+        { "id": 16777238, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" },
+        { "id": 16777284, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" },
+        { "id": 16777274, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" }
+    ];
+}
+export function getAllGoods() {
+    const goodsList = [];
+    let id = 1;
+    // æ‰‹æœºåˆ†ç±»å•†å“
+    const mobilePhones = [
+        { name: 'vivo X300 Proæ–°å“è”¡å¸2äº¿APOè¶…çº§é•¿ç„¦å¤©ç‘9500æ‹ç…§æ‰‹æœºå®˜æ–¹æ——èˆ°åº—å®˜ç½‘æ­£å“', price: { "id": 16777266, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" } },
+        { name: 'HUAWEI Mate 80 éº’éºŸ9020èŠ¯ç‰‡ ç¬¬äºŒä»£çº¢æ«å½±åƒ é¸¿è’™AI åä¸ºç›´å±é¸¿è’™æ™ºèƒ½æ‰‹æœºåä¸ºå®˜æ–¹æ——èˆ°åº—', price: { "id": 16777267, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" } },
+        { name: 'Apple/è‹¹æœ iPhone 17 Pro Max æ‰‹æœº A19 ProèŠ¯ç‰‡ 2025æ–°æ¬¾ å…¨æ–°æœªæ‹†å°ï¼Œå®˜æ–¹æ­£å“', price: { "id": 16777268, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" } },
+        { name: 'å°ç±³17 Proæ‰‹æœºæ–°å“ä¸Šå¸‚å°ç±³å¾•å¡è”åˆç ”å‘å°ç±³å®˜æ–¹æ——èˆ°åº—å®˜ç½‘å°ç±³æ¾æ¹ƒOSå°ç±³17pro', price: { "id": 16777269, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" } },
+    ];
+    // æœè£…åˆ†ç±»å•†å“
+    const clothes = [
+        { name: 'èŠ±çº±ç¾Šæ¯›æ··çººåŠé«˜é¢†æ¯›è¡£å¼€è¡«è€é’±æ£•è‰²ç°è‰²ç™¾æ­cleanfit', price: { "id": 16777258, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" } },
+        { name: 'OUR LEGACY Eveningç”·å£«é»‘è‰²Poloè¡«ä¼‘é—²å®½æ¾å¤å¤é’ˆç»‡å¼€è¡«å¤–å¥—', price: { "id": 16777259, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" } },
+        { name: 'No day offã€Œçƒ§è¾¹ç‰›è§’æ‰£ã€ç¾Šæ¯›æ··çººé’ˆç»‡äº¨åˆ©é¢†æ¯›è¡£çº¯è‰²åŸºç¡€é•¿è¢–ç”·', price: { "id": 16777260, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" } },
+        { name: 'é«˜çŸ¥æ„Ÿèˆ’èŠ™è•¾ä¼‘é—²å¤å¤æ…µæ‡’ç¾Šæ¯›æ··çººæ¯›ç»‡å¼€è¡«å¤–å¥—', price: { "id": 16777261, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" } },
+    ];
+    // ç©¿æˆ´åˆ†ç±»å•†å“
+    const wears = [
+        { name: 'Apple Watch Series 11 GPS + èœ‚çªæ¬¾ 44mm é’›é‡‘å±è¡¨å£³ æµ·æ´‹è¡¨å¸¦ æ™ºèƒ½æ‰‹è¡¨', price: { "id": 16777270, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" } },
+        { name: 'ã€æ–°å“ä¸Šå¸‚ã€‘Huawei/åä¸º WATCH GT 6æ™ºèƒ½æ‰‹è¡¨21å¤©è¶…é•¿ç»­èˆªåä¸ºæ‰‹æœºä¸“å–åº—æ™ºèƒ½ç©¿æˆ´è®¾å¤‡å¥åº·å…¨æ–°éª‘è¡Œä½“éªŒ', price: { "id": 16777271, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" } },
+        { name: 'å°ç±³æ‰‹ç¯10æ™ºèƒ½æ‰‹ç¯è¿åŠ¨å¥åº·é˜²æ°´ç¡çœ å¿ƒç‡å…¨é¢å±é•¿ç»­èˆªå°ç±³æ‰‹ç¯9å‡çº§æ¬¾', price: { "id": 16777272, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" } },
+        { name: 'ä¸‰æ˜Ÿ/Samsung Galaxy Watch8 æ™ºèƒ½æ‰‹è¡¨ è¿åŠ¨AIå¿ƒç‡ç›‘æµ‹ç¡çœ ç›‘æµ‹è¡€æ°§è¡€å‹å¿ƒç‡é€‚é…ä¸‰æ˜Ÿä¸‰æŠ˜å ', price: { "id": 16777273, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" } },
+    ];
+    // å®¶å±…åˆ†ç±»å•†å“
+    const homeFurnishings = [
+        { name: 'è‰åœ°æµ®æ¸¸æ°´æ°”ç¼¸æ¡Œé¢ç¯æ‘†ä»¶æ°›å›´å°å¤œç¯é±¼ç¼¸', price: { "id": 16777262, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" } },
+        { name: 'ç‰©æœ‰å¼•åŠ› è´¢ç«ç¯ å¤å¤æ°›å›´ç¯å§å®¤åºŠå¤´å°å¤œç¯å……ç”µæ°‘å®¿è£…é¥°åœ£è¯åˆ›æ„', price: { "id": 16777263, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" } },
+        { name: 'ç°ä»£è½»å¥¢æ¤­åœ†å½¢è£…é¥°æ‰˜ç›˜æ ·æ¿æˆ¿åˆ›æ„å®¶å±…é¤æ¡ŒèŒ¶å‡ æ°´æœç›˜æ”¶çº³ç›˜æ‘†ä»¶', price: { "id": 16777264, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" } },
+        { name: 'åŸæœ¨å¥¶æ²¹é£å®¢å…è£…é¥°ç”»è¶£å‘³çŒ«å’ªæ²™å‘èƒŒæ™¯å¢™æŒ‚ç”»ç«‹ä½“ç ‚å²©é«˜çº§æ„Ÿå£ç”»', price: { "id": 16777265, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" } },
+    ];
+    // ç”Ÿæˆæ‰‹æœºå•†å“
+    mobilePhones.forEach((item, index) => {
+        goodsList.push({
+            id: id++,
+            goodsName: item.name,
+            price: item.price,
+            goodsImg: getPhoneImage(index % 4 + 1),
+            advertisingLanguage: { "id": 16777236, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" },
+            evaluate: { "id": 16777240, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" },
+            category: CATEGORIES.MOBILE_PHONE
+        });
+    });
+    // ç”Ÿæˆæœè£…å•†å“
+    clothes.forEach((item, index) => {
+        goodsList.push({
+            id: id++,
+            goodsName: item.name,
+            price: item.price,
+            goodsImg: getClothesImage(index % 4 + 1),
+            advertisingLanguage: { "id": 16777236, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" },
+            evaluate: { "id": 16777240, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" },
+            category: CATEGORIES.CLOTHES
+        });
+    });
+    // ç”Ÿæˆç©¿æˆ´å•†å“
+    wears.forEach((item, index) => {
+        goodsList.push({
+            id: id++,
+            goodsName: item.name,
+            price: item.price,
+            goodsImg: getWearImage(index % 4 + 1),
+            advertisingLanguage: { "id": 16777236, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" },
+            evaluate: { "id": 16777240, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" },
+            category: CATEGORIES.WEAR
+        });
+    });
+    // ç”Ÿæˆå®¶å±…å•†å“
+    homeFurnishings.forEach((item, index) => {
+        goodsList.push({
+            id: id++,
+            goodsName: item.name,
+            price: item.price,
+            goodsImg: getHomeImage(index % 4 + 1),
+            advertisingLanguage: { "id": 16777236, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" },
+            evaluate: { "id": 16777240, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" },
+            category: CATEGORIES.HOME_FURNISHING
+        });
+    });
+    return goodsList;
+}
+// è·å–æŒ‡å®šåˆ†ç±»çš„å•†å“æ•°æ®
+function getGoodsByCategory(category) {
+    const allGoods = getAllGoods();
+    if (category === CATEGORIES.SELECTED) {
+        // ç²¾é€‰é¡µï¼šä»æ‰€æœ‰å•†å“ä¸­éšæœºæŒ‘é€‰
+        return shuffleArray(allGoods).slice(0, FEATURED_SIZE);
+    }
+    else {
+        // å…¶ä»–åˆ†ç±»ï¼šç­›é€‰å¯¹åº”åˆ†ç±»çš„å•†å“
+        const filtered = allGoods.filter(item => item.category === category);
+        // å¦‚æœæ•°é‡ä¸å¤Ÿï¼Œå¾ªç¯å±•ç¤º
+        if (filtered.length < PAGE_SIZE) {
+            return fillArrayWithLoop(filtered, PAGE_SIZE);
+        }
+        return filtered.slice(0, PAGE_SIZE);
+    }
+}
+// éšæœºæ‰“ä¹±æ•°ç»„
+function shuffleArray(array) {
+    const newArray = [...array];
+    for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = newArray[i];
+        newArray[i] = newArray[j];
+        newArray[j] = temp;
+    }
+    return newArray;
+}
+// å¾ªç¯å¡«å……æ•°ç»„ï¼Œç›´åˆ°è¾¾åˆ°æŒ‡å®šé•¿åº¦
+function fillArrayWithLoop(array, length) {
+    if (array.length === 0) {
+        return array;
+    }
+    const result = [];
+    while (result.length < length) {
+        for (let i = 0; i < array.length && result.length < length; i++) {
+            result.push(array[i]);
+        }
+    }
+    return result;
+}
+// è·å–åˆ·æ–°åçš„å•†å“æ•°æ®ï¼ˆéšæœºæ’åºï¼‰
+export function getRefreshedGoodsByCategory(category) {
+    let goods = getGoodsByCategory(category);
+    // éšæœºæ‰“ä¹±
+    goods = shuffleArray(goods);
+    // å¦‚æœæ•°é‡ä¸å¤Ÿï¼Œåˆ™å¾ªç¯å¡«å……
+    if (goods.length < PAGE_SIZE) {
+        goods = fillArrayWithLoop(goods, PAGE_SIZE);
+    }
+    return goods.slice(0, PAGE_SIZE);
+}
+// å®šä¹‰æ¯ä¸ªåˆ†ç±»çš„å›¾ç‰‡è·å–å‡½æ•°
+function getPhoneImage(index) {
+    switch (index) {
+        case 1: return { "id": 16777227, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        case 2: return { "id": 16777220, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        case 3: return { "id": 16777286, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        case 4: return { "id": 16777296, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        default: return { "id": 16777227, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+    }
+}
+function getClothesImage(index) {
+    switch (index) {
+        case 1: return { "id": 16777225, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        case 2: return { "id": 16777287, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        case 3: return { "id": 16777288, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        case 4: return { "id": 16777221, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        default: return { "id": 16777225, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+    }
+}
+function getWearImage(index) {
+    switch (index) {
+        case 1: return { "id": 16777223, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        case 2: return { "id": 16777293, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        case 3: return { "id": 16777222, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        case 4: return { "id": 16777294, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        default: return { "id": 16777223, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+    }
+}
+function getHomeImage(index) {
+    switch (index) {
+        case 1: return { "id": 16777289, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        case 2: return { "id": 16777224, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        case 3: return { "id": 16777218, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        case 4: return { "id": 16777290, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+        default: return { "id": 16777289, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+    }
+}
+// åˆå§‹åŒ–å•†å“æ•°æ®
+export function initGoodsData() {
+    return getGoodsByCategory(CATEGORIES.SELECTED);
+}
+//# sourceMappingURL=InitialData.js.mapÂ‘Ù[C:\Users\24505\Documents\GitHub\Yigofang_Mall\entry\src\main\ets\common\CommonConstants.etsÙZC:\Users\24505\Documents\GitHub\Yigofang_Mall\entry\src\main\ets\viewmodel\InitialData.etsÔrBœªmoduleName±isLocalDependency¯isNodeEntryFile§pkgPath±belongProjectPath§pkgNameªpkgVersion±dependencyPkgInfo¯hostModulesInfo°belongModulePath§checker¬shouldEmitJs¥entryÃÂÙ3C:\Users\24505\Documents\GitHub\Yigofang_Mall\entryÙ-C:\Users\24505\Documents\GitHub\Yigofang_Mall¥entry¥1.0.0Ô  “ÔrC’²hostDependencyName®hostModuleName¸../viewmodel/InitialData¥entryC­./InitialData¥entryC­./InitialData¥entryÙ3C:\Users\24505\Documents\GitHub\Yigofang_Mall\entryÔrDÜ ®¬getNodeCount²getIdentifierCount®getSymbolCount¬getTypeCountµgetInstantiationCountµgetRelationCacheSizes±isUndefinedSymbol±isArgumentsSymbol¯isUnknownSymbol¯getMergedSymbol®getDiagnostics´getGlobalDiagnostics´getRecursionIdentity¶getUnmatchedProperties¹getTypeOfSymbolAtLocation¯getTypeOfSymbolÙ(getSymbolsOfParameterPropertyDeclaration·getDeclaredTypeOfSymbol³getPropertiesOfType±getPropertyOfTypeÙ"getPrivateIdentifierPropertyOfType·getTypeOfPropertyOfType²getIndexInfoOfType³getIndexInfosOfTypeºgetIndexInfosOfIndexSymbol³getSignaturesOfType²getIndexTypeOfType¬getIndexType¬getBaseTypes¸getBaseTypeOfLiteralType®getWidenedType³getTypeFromTypeNode°getParameterTypeÙ$getParameterIdentifierNameAtPosition¸getPromisedTypeOfPromise®getAwaitedType¸getReturnTypeOfSignature®isNullableType¯getNullableType²getNonNullableType²getNonOptionalType°getTypeArguments®typeToTypeNodeÙ$indexInfoToIndexSignatureDeclaration¿signatureToSignatureDeclaration²symbolToEntityName²symbolToExpression¬symbolToNodeÙ!symbolToTypeParameterDeclarations¼symbolToParameterDeclarationºtypeParameterToDeclaration±getSymbolsInScope³getSymbolAtLocation·getIndexInfosAtLocationÙ!getShorthandAssignmentValueSymbolÙ#getExportSpecifierLocalTargetSymbol·getExportSymbolOfSymbol±getTypeAtLocationºgetTypeAtLocationForLinterÙ tryGetTypeAtLocationWithoutCheckºgetTypeOfAssignmentPatternÙ*getPropertySymbolOfDestructuringAssignment±signatureToString¬typeToString®symbolToStringµtypePredicateToString®writeSignature©writeType«writeSymbol²writeTypePredicate¼getAugmentedPropertiesOfType®getRootSymbols²getSymbolOfExpando±getContextualTypeÙ(getContextualTypeForObjectLiteralElementÙ#getContextualTypeForArgumentAtIndexÙ getContextualTypeForJsxAttribute²isContextSensitiveÙ!getTypeOfPropertyOfContextualTypeµgetFullyQualifiedNameÙ#tryGetResolvedSignatureWithoutCheck´getResolvedSignatureÙ/getResolvedSignatureForStringLiteralCompletionsÙ$getResolvedSignatureForSignatureHelpµgetExpandedParameters¹hasEffectiveRestParameterºcontainsArgumentsReference°getConstantValueµisValidPropertyAccessÙ#isValidPropertyAccessForCompletions»getSignatureFromDeclarationºisImplementationOfOverload¹getImmediateAliasedSymbol°getAliasedSymbol¯getEmitResolver²getExportsOfModule¿getExportsAndPropertiesOfModuleÙ forEachExportAndPropertyOfModule¯getSymbolWalker±getAmbientModules¹getJsxIntrinsicTagNamesAt³isOptionalParameter»tryGetMemberInModuleExportsÙ(tryGetMemberInModuleExportsAndProperties´tryFindAmbientModuleÙ(tryFindAmbientModuleWithoutAugmentations¯getApparentType¬getUnionType²isTypeAssignableTo³createAnonymousType¯createSignature¬createSymbol¯createIndexInfoªgetAnyType­getStringType­getNumberType±createPromiseType¯createArrayType¹getElementTypeOfArrayType®getBooleanType¬getFalseType«getTrueType«getVoidType°getUndefinedType«getNullType¯getESSymbolType¬getNeverType¯getOptionalType®getPromiseType²getPromiseLikeType´getAsyncIterableType²isSymbolAccessible«isArrayType«isTupleType¯isArrayLikeTypeÙ#isTypeInvalidDueToUnionDiscriminantºgetExactOptionalProperties¿getAllPossiblePropertiesOfTypesÙ(getSuggestedSymbolForNonexistentPropertyÙ#getSuggestionForNonexistentPropertyÙ,getSuggestedSymbolForNonexistentJSXAttributeÙ&getSuggestedSymbolForNonexistentSymbolÙ!getSuggestionForNonexistentSymbolÙ&getSuggestedSymbolForNonexistentModuleÙ!getSuggestionForNonexistentExportÙ+getSuggestedSymbolForNonexistentClassMember·getBaseConstraintOfType»getDefaultFromTypeParameter«resolveName¯getJsxNamespaceµgetJsxFragmentFactory¸getAccessibleSymbolChain»getTypePredicateOfSignature¹resolveExternalModuleName»resolveExternalModuleSymbol°tryGetThisTypeAt¹getTypeArgumentConstraint¸getSuggestionDiagnostics¸runWithCancellationTokenÙ3getLocalTypeParametersOfClassOrInterfaceOrTypeAlias´isDeclarationVisible´isPropertyAccessible»getTypeOnlyAliasDeclaration¿getMemberOverrideModifierStatusÙ!isTypeParameterPossiblyReferenced²getConstEnumRelate´clearConstEnumRelateµdeleteConstEnumRelateÙ$getTypeArgumentsForResolvedSignatureµgetCheckedSourceFilesÙ"collectHaveTsNoCheckFilesForLinter·clearQualifiedNameCache®isStaticRecord²isStaticSourceFileÔ  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  ÃÃÚ$Ó/*
+ * Copyright (c) 2023 Huawei Device Co., Ltd.
+ * Licensed under the Apache License,Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import { PAGE_SIZE, FEATURED_SIZE, SEARCH_RESULT_MAX, SEARCH_RESULT_MIN } from '../common/CommonConstants';
+// å•†å“åˆ—è¡¨é¡¹ç±»å‹
+export interface GoodsListItemType {
+  id: number;
+  goodsName: string; // ç›´æ¥ä½¿ç”¨å­—ç¬¦ä¸²è€Œä¸æ˜¯ResourceStr
+  price: ResourceStr;
+  goodsImg: Resource;
+  advertisingLanguage: ResourceStr;
+  evaluate: ResourceStr;
+  category: string; // å•†å“åˆ†ç±»
+}
+
+// åˆ†ç±»å¸¸é‡
+interface GeneratedObjectLiteralInterface_1 {
+  SELECTED: string;
+  MOBILE_PHONE: string;
+  CLOTHES: string;
+  WEAR: string;
+  HOME_FURNISHING: string;
+}
+
+export const CATEGORIES: GeneratedObjectLiteralInterface_1 = {
+  SELECTED: 'selected',
+  MOBILE_PHONE: 'mobile_phone',
+  CLOTHES: 'clothes',
+  WEAR: 'wear',
+  HOME_FURNISHING: 'home_furnishing'
+};
+
+// åˆå§‹åŒ–æ ‡ç­¾æ æ•°æ®
+export function initTabBarData(): Resource[] {
+  return [
+    $r('app.string.mobile_phone'),
+    $r('app.string.clothes'),
+    $r('app.string.wear'),
+    $r('app.string.home_furnishing')
+  ];
+}
+// è·å–æ‰€æœ‰åˆ†ç±»çš„å•†å“æ•°æ®
+interface GeneratedTypeLiteralInterface_phone {
+  name: string;
+  price: ResourceStr;
+}
+
+interface GeneratedTypeLiteralInterface_clothes {
+  name: string;
+  price: ResourceStr;
+}
+
+interface GeneratedTypeLiteralInterface_wear {
+  name: string;
+  price: ResourceStr;
+}
+
+interface GeneratedTypeLiteralInterface_home {
+  name: string;
+  price: ResourceStr;
+}
+
+export function getAllGoods(): GoodsListItemType[] {
+  const goodsList: GoodsListItemType[] = [];
+  let id = 1;
+
+  // æ‰‹æœºåˆ†ç±»å•†å“
+  const mobilePhones: Array<GeneratedTypeLiteralInterface_phone> = [
+    { name: 'vivo X300 Proæ–°å“è”¡å¸2äº¿APOè¶…çº§é•¿ç„¦å¤©ç‘9500æ‹ç…§æ‰‹æœºå®˜æ–¹æ——èˆ°åº—å®˜ç½‘æ­£å“', price: $r('app.string.goods_price_phone_1') },
+    { name: 'HUAWEI Mate 80 éº’éºŸ9020èŠ¯ç‰‡ ç¬¬äºŒä»£çº¢æ«å½±åƒ é¸¿è’™AI åä¸ºç›´å±é¸¿è’™æ™ºèƒ½æ‰‹æœºåä¸ºå®˜æ–¹æ——èˆ°åº—', price: $r('app.string.goods_price_phone_2') },
+    { name: 'Apple/è‹¹æœ iPhone 17 Pro Max æ‰‹æœº A19 ProèŠ¯ç‰‡ 2025æ–°æ¬¾ å…¨æ–°æœªæ‹†å°ï¼Œå®˜æ–¹æ­£å“', price: $r('app.string.goods_price_phone_3') },
+    { name: 'å°ç±³17 Proæ‰‹æœºæ–°å“ä¸Šå¸‚å°ç±³å¾•å¡è”åˆç ”å‘å°ç±³å®˜æ–¹æ——èˆ°åº—å®˜ç½‘å°ç±³æ¾æ¹ƒOSå°ç±³17pro', price: $r('app.string.goods_price_phone_4') },
+  ];
+
+  // æœè£…åˆ†ç±»å•†å“
+  const clothes: Array<GeneratedTypeLiteralInterface_clothes> = [
+    { name: 'èŠ±çº±ç¾Šæ¯›æ··çººåŠé«˜é¢†æ¯›è¡£å¼€è¡«è€é’±æ£•è‰²ç°è‰²ç™¾æ­cleanfit', price: $r('app.string.goods_price_clothes_1') },
+    { name: 'OUR LEGACY Eveningç”·å£«é»‘è‰²Poloè¡«ä¼‘é—²å®½æ¾å¤å¤é’ˆç»‡å¼€è¡«å¤–å¥—', price: $r('app.string.goods_price_clothes_2') },
+    { name: 'No day offã€Œçƒ§è¾¹ç‰›è§’æ‰£ã€ç¾Šæ¯›æ··çººé’ˆç»‡äº¨åˆ©é¢†æ¯›è¡£çº¯è‰²åŸºç¡€é•¿è¢–ç”·', price: $r('app.string.goods_price_clothes_3') },
+    { name: 'é«˜çŸ¥æ„Ÿèˆ’èŠ™è•¾ä¼‘é—²å¤å¤æ…µæ‡’ç¾Šæ¯›æ··çººæ¯›ç»‡å¼€è¡«å¤–å¥—', price: $r('app.string.goods_price_clothes_4') },
+  ];
+
+  // ç©¿æˆ´åˆ†ç±»å•†å“
+  const wears: Array<GeneratedTypeLiteralInterface_wear> = [
+    { name: 'Apple Watch Series 11 GPS + èœ‚çªæ¬¾ 44mm é’›é‡‘å±è¡¨å£³ æµ·æ´‹è¡¨å¸¦ æ™ºèƒ½æ‰‹è¡¨', price: $r('app.string.goods_price_wear_1') },
+    { name: 'ã€æ–°å“ä¸Šå¸‚ã€‘Huawei/åä¸º WATCH GT 6æ™ºèƒ½æ‰‹è¡¨21å¤©è¶…é•¿ç»­èˆªåä¸ºæ‰‹æœºä¸“å–åº—æ™ºèƒ½ç©¿æˆ´è®¾å¤‡å¥åº·å…¨æ–°éª‘è¡Œä½“éªŒ', price: $r('app.string.goods_price_wear_2') },
+    { name: 'å°ç±³æ‰‹ç¯10æ™ºèƒ½æ‰‹ç¯è¿åŠ¨å¥åº·é˜²æ°´ç¡çœ å¿ƒç‡å…¨é¢å±é•¿ç»­èˆªå°ç±³æ‰‹ç¯9å‡çº§æ¬¾', price: $r('app.string.goods_price_wear_3') },
+    { name: 'ä¸‰æ˜Ÿ/Samsung Galaxy Watch8 æ™ºèƒ½æ‰‹è¡¨ è¿åŠ¨AIå¿ƒç‡ç›‘æµ‹ç¡çœ ç›‘æµ‹è¡€æ°§è¡€å‹å¿ƒç‡é€‚é…ä¸‰æ˜Ÿä¸‰æŠ˜å ', price: $r('app.string.goods_price_wear_4') },
+  ];
+
+  // å®¶å±…åˆ†ç±»å•†å“
+  const homeFurnishings: Array<GeneratedTypeLiteralInterface_home> = [
+    { name: 'è‰åœ°æµ®æ¸¸æ°´æ°”ç¼¸æ¡Œé¢ç¯æ‘†ä»¶æ°›å›´å°å¤œç¯é±¼ç¼¸', price: $r('app.string.goods_price_home_1') },
+    { name: 'ç‰©æœ‰å¼•åŠ› è´¢ç«ç¯ å¤å¤æ°›å›´ç¯å§å®¤åºŠå¤´å°å¤œç¯å……ç”µæ°‘å®¿è£…é¥°åœ£è¯åˆ›æ„', price: $r('app.string.goods_price_home_2') },
+    { name: 'ç°ä»£è½»å¥¢æ¤­åœ†å½¢è£…é¥°æ‰˜ç›˜æ ·æ¿æˆ¿åˆ›æ„å®¶å±…é¤æ¡ŒèŒ¶å‡ æ°´æœç›˜æ”¶çº³ç›˜æ‘†ä»¶', price: $r('app.string.goods_price_home_3') },
+    { name: 'åŸæœ¨å¥¶æ²¹é£å®¢å…è£…é¥°ç”»è¶£å‘³çŒ«å’ªæ²™å‘èƒŒæ™¯å¢™æŒ‚ç”»ç«‹ä½“ç ‚å²©é«˜çº§æ„Ÿå£ç”»', price: $r('app.string.goods_price_home_4') },
+  ];
+
+  // ç”Ÿæˆæ‰‹æœºå•†å“
+  mobilePhones.forEach((item, index) => {
+    goodsList.push({
+      id: id++,
+      goodsName: item.name,
+      price: item.price,
+      goodsImg: getPhoneImage(index % 4 + 1),
+      advertisingLanguage: $r('app.string.advertising_language'),
+      evaluate: $r('app.string.evaluate'),
+      category: CATEGORIES.MOBILE_PHONE
+    });
+  });
+
+  // ç”Ÿæˆæœè£…å•†å“
+  clothes.forEach((item, index) => {
+    goodsList.push({
+      id: id++,
+      goodsName: item.name,
+      price: item.price,
+      goodsImg: getClothesImage(index % 4 + 1),
+      advertisingLanguage: $r('app.string.advertising_language'),
+      evaluate: $r('app.string.evaluate'),
+      category: CATEGORIES.CLOTHES
+    });
+  });
+
+  // ç”Ÿæˆç©¿æˆ´å•†å“
+  wears.forEach((item, index) => {
+    goodsList.push({
+      id: id++,
+      goodsName: item.name,
+      price: item.price,
+      goodsImg: getWearImage(index % 4 + 1),
+      advertisingLanguage: $r('app.string.advertising_language'),
+      evaluate: $r('app.string.evaluate'),
+      category: CATEGORIES.WEAR
+    });
+  });
+
+  // ç”Ÿæˆå®¶å±…å•†å“
+  homeFurnishings.forEach((item, index) => {
+    goodsList.push({
+      id: id++,
+      goodsName: item.name,
+      price: item.price,
+      goodsImg: getHomeImage(index % 4 + 1),
+      advertisingLanguage: $r('app.string.advertising_language'),
+      evaluate: $r('app.string.evaluate'),
+      category: CATEGORIES.HOME_FURNISHING
+    });
+  });
+
+  return goodsList;
+}
+
+// è·å–æŒ‡å®šåˆ†ç±»çš„å•†å“æ•°æ®
+function getGoodsByCategory(category: string): GoodsListItemType[] {
+  const allGoods = getAllGoods();
+  if (category === CATEGORIES.SELECTED) {
+    // ç²¾é€‰é¡µï¼šä»æ‰€æœ‰å•†å“ä¸­éšæœºæŒ‘é€‰
+    return shuffleArray(allGoods).slice(0, FEATURED_SIZE);
+  } else {
+    // å…¶ä»–åˆ†ç±»ï¼šç­›é€‰å¯¹åº”åˆ†ç±»çš„å•†å“
+    const filtered = allGoods.filter(item => item.category === category);
+    // å¦‚æœæ•°é‡ä¸å¤Ÿï¼Œå¾ªç¯å±•ç¤º
+    if (filtered.length < PAGE_SIZE) {
+      return fillArrayWithLoop(filtered, PAGE_SIZE);
+    }
+    return filtered.slice(0, PAGE_SIZE);
+  }
+}
+
+// éšæœºæ‰“ä¹±æ•°ç»„
+function shuffleArray<T>(array: T[]): T[] {
+  const newArray = [...array];
+  for (let i = newArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = newArray[i];
+    newArray[i] = newArray[j];
+    newArray[j] = temp;
+  }
+  return newArray;
+}
+
+// å¾ªç¯å¡«å……æ•°ç»„ï¼Œç›´åˆ°è¾¾åˆ°æŒ‡å®šé•¿åº¦
+function fillArrayWithLoop<T>(array: T[], length: number): T[] {
+  if (array.length === 0) {
+    return array;
+  }
+  const result: T[] = [];
+  while (result.length < length) {
+    for (let i = 0; i < array.length && result.length < length; i++) {
+      result.push(array[i]);
+    }
+  }
+  return result;
+}
+
+// è·å–åˆ·æ–°åçš„å•†å“æ•°æ®ï¼ˆéšæœºæ’åºï¼‰
+export function getRefreshedGoodsByCategory(category: string): GoodsListItemType[] {
+  let goods = getGoodsByCategory(category);
+  // éšæœºæ‰“ä¹±
+  goods = shuffleArray(goods);
+  // å¦‚æœæ•°é‡ä¸å¤Ÿï¼Œåˆ™å¾ªç¯å¡«å……
+  if (goods.length < PAGE_SIZE) {
+    goods = fillArrayWithLoop(goods, PAGE_SIZE);
+  }
+  return goods.slice(0, PAGE_SIZE);
+}
+
+// å®šä¹‰æ¯ä¸ªåˆ†ç±»çš„å›¾ç‰‡è·å–å‡½æ•°
+function getPhoneImage(index: number): Resource {
+  switch (index) {
+    case 1: return $r('app.media.phone1');
+    case 2: return $r('app.media.phone2');
+    case 3: return $r('app.media.phone3');
+    case 4: return $r('app.media.phone4');
+    default: return $r('app.media.phone1');
+  }
+}
+function getClothesImage(index: number): Resource {
+  switch (index) {
+    case 1: return $r('app.media.clothes1');
+    case 2: return $r('app.media.clothes2');
+    case 3: return $r('app.media.clothes3');
+    case 4: return $r('app.media.clothes4');
+    default: return $r('app.media.clothes1');
+  }
+}
+function getWearImage(index: number): Resource {
+  switch (index) {
+    case 1: return $r('app.media.wear1');
+    case 2: return $r('app.media.wear2');
+    case 3: return $r('app.media.wear3');
+    case 4: return $r('app.media.wear4');
+    default: return $r('app.media.wear1');
+  }
+}
+function getHomeImage(index: number): Resource {
+  switch (index) {
+    case 1: return $r('app.media.home1');
+    case 2: return $r('app.media.home2');
+    case 3: return $r('app.media.home3');
+    case 4: return $r('app.media.home4');
+    default: return $r('app.media.home1');
+  }
+}
+
+// åˆå§‹åŒ–å•†å“æ•°æ®
+export function initGoodsData(): GoodsListItemType[] {
+  return getGoodsByCategory(CATEGORIES.SELECTED);
+}ÀÔrE‘¹../common/CommonConstantsÔrF—ªassertions¨external¢id¤meta±moduleSideEffectsªresolvedByµsyntheticNamedExportsAÂÙ[C:\Users\24505\Documents\GitHub\Yigofang_Mall\entry\src\main\ets\common\CommonConstants.etsAÃªoh-resolveÂ“ÔrG–§version¤fileªsourceRoot§sources¥names¨mappings®InitialData.js ‘¯InitialData.etsÜ Í‘”    ‘” š”   ” ”	 	” ” ”! !”# ÌI”) ÌO”ÌD Ìj”ÌE Ìk–”  $ ” $” $” $” $” $=”” %” %
+” %” %”” &” &” &”  &”” '” '	” '” '”” (” (”
+ (” (”” )” )” )”& )$’” *” *’”  , ” ,””  - ” -” -” -’” .” .	’” 3” 3’”  4 ” 4””  ÌJ ” ÌJ” ÌJ” ÌJ–” ÌK”
+ ÌK” ÌK” ÌK)” ÌK+” ÌK,–” ÌL” ÌL”
+ ÌL” ÌL” ÌL” ÌL’” ÌN” ÌN”” ÌO”
+ ÌO” ÌO” ÌOÌC™” ÌP”
+ ÌP” ÌP
+” ÌP”? ÌP;”ÌA ÌP=”ÌF ÌPÌB”Ì¶ ÌPÌh”Ì¸ ÌPÌj™” ÌQ”
+ ÌQ” ÌQ
+” ÌQ”ÌH ÌQÌD”ÌJ ÌQÌF”ÌO ÌQÌK”Ì¿ ÌQÌq”ÌÁ ÌQÌs™” ÌR”
+ ÌR” ÌR
+” ÌR”ÌK ÌRÌG”ÌM ÌRÌI”ÌR ÌRÌN”ÌÂ ÌRÌt”ÌÄ ÌRÌv™” ÌS”
+ ÌS” ÌS
+” ÌS”> ÌS:”Ì@ ÌS<”ÌE ÌSÌA”Ìµ ÌSÌg”Ì· ÌSÌi’” ÌT” ÌT’” ÌV” ÌV”” ÌW”
+ ÌW” ÌW” ÌWÌ@™” ÌX”
+ ÌX” ÌX
+” ÌX”/ ÌX+”1 ÌX-”6 ÌX2”Ì¦ ÌXÌZ”Ì¨ ÌXÌ\™” ÌY”
+ ÌY” ÌY
+” ÌY”9 ÌY5”; ÌY7”Ì@ ÌY<”Ì° ÌYÌd”Ì² ÌYÌf™” ÌZ”
+ ÌZ” ÌZ
+” ÌZ”5 ÌZ1”7 ÌZ3”< ÌZ8”Ì¬ ÌZÌ`”Ì® ÌZÌb™” Ì[”
+ Ì[” Ì[
+” Ì[”( Ì[$”* Ì[&”/ Ì[+”ÌŸ Ì[ÌS”Ì¡ Ì[ÌU’” Ì\” Ì\’” Ì^” Ì^”” Ì_”
+ Ì_” Ì_” Ì_;™” Ì`”
+ Ì`” Ì`
+” Ì`”ÌF Ì`ÌB”ÌH Ì`ÌD”ÌM Ì`ÌI”Ì½ Ì`Ìn”Ì¿ Ì`Ìp™” Ìa”
+ Ìa” Ìa
+” Ìa”ÌL ÌaÌH”ÌN ÌaÌJ”ÌS ÌaÌO”ÌÃ ÌaÌt”ÌÅ ÌaÌv™” Ìb”
+ Ìb” Ìb
+” Ìb”4 Ìb0”6 Ìb2”; Ìb7”Ì« ÌbÌ\”Ì­ ÌbÌ^™” Ìc”
+ Ìc” Ìc
+” Ìc”ÌI ÌcÌE”ÌK ÌcÌG”ÌP ÌcÌL”ÌÀ ÌcÌq”ÌÂ ÌcÌs’” Ìd” Ìd’” Ìf” Ìf”” Ìg”
+ Ìg” Ìg” ÌgÌE™” Ìh”
+ Ìh” Ìh
+” Ìh”% Ìh!”' Ìh#”, Ìh(”Ìœ ÌhÌM”Ì ÌhÌO™” Ìi”
+ Ìi” Ìi
+” Ìi”1 Ìi-”3 Ìi/”8 Ìi4”Ì¨ ÌiÌY”Ìª ÌiÌ[™” Ìj”
+ Ìj” Ìj
+” Ìj”0 Ìj,”2 Ìj.”7 Ìj3”Ì§ ÌjÌX”Ì© ÌjÌZ™” Ìk”
+ Ìk” Ìk
+” Ìk”0 Ìk,”2 Ìk.”7 Ìk3”Ì§ ÌkÌX”Ì© ÌkÌZ’” Ìl” Ìl’” Ìn” Ìn›” Ìo” Ìo” Ìo” Ìo” Ìo” Ìo” Ìo”  Ìo”% Ìo#”' Ìo%”) Ìo'•” Ìp” Ìp” Ìp” Ìp” Ìp•” Ìq” Ìq” Ìq
+” Ìq” Ìq–” Ìr” Ìr” Ìr” Ìr” Ìr”  Ìr–” Ìs” Ìs” Ìs” Ìs” Ìs” Ìs›” Ìt” Ìt” Ìt”# Ìt”$ Ìt”) Ìt#”, Ìt&”- Ìt'”0 Ìt*”1 Ìt+”2 Ìt,“” Ìu” Ìu”Ì ÌuÌ@“” Ìv” Ìv”Ì„ Ìv)–” Ìw” Ìw” Ìw”  Ìw”! Ìw”- Ìw'“”	 Ìx”
+ Ìx” Ìx”” Ìy” Ìy” Ìy” Ìy’” Ì{” Ì{›” Ì|” Ì|	” Ì|
+” Ì|” Ì|” Ì|” Ì|” Ì|”  Ì|”" Ì| ”$ Ì|"•” Ì}” Ì}” Ì}” Ì}” Ì}•” Ì~” Ì~” Ì~
+” Ì~” Ì~–” Ì” Ì” Ì” Ì” Ì”  Ì–” Ì€” Ì€” Ì€” Ì€” Ì€” Ì€›” Ì” Ì” Ì”% Ì”& Ì ”+ Ì%”. Ì(”/ Ì)”2 Ì,”3 Ì-”4 Ì.“” Ì‚” Ì‚”Ì Ì‚Ì@“” Ìƒ” Ìƒ”Ì„ Ìƒ)–” Ì„” Ì„” Ì„”  Ì„”! Ì„”( Ì„"“”	 Ì…”
+ Ì…” Ì…”” Ì†” Ì†” Ì†” Ì†’” Ìˆ” Ìˆ›” Ì‰”	 Ì‰”
+ Ì‰” Ì‰” Ì‰” Ì‰” Ì‰” Ì‰” Ì‰”  Ì‰”" Ì‰ •” ÌŠ” ÌŠ” ÌŠ” ÌŠ” ÌŠ•” Ì‹” Ì‹” Ì‹
+” Ì‹” Ì‹–” ÌŒ” ÌŒ” ÌŒ” ÌŒ” ÌŒ”  ÌŒ–” Ì” Ì” Ì” Ì” Ì” Ì›” Ì” Ì” Ì”" Ì”# Ì”( Ì"”+ Ì%”, Ì&”/ Ì)”0 Ì*”1 Ì+“” Ì” Ì”Ì ÌÌ@“” Ì” Ì”Ì„ Ì)–” Ì‘” Ì‘” Ì‘”  Ì‘”! Ì‘”% Ì‘“”	 Ì’”
+ Ì’” Ì’”” Ì“” Ì“” Ì“” Ì“’” Ì•” Ì•›” Ì–” Ì–” Ì–” Ì–” Ì–” Ì–”! Ì–”# Ì–!”( Ì–&”* Ì–(”, Ì–*•” Ì—” Ì—” Ì—” Ì—” Ì—•” Ì˜” Ì˜” Ì˜
+” Ì˜” Ì˜–” Ì™” Ì™” Ì™” Ì™” Ì™”  Ì™–” Ìš” Ìš” Ìš” Ìš” Ìš” Ìš›” Ì›” Ì›” Ì›”" Ì›”# Ì›”( Ì›"”+ Ì›%”, Ì›&”/ Ì›)”0 Ì›*”1 Ì›+“” Ìœ” Ìœ”Ì ÌœÌ@“” Ì” Ì”Ì„ Ì)–” Ì” Ì” Ì”  Ì”! Ì”0 Ì*“”	 ÌŸ”
+ ÌŸ” ÌŸ”” Ì ” Ì ” Ì ” Ì ”” Ì¢” Ì¢	” Ì¢” Ì¢’”  Ì£ ” Ì£’”  Ì¥ ” Ì¥•”  Ì¦ ”	 Ì¦	” Ì¦” Ì¦”$ Ì¦,—” Ì§”
+ Ì§” Ì§” Ì§”  Ì§”" Ì§ ”# Ì§!˜” Ì¨” Ì¨” Ì¨” Ì¨” Ì¨”  Ì¨”( Ì¨&”* Ì¨(’” Ì©” Ì©” Ìª” Ìª” Ìª” Ìª”$ Ìª ”% Ìª!”& Ìª"”+ Ìª'”, Ìª(”- Ìª)”/ Ìª+”< Ìª8”= Ìª9”> Ìª:‘” Ì«‘”	 Ì«	’” Ì¬” Ì¬Ü ” Ì­” Ì­
+” Ì­” Ì­”! Ì­”" Ì­”( Ì­$”) Ì­%”- Ì­)”. Ì­*”0 Ì­,”1 Ì­-”5 Ì­1”6 Ì­2”> Ì­:”ÌC Ì­?”ÌK Ì­ÌG”ÌL Ì­ÌH”ÌM Ì­ÌI’” Ì®” Ì®˜” Ì¯” Ì¯” Ì¯” Ì¯” Ì¯” Ì¯”' Ì¯#”) Ì¯%™” Ì°” Ì°”$ Ì°”% Ì°”- Ì°'”/ Ì°)”8 Ì°2”9 Ì°3”: Ì°4‘”	 Ì±›” Ì²” Ì²” Ì²” Ì²” Ì²” Ì²” Ì²”! Ì²”* Ì²&”+ Ì²'”, Ì²(‘” Ì³’”  Ì´ ” Ì´’”  Ì¶ ”	 Ì¶	•”  Ì· ”	 Ì·	” Ì·” Ì·” Ì·#™” Ì¸”
+ Ì¸” Ì¸” Ì¸” Ì¸” Ì¸” Ì¸” Ì¸”  Ì¸Ü ” Ì¹”	 Ì¹” Ì¹” Ì¹” Ì¹” Ì¹” Ì¹”  Ì¹”# Ì¹!”$ Ì¹"”& Ì¹$”' Ì¹%”* Ì¹(”+ Ì¹)”- Ì¹+”. Ì¹,”0 Ì¹.”2 Ì¹0Ü ” Ìº” Ìº
+” Ìº” Ìº” Ìº” Ìº” Ìº” Ìº”! Ìº”" Ìº”( Ìº$”* Ìº&”- Ìº)”. Ìº*”/ Ìº+”2 Ìº.”3 Ìº/”4 Ìº0”5 Ìº1”6 Ìº2™” Ì»” Ì»
+” Ì»” Ì»” Ì»” Ì»” Ì»”  Ì»”! Ì»›” Ì¼” Ì¼” Ì¼” Ì¼” Ì¼” Ì¼” Ì¼” Ì¼”  Ì¼”! Ì¼”" Ì¼˜” Ì½” Ì½” Ì½” Ì½” Ì½” Ì½” Ì½” Ì½‘” Ì¾”” Ì¿” Ì¿	” Ì¿” Ì¿’”  ÌÀ ” ÌÀ’”  ÌÂ ” ÌÂ—”  ÌÃ ”	 ÌÃ	” ÌÃ” ÌÃ”  ÌÃ(”" ÌÃ*”( ÌÃ8˜” ÌÄ” ÌÄ” ÌÄ” ÌÄ” ÌÄ” ÌÄ” ÌÄ” ÌÄ”” ÌÅ” ÌÅ” ÌÅ” ÌÅ‘” ÌÆ–” ÌÇ”
+ ÌÇ” ÌÇ” ÌÇ” ÌÇ” ÌÇ˜” ÌÈ” ÌÈ	” ÌÈ” ÌÈ” ÌÈ” ÌÈ”! ÌÈ”# ÌÈ!Ü ” ÌÉ” ÌÉ	” ÌÉ” ÌÉ” ÌÉ” ÌÉ” ÌÉ” ÌÉ” ÌÉ”! ÌÉ”" ÌÉ”( ÌÉ$”, ÌÉ(”2 ÌÉ.”3 ÌÉ/”9 ÌÉ5”< ÌÉ8”ÌB ÌÉ>”ÌD ÌÉÌ@”ÌE ÌÉÌA”ÌG ÌÉÌC”ÌI ÌÉÌE›” ÌÊ” ÌÊ” ÌÊ” ÌÊ” ÌÊ” ÌÊ” ÌÊ” ÌÊ”  ÌÊ”! ÌÊ”" ÌÊ‘”	 ÌË‘” ÌÌ”” ÌÍ” ÌÍ	” ÌÍ” ÌÍ’”  ÌÎ ” ÌÎ’”  ÌĞ ” ÌĞ–”  ÌÑ ” ÌÑ” ÌÑ”+ ÌÑ+”, ÌÑ,”4 ÌÑ<™” ÌÒ” ÌÒ” ÌÒ” ÌÒ”" ÌÒ ”# ÌÒ!”+ ÌÒ)”, ÌÒ*”- ÌÒ+’” ÌÓ” ÌÓ	˜” ÌÔ”	 ÌÔ” ÌÔ
+” ÌÔ” ÌÔ” ÌÔ” ÌÔ”  ÌÔ’” ÌÕ” ÌÕ˜” ÌÖ” ÌÖ” ÌÖ” ÌÖ” ÌÖ” ÌÖ”  ÌÖ”" ÌÖ š” Ì×” Ì×	” Ì×”! Ì×”" Ì×”' Ì×#”) Ì×%”2 Ì×.”3 Ì×/”4 Ì×0‘” ÌØ›” ÌÙ” ÌÙ	” ÌÙ” ÌÙ” ÌÙ” ÌÙ” ÌÙ” ÌÙ”# ÌÙ!”$ ÌÙ"”% ÌÙ#’”  ÌÚ ” ÌÚ’”  ÌÜ ” ÌÜ•”  Ìİ ”	 Ìİ	” Ìİ” Ìİ” Ìİ$”” ÌŞ” ÌŞ
+” ÌŞ” ÌŞ–” Ìß” Ìß	” Ìß
+” Ìß” Ìß”Ì† Ìß*–” Ìà” Ìà	” Ìà
+” Ìà” Ìà”Ì† Ìà*–” Ìá” Ìá	” Ìá
+” Ìá” Ìá”Ì† Ìá*–” Ìâ” Ìâ	” Ìâ
+” Ìâ” Ìâ”Ì† Ìâ*•” Ìã” Ìã” Ìã” Ìã”Ì‡ Ìã+‘” Ìä’”  Ìå ” Ìå•”  Ìæ ”	 Ìæ	” Ìæ” Ìæ” Ìæ&”” Ìç” Ìç
+” Ìç” Ìç–” Ìè” Ìè	” Ìè
+” Ìè” Ìè”Ì† Ìè,–” Ìé” Ìé	” Ìé
+” Ìé” Ìé”Ì† Ìé,–” Ìê” Ìê	” Ìê
+” Ìê” Ìê”Ì† Ìê,–” Ìë” Ìë	” Ìë
+” Ìë” Ìë”Ì† Ìë,•” Ìì” Ìì” Ìì” Ìì”Ì‡ Ìì-‘” Ìí’”  Ìî ” Ìî•”  Ìï ”	 Ìï	” Ìï” Ìï” Ìï#”” Ìğ” Ìğ
+” Ìğ” Ìğ–” Ìñ” Ìñ	” Ìñ
+” Ìñ” Ìñ”Ì† Ìñ)–” Ìò” Ìò	” Ìò
+” Ìò” Ìò”Ì† Ìò)–” Ìó” Ìó	” Ìó
+” Ìó” Ìó”Ì† Ìó)–” Ìô” Ìô	” Ìô
+” Ìô” Ìô”Ì† Ìô)•” Ìõ” Ìõ” Ìõ” Ìõ”Ì‡ Ìõ*‘” Ìö’”  Ì÷ ” Ì÷•”  Ìø ”	 Ìø	” Ìø” Ìø” Ìø#”” Ìù” Ìù
+” Ìù” Ìù–” Ìú” Ìú	” Ìú
+” Ìú” Ìú”Ì† Ìú)–” Ìû” Ìû	” Ìû
+” Ìû” Ìû”Ì† Ìû)–” Ìü” Ìü	” Ìü
+” Ìü” Ìü”Ì† Ìü)–” Ìı” Ìı	” Ìı
+” Ìı” Ìı”Ì† Ìı)•” Ìş” Ìş” Ìş” Ìş”Ì‡ Ìş*‘” Ìÿ’”  Í  ” Í ’”  Í ”
+ Í
+””  Í ” Í” Í” Í™” Í” Í	” Í” Í”( Í&”) Í'”1 Í/”2 Í0”3 Í1’”  Í ” ÍÔrH–§version¤file§sources®sourcesContent¥names¨mappingsÀ‘À‘ÀÜ Î‘”    ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”  	 ‘”  
+ ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”    ‘”  ! ‘”  " ‘”  # ‘”  $ ‘”  % ‘”  & ‘”  ' ‘”  ( ‘”  ) ‘”  * ‘”  + ‘”  , ‘”  - ‘”  . ‘”  / ‘”  0 ‘”  1 ‘”  2 ‘”  3 ‘”  4 ‘”  5 ‘”  6 ‘”  7 ‘”  8 ‘”  9 ‘”  : ‘”  ; ‘”  < ‘”  = ‘”  > ‘”  ? ‘”  Ì@ ‘”  ÌA ‘”  ÌB ‘”  ÌC ‘”  ÌD ‘”  ÌE ‘”  ÌF ‘”  ÌG ‘”  ÌH ‘”  ÌI ‘”  ÌJ ‘”  ÌK ‘”  ÌL ‘”  ÌM ‘”  ÌN ‘”  ÌO ‘”  ÌP ‘”  ÌQ ‘”  ÌR ‘”  ÌS ‘”  ÌT ‘”  ÌU ‘”  ÌV ‘”  ÌW ‘”  ÌX ‘”  ÌY ‘”  ÌZ ‘”  Ì[ ‘”  Ì\ ‘”  Ì] ‘”  Ì^ ‘”  Ì_ ‘”  Ì` ‘”  Ìa ‘”  Ìb ‘”  Ìc ‘”  Ìd ‘”  Ìe ‘”  Ìf ‘”  Ìg ‘”  Ìh ‘”  Ìi ‘”  Ìj ‘”  Ìk ‘”  Ìl ‘”  Ìm ‘”  Ìn ‘”  Ìo ‘”  Ìp ‘”  Ìq ‘”  Ìr ‘”  Ìs ‘”  Ìt ‘”  Ìu ‘”  Ìv ‘”  Ìw ‘”  Ìx ‘”  Ìy ‘”  Ìz ‘”  Ì{ ‘”  Ì| ‘”  Ì} ‘”  Ì~ ‘”  Ì ‘”  Ì€ ‘”  Ì ‘”  Ì‚ ‘”  Ìƒ ‘”  Ì„ ‘”  Ì… ‘”  Ì† ‘”  Ì‡ ‘”  Ìˆ ‘”  Ì‰ ‘”  ÌŠ ‘”  Ì‹ ‘”  ÌŒ ‘”  Ì ‘”  Ì ‘”  Ì ‘”  Ì ‘”  Ì‘ ‘”  Ì’ ‘”  Ì“ ‘”  Ì” ‘”  Ì• ‘”  Ì– ‘”  Ì— ‘”  Ì˜ ‘”  Ì™ ‘”  Ìš ‘”  Ì› ‘”  Ìœ ‘”  Ì ‘”  Ì ‘”  ÌŸ ‘”  Ì  ‘”  Ì¡ ‘”  Ì¢ ‘”  Ì£ ‘”  Ì¤ ‘”  Ì¥ ‘”  Ì¦ ‘”  Ì§ ‘”  Ì¨ ‘”  Ì© ‘”  Ìª ‘”  Ì« ‘”  Ì¬ ‘”  Ì­ ‘”  Ì® ‘”  Ì¯ ‘”  Ì° ‘”  Ì± ‘”  Ì² ‘”  Ì³ ‘”  Ì´ ‘”  Ìµ ‘”  Ì¶ ‘”  Ì· ‘”  Ì¸ ‘”  Ì¹ ‘”  Ìº ‘”  Ì» ‘”  Ì¼ ‘”  Ì½ ‘”  Ì¾ ‘”  Ì¿ ‘”  ÌÀ ‘”  ÌÁ ‘”  ÌÂ ‘”  ÌÃ ‘”  ÌÄ ‘”  ÌÅ ‘”  ÌÆ ‘”  ÌÇ ‘”  ÌÈ ‘”  ÌÉ ‘”  ÌÊ ‘”  ÌË ‘”  ÌÌ ‘”  ÌÍ ÔrI’§missing¦pluginÃ¦genAbcÂÔ  ÔrJ”²dynamicImportCache¹exportAllDeclarationCache»exportNamedDeclarationCache«importCache•ÔrK–¤type¥start£end«declarationªspecifiers¦source¶ExportNamedDeclarationÍ°ÍaÔrL•¤type¥start£end¬declarations¤kind³VariableDeclarationÍ·Ía‘ÔrM•¤type¥start£end¢id¤init²VariableDeclaratorÍ½Í`ÔrN”¤type¥start£end¤nameªIdentifierÍ½ÍÇªCATEGORIESÔrO”¤type¥start£endªproperties°ObjectExpressionÍÊÍ`•ÔrP™¤type¥start£end¦method©shorthand¨computed£key¥value¤kind¨PropertyÍÑÍåÂÂÂNªIdentifierÍÑÍÙ¨SELECTEDÔrQ•¤type¥start£end¥value£raw§LiteralÍÛÍå¨selectedª'selected'¤initP¨PropertyÍìÍÂÂÂNªIdentifierÍìÍø¬MOBILE_PHONEQ§LiteralÍúÍ¬mobile_phone®'mobile_phone'¤initP¨PropertyÍÍ!ÂÂÂNªIdentifierÍÍ§CLOTHESQ§LiteralÍÍ!§clothes©'clothes'¤initP¨PropertyÍ(Í4ÂÂÂNªIdentifierÍ(Í,¤WEARQ§LiteralÍ.Í4¤wear¦'wear'¤initP¨PropertyÍ;Í]ÂÂÂNªIdentifierÍ;ÍJ¯HOME_FURNISHINGQ§LiteralÍLÍ]¯home_furnishing±'home_furnishing'¤init¥constÀK¶ExportNamedDeclarationÍpÍÔrR™¤type¥start£end¢idªexpression©generator¥async¦params¤body³FunctionDeclarationÍwÍNªIdentifierÍ€Í®initTabBarDataÂÂÂÔrS”¤type¥start£end¤body®BlockStatementÍ‘Í‘ÔrT”¤type¥start£end¨argument¯ReturnStatementÍ˜Í‹ÔrU”¤type¥start£end¨elements¯ArrayExpressionÍŸÍŠ”O°ObjectExpressionÍªÍ•P¨PropertyÍ¬ÍºÂÂÂQ§LiteralÍ¬Í°¢id¤"id"Q§LiteralÍ²ÍºÎ  ;¨16777275¤initP¨PropertyÍ¼ÍÉÂÂÂQ§LiteralÍ¼ÍÂ¤type¦"type"Q§LiteralÍÄÍÉÍ'¥10003¤initP¨PropertyÍËÍÕÂÂÂNªIdentifierÍËÍÑ¦paramsU¯ArrayExpressionÍÓÍÕ¤initP¨PropertyÍ×ÍÿÂÂÂQ§LiteralÍ×ÍãªbundleName¬"bundleName"Q§LiteralÍåÍÿ¸com.example.list_harmonyº"com.example.list_harmony"¤initP¨PropertyÍÍÂÂÂQ§LiteralÍÍªmoduleName¬"moduleName"Q§LiteralÍÍ¥entry§"entry"¤initO°ObjectExpressionÍ#Í‘•P¨PropertyÍ%Í3ÂÂÂQ§LiteralÍ%Í)¢id¤"id"Q§LiteralÍ+Í3Î  ¨16777238¤initP¨PropertyÍ5ÍBÂÂÂQ§LiteralÍ5Í;¤type¦"type"Q§LiteralÍ=ÍBÍ'¥10003¤initP¨PropertyÍDÍNÂÂÂNªIdentifierÍDÍJ¦paramsU¯ArrayExpressionÍLÍN¤initP¨PropertyÍPÍxÂÂÂQ§LiteralÍPÍ\ªbundleName¬"bundleName"Q§LiteralÍ^Íx¸com.example.list_harmonyº"com.example.list_harmony"¤initP¨PropertyÍzÍÂÂÂQ§LiteralÍzÍ†ªmoduleName¬"moduleName"Q§LiteralÍˆÍ¥entry§"entry"¤initO°ObjectExpressionÍœÍ
+•P¨PropertyÍÍ¬ÂÂÂQ§LiteralÍÍ¢¢id¤"id"Q§LiteralÍ¤Í¬Î  D¨16777284¤initP¨PropertyÍ®Í»ÂÂÂQ§LiteralÍ®Í´¤type¦"type"Q§LiteralÍ¶Í»Í'¥10003¤initP¨PropertyÍ½ÍÇÂÂÂNªIdentifierÍ½ÍÃ¦paramsU¯ArrayExpressionÍÅÍÇ¤initP¨PropertyÍÉÍñÂÂÂQ§LiteralÍÉÍÕªbundleName¬"bundleName"Q§LiteralÍ×Íñ¸com.example.list_harmonyº"com.example.list_harmony"¤initP¨PropertyÍóÍÂÂÂQ§LiteralÍóÍÿªmoduleName¬"moduleName"Q§LiteralÍÍ¥entry§"entry"¤initO°ObjectExpressionÍÍƒ•P¨PropertyÍÍ%ÂÂÂQ§LiteralÍÍ¢id¤"id"Q§LiteralÍÍ%Î  :¨16777274¤initP¨PropertyÍ'Í4ÂÂÂQ§LiteralÍ'Í-¤type¦"type"Q§LiteralÍ/Í4Í'¥10003¤initP¨PropertyÍ6Í@ÂÂÂNªIdentifierÍ6Í<¦paramsU¯ArrayExpressionÍ>Í@¤initP¨PropertyÍBÍjÂÂÂQ§LiteralÍBÍNªbundleName¬"bundleName"Q§LiteralÍPÍj¸com.example.list_harmonyº"com.example.list_harmony"¤initP¨PropertyÍlÍÂÂÂQ§LiteralÍlÍxªmoduleName¬"moduleName"Q§LiteralÍzÍ¥entry§"entry"¤initÀK¶ExportNamedDeclarationÍÍR³FunctionDeclarationÍ—ÍNªIdentifierÍ Í««getAllGoodsÂÂÂS®BlockStatementÍ®Í›L³VariableDeclarationÍµÍÊ‘M²VariableDeclaratorÍ»ÍÉNªIdentifierÍ»ÍÄ©goodsListU¯ArrayExpressionÍÇÍÉ¥constL³VariableDeclarationÍĞÍÛ‘M²VariableDeclaratorÍÔÍÚNªIdentifierÍÔÍÖ¢idQ§LiteralÍÙÍÚ¡1£letL³VariableDeclarationÍğÍ	‘M²VariableDeclaratorÍöÍ	NªIdentifierÍöÍ¬mobilePhonesU¯ArrayExpressionÍÍ	”O°ObjectExpressionÍÍÀ’P¨PropertyÍÍGÂÂÂNªIdentifierÍÍ¤nameQ§LiteralÍÍGÙ]vivo X300 Proæ–°å“è”¡å¸2äº¿APOè¶…çº§é•¿ç„¦å¤©ç‘9500æ‹ç…§æ‰‹æœºå®˜æ–¹æ——èˆ°åº—å®˜ç½‘æ­£å“Ù_'vivo X300 Proæ–°å“è”¡å¸2äº¿APOè¶…çº§é•¿ç„¦å¤©ç‘9500æ‹ç…§æ‰‹æœºå®˜æ–¹æ——èˆ°åº—å®˜ç½‘æ­£å“'¤initP¨PropertyÍIÍ¾ÂÂÂNªIdentifierÍIÍN¥priceO°ObjectExpressionÍPÍ¾•P¨PropertyÍRÍ`ÂÂÂQ§LiteralÍRÍV¢id¤"id"Q§LiteralÍXÍ`Î  2¨16777266¤initP¨PropertyÍbÍoÂÂÂQ§LiteralÍbÍh¤type¦"type"Q§LiteralÍjÍoÍ'¥10003¤initP¨PropertyÍqÍ{ÂÂÂNªIdentifierÍqÍw¦paramsU¯ArrayExpressionÍyÍ{¤initP¨PropertyÍ}Í¥ÂÂÂQ§LiteralÍ}Í‰ªbundleName¬"bundleName"Q§LiteralÍ‹Í¥¸com.example.list_harmonyº"com.example.list_harmony"¤initP¨PropertyÍ§Í¼ÂÂÂQ§LiteralÍ§Í³ªmoduleName¬"moduleName"Q§LiteralÍµÍ¼¥entry§"entry"¤init¤initO°ObjectExpressionÍËÍ„’P¨PropertyÍÍÍÂÂÂNªIdentifierÍÍÍÑ¤nameQ§LiteralÍÓÍÙrHUAWEI Mate 80 éº’éºŸ9020èŠ¯ç‰‡ ç¬¬äºŒä»£çº¢æ«å½±åƒ é¸¿è’™AI åä¸ºç›´å±é¸¿è’™æ™ºèƒ½æ‰‹æœºåä¸ºå®˜æ–¹æ——èˆ°åº—Ùt'HUAWEI Mate 80 éº’éºŸ9020èŠ¯ç‰‡ ç¬¬äºŒä»£çº¢æ«å½±åƒ é¸¿è’™AI åä¸ºç›´å±é¸¿è’™æ™ºèƒ½æ‰‹æœºåä¸ºå®˜æ–¹æ——èˆ°åº—'¤initP¨PropertyÍÍ‚ÂÂÂNªIdentifierÍÍ¥priceO°ObjectExpressionÍÍ‚•P¨PropertyÍÍ$ÂÂÂQ§LiteralÍÍ¢id¤"id"Q§LiteralÍÍ$Î  3¨16777267¤initP¨PropertyÍ&Í3ÂÂÂQ§LiteralÍ&Í,¤type¦"type"Q§LiteralÍ.Í3Í'¥10003¤initP¨PropertyÍ5Í?ÂÂÂNªIdentifierÍ5Í;¦paramsU¯ArrayExpressionÍ=Í?¤initP¨PropertyÍAÍiÂÂÂQ§LiteralÍAÍMªbundleName¬"bundleName"Q§LiteralÍOÍi¸com.example.list_harmonyº"com.example.list_harmony"¤initP¨PropertyÍkÍ€ÂÂÂQ§LiteralÍkÍwªmoduleName¬"moduleName"Q§LiteralÍyÍ€¥entry§"entry"¤init¤initO°ObjectExpressionÍÍK’P¨PropertyÍ‘ÍÒÂÂÂNªIdentifierÍ‘Í•¤nameQ§LiteralÍ—ÍÒÙ]Apple/è‹¹æœ iPhone 17 Pro Max æ‰‹æœº A19 ProèŠ¯ç‰‡ 2025æ–°æ¬¾ å…¨æ–°æœªæ‹†å°ï¼Œå®˜æ–¹æ­£å“Ù_'Apple/è‹¹æœ iPhone 17 Pro Max æ‰‹æœº A19 ProèŠ¯ç‰‡ 2025æ–°æ¬¾ å…¨æ–°æœªæ‹†å°ï¼Œå®˜æ–¹æ­£å“'¤initP¨PropertyÍÔÍIÂÂÂNªIdentifierÍÔÍÙ¥priceO°ObjectExpressionÍÛÍI•P¨PropertyÍİÍëÂÂÂQ§LiteralÍİÍá¢id¤"id"Q§LiteralÍãÍëÎ  4¨16777268¤initP¨PropertyÍíÍúÂÂÂQ§LiteralÍíÍó¤type¦"type"Q§LiteralÍõÍúÍ'¥10003¤initP¨PropertyÍüÍÂÂÂNªIdentifierÍüÍ¦paramsU¯ArrayExpressionÍÍ¤initP¨PropertyÍÍ0ÂÂÂQ§LiteralÍÍªbundleName¬"bundleName"Q§LiteralÍÍ0¸com.example.list_harmonyº"com.example.list_harmony"¤initP¨PropertyÍ2ÍGÂÂÂQ§LiteralÍ2Í>ªmoduleName¬"moduleName"Q§LiteralÍ@ÍG¥entry§"entry"¤init¤initO°ObjectExpressionÍVÍ	’P¨PropertyÍXÍŒÂÂÂNªIdentifierÍXÍ\¤nameQ§LiteralÍ^ÍŒÙjå°ç±³17 Proæ‰‹æœºæ–°å“ä¸Šå¸‚å°ç±³å¾•å¡è”åˆç ”å‘å°ç±³å®˜æ–¹æ——èˆ°åº—å®˜ç½‘å°ç±³æ¾æ¹ƒOSå°ç±³17proÙl'å°ç±³17 Proæ‰‹æœºæ–°å“ä¸Šå¸‚å°ç±³å¾•å¡è”åˆç ”å‘å°ç±³å®˜æ–¹æ——èˆ°åº—å®˜ç½‘å°ç±³æ¾æ¹ƒOSå°ç±³17pro'¤initP¨PropertyÍÍ	ÂÂÂNªIdentifierÍÍ“¥priceO°ObjectExpressionÍ•Í	•P¨PropertyÍ—Í¥ÂÂÂQ§LiteralÍ—Í›¢id¤"id"Q§LiteralÍÍ¥Î  5¨16777269¤initP¨PropertyÍ§Í´ÂÂÂQ§LiteralÍ§Í­¤type¦"type"Q§LiteralÍ¯Í´Í'¥10003¤initP¨PropertyÍ¶ÍÀÂÂÂNªIdentifierÍ¶Í¼¦paramsU¯ArrayExpressionÍ¾ÍÀ¤initP¨PropertyÍÂÍêÂÂÂQ§LiteralÍÂÍÎªbundleName¬"bundleName"Q§LiteralÍĞÍê¸com.example.list_harmonyº"com.example.list_harmony"¤initP¨PropertyÍìÍ	ÂÂÂQ§LiteralÍìÍøªmoduleName¬"moduleName"Q§LiteralÍúÍ	¥entry§"entry"¤init¤init¥constL³VariableDeclarationÍ	#Íñ‘M²VariableDeclaratorÍ	)ÍğNªIdentifierÍ	)Í	0§clothesU¯ArrayExpressionÍ	3Íğ”O°ObjectExpressionÍ	>Í	Ş’P¨PropertyÍ	@Í	eÂÂÂNªIdentifierÍ	@Í	D¤nameQ§LiteralÍ	FÍ	eÙGèŠ±çº±ç¾Šæ¯›æ··çººåŠé«˜é¢†æ¯›è¡£å¼€è¡«è€é’±æ£•è‰²ç°è‰²ç™¾æ­cleanfitÙI'èŠ±çº±ç¾Šæ¯›æ··çººåŠé«˜é¢†æ¯›è¡£å¼€è¡«è€é’±æ£•è‰²ç°è‰²ç™¾æ­cleanfit'¤initP¨PropertyÍ	gÍ	ÜÂÂÂNªIdentifierÍ	gÍ	l¥priceO°ObjectExpressionÍ	nÍ	Ü•P¨PropertyÍ	pÍ	~ÂÂÂQ§LiteralÍ	pÍ	t¢id¤"id"Q§LiteralÍ	vÍ	~Î  *¨16777258¤initP¨PropertyÍ	€Í	ÂÂÂQ§LiteralÍ	€Í	†¤type¦"type"Q§LiteralÍ	ˆÍ	Í'¥10003¤initP¨PropertyÍ	Í	™ÂÂÂNªIdentifierÍ	Í	•¦paramsU¯ArrayExpressionÍ	—Í	™¤initP¨PropertyÍ	›Í	ÃÂÂÂQ§LiteralÍ	›Í	§ªbundleName¬"bundleName"Q§LiteralÍ	©Í	Ã¸com.example.list_harmonyº"com.example.list_harmony"¤initP¨PropertyÍ	ÅÍ	ÚÂÂÂQ§LiteralÍ	ÅÍ	ÑªmoduleName¬"moduleName"Q§LiteralÍ	ÓÍ	Ú¥entry§"entry"¤init¤initO°ObjectExpressionÍ	éÍ
+“’P¨PropertyÍ	ëÍ
+ÂÂÂNªIdentifierÍ	ëÍ	ï¤nameQ§LiteralÍ	ñÍ
+ÙIOUR LEGACY Eveningç”·å£«é»‘è‰²Poloè¡«ä¼‘é—²å®½æ¾å¤å¤é’ˆç»‡å¼€è¡«å¤–å¥—ÙK'OUR LEGACY Eveningç”·å£«é»‘è‰²Poloè¡«ä¼‘é—²å®½æ¾å¤å¤é’ˆç»‡å¼€è¡«å¤–å¥—'¤initP¨PropertyÍ
+Í
+‘ÂÂÂNªIdentifierÍ
+Í
+!¥priceO°ObjectExpressionÍ
+#Í
+‘•P¨PropertyÍ
+%Í
+3ÂÂÂQ§LiteralÍ
+%Í
+)¢id¤"id"Q§LiteralÍ
++Í
+3Î  +¨16777259¤initP¨PropertyÍ
+5Í
+BÂÂÂQ§LiteralÍ
+5Í
+;¤type¦"type"Q§LiteralÍ
+=Í
+BÍ'¥10003¤initP¨PropertyÍ
+DÍ
+NÂÂÂNªIdentifierÍ
+DÍ
+J¦paramsU¯ArrayExpressionÍ
+LÍ
+N¤initP¨PropertyÍ
+PÍ
+xÂÂÂQ§LiteralÍ
+PÍ
+\ªbundleName¬"bundleName"Q§LiteralÍ
+^Í
+x¸com.example.list_harmonyº"com.example.list_harmony"¤initP¨PropertyÍ
+zÍ
+ÂÂÂQ§LiteralÍ
+zÍ
+†ªmoduleName¬"moduleName"Q§LiteralÍ
+ˆÍ
+¥entry§"entry"¤init¤initO°ObjectExpressionÍ
+ÍD’P¨PropertyÍ
+ Í
+ËÂÂÂNªIdentifierÍ
+ Í
+¤¤nameQ§LiteralÍ
+¦Í
+ËÙUNo day offã€Œçƒ§è¾¹ç‰›è§’æ‰£ã€ç¾Šæ¯›æ··çººé’ˆç»‡äº¨åˆ©é¢†æ¯›è¡£çº¯è‰²åŸºç¡€é•¿è¢–ç”·ÙW'No day offã€Œçƒ§è¾¹ç‰›è§’æ‰£ã€ç¾Šæ¯›æ··çººé’ˆç»‡äº¨åˆ©é¢†æ¯›è¡£çº¯è‰²åŸºç¡€é•¿è¢–ç”·'¤initP¨PropertyÍ
+ÍÍBÂÂÂNªIdentifierÍ
+ÍÍ
+Ò¥priceO°ObjectExpressionÍ
+ÔÍB•P¨PropertyÍ
+ÖÍ
+äÂÂÂQ§LiteralÍ
+ÖÍ
+Ú¢id¤"id"Q§LiteralÍ
+ÜÍ
+äÎ  ,¨16777260¤initP¨PropertyÍ
+æÍ
+óÂÂÂQ§LiteralÍ
+æÍ
+ì¤type¦"type"Q§LiteralÍ
+îÍ
+óÍ'¥10003¤initP¨PropertyÍ
+õÍ
+ÿÂÂÂNªIdentifierÍ
+õÍ
+û¦paramsU¯ArrayExpressionÍ
+ıÍ
+ÿ¤initP¨PropertyÍÍ)ÂÂÂQ§LiteralÍÍªbundleName¬"bundleName"Q§LiteralÍÍ)¸com.example.list_harmonyº"com.example.list_harmony"¤initP¨PropertyÍ+Í@ÂÂÂQ§LiteralÍ+Í7ªmoduleName¬"moduleName"Q§LiteralÍ9Í@¥entry§"entry"¤init¤initO°ObjectExpressionÍOÍè’P¨PropertyÍQÍoÂÂÂNªIdentifierÍQÍU¤nameQ§LiteralÍWÍoÙBé«˜çŸ¥æ„Ÿèˆ’èŠ™è•¾ä¼‘é—²å¤å¤æ…µæ‡’ç¾Šæ¯›æ··çººæ¯›ç»‡å¼€è¡«å¤–å¥—ÙD'é«˜çŸ¥æ„Ÿèˆ’èŠ™è•¾ä¼‘é—²å¤å¤æ…µæ‡’ç¾Šæ¯›æ··çººæ¯›ç»‡å¼€è¡«å¤–å¥—'¤initP¨PropertyÍqÍæÂÂÂNªIdentifierÍqÍv¥priceO°ObjectExpressionÍxÍæ•P¨PropertyÍzÍˆÂÂÂQ§LiteralÍzÍ~¢id¤"id"Q§LiteralÍ€ÍˆÎ  -¨16777261¤initP¨PropertyÍŠÍ—ÂÂÂQ§LiteralÍŠÍ¤type¦"type"Q§LiteralÍ’Í—Í'¥10003¤initP¨PropertyÍ™Í£ÂÂÂNªIdentifierÍ™ÍŸ¦paramsU¯ArrayExpressionÍ¡Í£¤initP¨PropertyÍ¥ÍÍÂÂÂQ§LiteralÍ¥Í±ªbundleName¬"bundleName"Q§LiteralÍ³ÍÍ¸com.example.list_harmonyº"com.example.list_harmony"¤initP¨PropertyÍÏÍäÂÂÂQ§LiteralÍÏÍÛªmoduleName¬"moduleName"Q§LiteralÍİÍä¥entry§"entry"¤init¤init¥constL³VariableDeclarationÍÍ‘M²VariableDeclaratorÍÍNªIdentifierÍÍ¥wearsU¯ArrayExpressionÍÍ”O°ObjectExpressionÍÍÖ’P¨PropertyÍ!Í]ÂÂÂNªIdentifierÍ!Í%¤nameQ§LiteralÍ'Í]ÙTApple Watch Series 11 GPS + èœ‚çªæ¬¾ 44mm é’›é‡‘å±è¡¨å£³ æµ·æ´‹è¡¨å¸¦ æ™ºèƒ½æ‰‹è¡¨ÙV'Apple Watch Series 11 GPS + èœ‚çªæ¬¾ 44mm é’›é‡‘å±è¡¨å£³ æµ·æ´‹è¡¨å¸¦ æ™ºèƒ½æ‰‹è¡¨'¤initP¨PropertyÍ_ÍÔÂÂÂNªIdentifierÍ_Íd¥priceO°ObjectExpressionÍfÍÔ•P¨PropertyÍhÍvÂÂÂQ§LiteralÍhÍl¢id¤"id"Q§LiteralÍnÍvÎ  6¨16777270¤initP¨PropertyÍxÍ…ÂÂÂQ§LiteralÍxÍ~¤type¦"type"Q§LiteralÍ€Í…Í'¥10003¤initP¨PropertyÍ‡Í‘ÂÂÂNªIdentifierÍ‡Í¦paramsU¯ArrayExpressionÍÍ‘¤initP¨PropertyÍ“Í»ÂÂÂQ§LiteralÍ“ÍŸªbundleName¬"bundleName"Q§LiteralÍ¡Í»¸com.example.list_harmonyº"com.example.list_harmony"¤initP¨PropertyÍ½ÍÒÂÂÂQ§LiteralÍ½ÍÉªmoduleName¬"moduleName"Q§LiteralÍËÍÒ¥entry§"entry"¤init¤initO°ObjectExpressionÍáÍ’P¨PropertyÍãÍ%ÂÂÂNªIdentifierÍãÍç¤nameQ§LiteralÍéÍ%Ù†ã€æ–°å“ä¸Šå¸‚ã€‘Huawei/åä¸º WATCH GT 6æ™ºèƒ½æ‰‹è¡¨21å¤©è¶…é•¿ç»­èˆªåä¸ºæ‰‹æœºä¸“å–åº—æ™ºèƒ½ç©¿æˆ´è®¾å¤‡å¥åº·å…¨æ–°éª‘è¡Œä½“éªŒÙˆ'ã€æ–°å“ä¸Šå¸‚ã€‘Huawei/åä¸º WATCH GT 6æ™ºèƒ½æ‰‹è¡¨21å¤©è¶…é•¿ç»­èˆªåä¸ºæ‰‹æœºä¸“å–åº—æ™ºèƒ½ç©¿æˆ´è®¾å¤‡å¥åº·å…¨æ–°éª‘è¡Œä½“éªŒ'¤initP¨PropertyÍ'ÍœÂÂÂNªIdentifierÍ'Í,¥priceO°ObjectExpressionÍ.Íœ•P¨PropertyÍ0Í>ÂÂÂQ§LiteralÍ0Í4¢id¤"id"Q§LiteralÍ6Í>Î  7¨16777271¤initP¨PropertyÍ@ÍMÂÂÂQ§LiteralÍ@ÍF¤type¦"type"Q§LiteralÍHÍMÍ'¥10003¤initP¨PropertyÍOÍYÂÂÂNªIdentifierÍOÍU¦paramsU¯ArrayExpressionÍWÍY¤initP¨PropertyÍ[ÍƒÂÂÂQ§LiteralÍ[ÍgªbundleName¬"bundleName"Q§LiteralÍiÍƒ¸com.example.list_harmonyº"com.example.list_harmony"¤initP¨PropertyÍ…ÍšÂÂÂQ§LiteralÍ…Í‘ªmoduleName¬"moduleName"Q§LiteralÍ“Íš¥entry§"entry"¤init¤initO°ObjectExpressionÍ©ÍN’P¨PropertyÍ«ÍÕÂÂÂNªIdentifierÍ«Í¯¤nameQ§LiteralÍ±ÍÕÙ`å°ç±³æ‰‹ç¯10æ™ºèƒ½æ‰‹ç¯è¿åŠ¨å¥åº·é˜²æ°´ç¡çœ å¿ƒç‡å…¨é¢å±é•¿ç»­èˆªå°ç±³æ‰‹ç¯9å‡çº§æ¬¾Ùb'å°ç±³æ‰‹ç¯10æ™ºèƒ½æ‰‹ç¯è¿åŠ¨å¥åº·é˜²æ°´ç¡çœ å¿ƒç‡å…¨é¢å±é•¿ç»­èˆªå°ç±³æ‰‹ç¯9å‡çº§æ¬¾'¤initP¨PropertyÍ×ÍLÂÂÂNªIdentifierÍ×ÍÜ¥priceO°ObjectExpressionÍŞÍL•P¨PropertyÍàÍîÂÂÂQ§LiteralÍàÍä¢id¤"id"Q§LiteralÍæÍîÎ  8¨16777272¤initP¨PropertyÍğÍıÂÂÂQ§LiteralÍğÍö¤type¦"type"Q§LiteralÍøÍıÍ'¥10003¤initP¨PropertyÍÿÍ	ÂÂÂNªIdentifierÍÿÍ¦paramsU¯ArrayExpressionÍÍ	¤initP¨PropertyÍÍ3ÂÂÂQ§LiteralÍÍªbundleName¬"bundleName"Q§LiteralÍÍ3¸com.example.list_harmonyº"com.example.list_harmony"¤initP¨PropertyÍ5ÍJÂÂÂQ§LiteralÍ5ÍAªmoduleName¬"moduleName"Q§LiteralÍCÍJ¥entry§"entry"¤init¤initO°ObjectExpressionÍYÍ’P¨PropertyÍ[ÍšÂÂÂNªIdentifierÍ[Í_¤nameQ§LiteralÍaÍšÙqä¸‰æ˜Ÿ/Samsung Galaxy Watch8 æ™ºèƒ½æ‰‹è¡¨ è¿åŠ¨AIå¿ƒç‡ç›‘æµ‹ç¡çœ ç›‘æµ‹è¡€æ°§è¡€å‹å¿ƒç‡é€‚é…ä¸‰æ˜Ÿä¸‰æŠ˜å Ùs'ä¸‰æ˜Ÿ/Samsung Galaxy Watch8 æ™ºèƒ½æ‰‹è¡¨ è¿åŠ¨AIå¿ƒç‡ç›‘æµ‹ç¡çœ ç›‘æµ‹è¡€æ°§è¡€å‹å¿ƒç‡é€‚é…ä¸‰æ˜Ÿä¸‰æŠ˜å '¤initP¨PropertyÍœÍÂÂÂNªIdentifierÍœÍ¡¥priceO°ObjectExpressionÍ£Í•P¨PropertyÍ¥Í³ÂÂÂQ§LiteralÍ¥Í©¢id¤"id"Q§LiteralÍ«Í³Î  9¨16777273¤initP¨PropertyÍµÍÂÂÂÂQ§LiteralÍµÍ»¤type¦"type"Q§LiteralÍ½ÍÂÍ'¥10003¤initP¨PropertyÍÄÍÎÂÂÂNªIdentifierÍÄÍÊ¦paramsU¯ArrayExpressionÍÌÍÎ¤initP¨PropertyÍĞÍøÂÂÂQ§LiteralÍĞÍÜªbundleName¬"bundleName"Q§LiteralÍŞÍø¸com.example.list_harmonyº"com.example.list_harmony"¤initP¨PropertyÍúÍÂÂÂQ§LiteralÍúÍªmoduleName¬"moduleName"Q§LiteralÍÍ¥entry§"entry"¤init¤init¥constL³VariableDeclarationÍ1Íø‘M²VariableDeclaratorÍ7Í÷NªIdentifierÍ7ÍF¯homeFurnishingsU¯ArrayExpressionÍIÍ÷”O°ObjectExpressionÍTÍê’P¨PropertyÍVÍqÂÂÂNªIdentifierÍVÍZ¤nameQ§LiteralÍ\ÍqÙ9è‰åœ°æµ®æ¸¸æ°´æ°”ç¼¸æ¡Œé¢ç¯æ‘†ä»¶æ°›å›´å°å¤œç¯é±¼ç¼¸Ù;'è‰åœ°æµ®æ¸¸æ°´æ°”ç¼¸æ¡Œé¢ç¯æ‘†ä»¶æ°›å›´å°å¤œç¯é±¼ç¼¸'¤initP¨PropertyÍsÍèÂÂÂNªIdentifierÍsÍx¥priceO°ObjectExpressionÍzÍè•P¨PropertyÍ|ÍŠÂÂÂQ§LiteralÍ|Í€¢id¤"id"Q§LiteralÍ‚ÍŠÎ  .¨16777262¤initP¨PropertyÍŒÍ™ÂÂÂQ§LiteralÍŒÍ’¤type¦"type"Q§LiteralÍ”Í™Í'¥10003¤initP¨PropertyÍ›Í¥ÂÂÂNªIdentifierÍ›Í¡¦paramsU¯ArrayExpressionÍ£Í¥¤initP¨PropertyÍ§ÍÏÂÂÂQ§LiteralÍ§Í³ªbundleName¬"bundleName"Q§LiteralÍµÍÏ¸com.example.list_harmonyº"com.example.list_harmony"¤initP¨PropertyÍÑÍæÂÂÂQ§LiteralÍÑÍİªmoduleName¬"moduleName"Q§LiteralÍßÍæ¥entry§"entry"¤init¤initO°ObjectExpressionÍõÍ—’P¨PropertyÍ÷ÍÂÂÂNªIdentifierÍ÷Íû¤nameQ§LiteralÍıÍÙYç‰©æœ‰å¼•åŠ› è´¢ç«ç¯ å¤å¤æ°›å›´ç¯å§å®¤åºŠå¤´å°å¤œç¯å……ç”µæ°‘å®¿è£…é¥°åœ£è¯åˆ›æ„Ù['ç‰©æœ‰å¼•åŠ› è´¢ç«ç¯ å¤å¤æ°›å›´ç¯å§å®¤åºŠå¤´å°å¤œç¯å……ç”µæ°‘å®¿è£…é¥°åœ£è¯åˆ›æ„'¤initP¨PropertyÍ Í•ÂÂÂNªIdentifierÍ Í%¥priceO°ObjectExpressionÍ'Í••P¨PropertyÍ)Í7ÂÂÂQ§LiteralÍ)Í-¢id¤"id"Q§LiteralÍ/Í7Î  /¨16777263¤initP¨PropertyÍ9ÍFÂÂÂQ§LiteralÍ9Í?¤type¦"type"Q§LiteralÍAÍFÍ'¥10003¤initP¨PropertyÍHÍRÂÂÂNªIdentifierÍHÍN¦paramsU¯ArrayExpressionÍPÍR¤initP¨PropertyÍTÍ|ÂÂÂQ§LiteralÍTÍ`ªbundleName¬"bundleName"Q§LiteralÍbÍ|¸com.example.list_harmonyº"com.example.list_harmony"¤initP¨PropertyÍ~Í“ÂÂÂQ§LiteralÍ~ÍŠªmoduleName¬"moduleName"Q§LiteralÍŒÍ“¥entry§"entry"¤init¤initO°ObjectExpressionÍ¢ÍC’P¨PropertyÍ¤ÍÊÂÂÂNªIdentifierÍ¤Í¨¤nameQ§LiteralÍªÍÊÙZç°ä»£è½»å¥¢æ¤­åœ†å½¢è£…é¥°æ‰˜ç›˜æ ·æ¿æˆ¿åˆ›æ„å®¶å±…é¤æ¡ŒèŒ¶å‡ æ°´æœç›˜æ”¶çº³ç›˜æ‘†ä»¶Ù\'ç°ä»£è½»å¥¢æ¤­åœ†å½¢è£…é¥°æ‰˜ç›˜æ ·æ¿æˆ¿åˆ›æ„å®¶å±…é¤æ¡ŒèŒ¶å‡ æ°´æœç›˜æ”¶çº³ç›˜æ‘†ä»¶'¤initP¨PropertyÍÌÍAÂÂÂNªIdentifierÍÌÍÑ¥priceO°ObjectExpressionÍÓÍA•P¨PropertyÍÕÍãÂÂÂQ§LiteralÍÕÍÙ¢id¤"id"Q§LiteralÍÛÍãÎ  0¨16777264¤initP¨PropertyÍåÍòÂÂÂQ§LiteralÍåÍë¤type¦"type"Q§LiteralÍíÍòÍ'¥10003¤initP¨PropertyÍôÍşÂÂÂNªIdentifierÍôÍú¦paramsU¯ArrayExpressionÍüÍş¤initP¨PropertyÍ Í(ÂÂÂQ§LiteralÍ ÍªbundleName¬"bundleName"Q§LiteralÍÍ(¸com.example.list_harmonyº"com.example.list_harmony"¤initP¨PropertyÍ*Í?ÂÂÂQ§LiteralÍ*Í6ªmoduleName¬"moduleName"Q§LiteralÍ8Í?¥entry§"entry"¤init¤initO°ObjectExpressionÍNÍï’P¨PropertyÍPÍvÂÂÂNªIdentifierÍPÍT¤nameQ§LiteralÍVÍvÙZåŸæœ¨å¥¶æ²¹é£å®¢å…è£…é¥°ç”»è¶£å‘³çŒ«å’ªæ²™å‘èƒŒæ™¯å¢™æŒ‚ç”»ç«‹ä½“ç ‚å²©é«˜çº§æ„Ÿå£ç”»Ù\'åŸæœ¨å¥¶æ²¹é£å®¢å…è£…é¥°ç”»è¶£å‘³çŒ«å’ªæ²™å‘èƒŒæ™¯å¢™æŒ‚ç”»ç«‹ä½“ç ‚å²©é«˜çº§æ„Ÿå£ç”»'¤initP¨PropertyÍxÍíÂÂÂNªIdentifierÍxÍ}¥priceO°ObjectExpressionÍÍí•P¨PropertyÍÍÂÂÂQ§LiteralÍÍ…¢id¤"id"Q§LiteralÍ‡ÍÎ  1¨16777265¤initP¨PropertyÍ‘ÍÂÂÂQ§LiteralÍ‘Í—¤type¦"type"Q§LiteralÍ™ÍÍ'¥10003¤initP¨PropertyÍ ÍªÂÂÂNªIdentifierÍ Í¦¦paramsU¯ArrayExpressionÍ¨Íª¤initP¨PropertyÍ¬ÍÔÂÂÂQ§LiteralÍ¬Í¸ªbundleName¬"bundleName"Q§LiteralÍºÍÔ¸com.example.list_harmonyº"com.example.list_harmony"¤initP¨PropertyÍÖÍëÂÂÂQ§LiteralÍÖÍâªmoduleName¬"moduleName"Q§LiteralÍäÍë¥entry§"entry"¤init¤init¥constÔrV”¤type¥start£endªexpression³ExpressionStatementÍÍ;ÔrW–¤type¥start£end¦callee©arguments¨optional®CallExpressionÍÍ:ÔrX—¤type¥start£end¦object¨property¨computed¨optional°MemberExpressionÍÍ!NªIdentifierÍÍ¬mobilePhonesNªIdentifierÍÍ!§forEachÂÂ‘R·ArrowFunctionExpressionÍ"Í9ÀÂÂÂ’NªIdentifierÍ#Í'¤itemNªIdentifierÍ)Í.¥indexS®BlockStatementÍ3Í9‘V³ExpressionStatementÍ>Í2W®CallExpressionÍ>Í1X°MemberExpressionÍ>ÍLNªIdentifierÍ>ÍG©goodsListNªIdentifierÍHÍL¤pushÂÂ‘O°ObjectExpressionÍMÍ0—P¨PropertyÍ\ÍdÂÂÂNªIdentifierÍ\Í^¢idÔrY–¤type¥start£end¨operator¦prefix¨argument°UpdateExpressionÍ`Íd¢++ÂNªIdentifierÍ`Íb¢id¤initP¨PropertyÍsÍ‡ÂÂÂNªIdentifierÍsÍ|©goodsNameX°MemberExpressionÍ~Í‡NªIdentifierÍ~Í‚¤itemNªIdentifierÍƒÍ‡¤nameÂÂ¤initP¨PropertyÍ–Í§ÂÂÂNªIdentifierÍ–Í›¥priceX°MemberExpressionÍÍ§NªIdentifierÍÍ¡¤itemNªIdentifierÍ¢Í§¥priceÂÂ¤initP¨PropertyÍ¶ÍÜÂÂÂNªIdentifierÍ¶Í¾¨goodsImgW®CallExpressionÍÀÍÜNªIdentifierÍÀÍÍ­getPhoneImage‘ÔrZ–¤type¥start£end¤left¨operator¥right°BinaryExpressionÍÎÍÛZ°BinaryExpressionÍÎÍ×NªIdentifierÍÎÍÓ¥index¡%Q§LiteralÍÖÍ×¡4¡+Q§LiteralÍÚÍÛ¡1Â¤initP¨PropertyÍëÍnÂÂÂNªIdentifierÍëÍş³advertisingLanguageO°ObjectExpressionÍ Ín•P¨PropertyÍÍÂÂÂQ§LiteralÍÍ¢id¤"id"Q§LiteralÍÍÎ  ¨16777236¤initP¨PropertyÍÍÂÂÂQ§LiteralÍÍ¤type¦"type"Q§LiteralÍÍÍ'¥10003¤initP¨PropertyÍ!Í+ÂÂÂNªIdentifierÍ!Í'¦paramsU¯ArrayExpressionÍ)Í+¤initP¨PropertyÍ-ÍUÂÂÂQ§LiteralÍ-Í9ªbundleName¬"bundleName"Q§LiteralÍ;ÍU¸com.example.list_harmonyº"com.example.list_harmony"¤initP¨PropertyÍWÍlÂÂÂQ§LiteralÍWÍcªmoduleName¬"moduleName"Q§LiteralÍeÍl¥entry§"entry"¤init¤initP¨PropertyÍ}ÍõÂÂÂNªIdentifierÍ}Í…¨evaluateO°ObjectExpressionÍ‡Íõ•P¨PropertyÍ‰Í—ÂÂÂQ§LiteralÍ‰Í¢id¤"id"Q§LiteralÍÍ—Î  ¨16777240¤initP¨PropertyÍ™Í¦ÂÂÂQ§LiteralÍ™ÍŸ¤type¦"type"Q§LiteralÍ¡Í¦Í'¥10003¤initP¨PropertyÍ¨Í²ÂÂÂNªIdentifierÍ¨Í®¦paramsU¯ArrayExpressionÍ°Í²¤initP¨PropertyÍ´ÍÜÂÂÂQ§LiteralÍ´ÍÀªbundleName¬"bundleName"Q§LiteralÍÂÍÜ¸com.example.list_harmonyº"com.example.list_harmony"¤initP¨PropertyÍŞÍóÂÂÂQ§LiteralÍŞÍêªmoduleName¬"moduleName"Q§LiteralÍìÍó¥entry§"entry"¤init¤initP¨PropertyÍÍ%ÂÂÂNªIdentifierÍÍ¨categoryX°MemberExpressionÍÍ%NªIdentifierÍÍªCATEGORIESNªIdentifierÍÍ%¬MOBILE_PHONEÂÂ¤initÂÂV³ExpressionStatementÍPÍvW®CallExpressionÍPÍuX°MemberExpressionÍPÍ_NªIdentifierÍPÍW§clothesNªIdentifierÍXÍ_§forEachÂÂ‘R·ArrowFunctionExpressionÍ`ÍtÀÂÂÂ’NªIdentifierÍaÍe¤itemNªIdentifierÍgÍl¥indexS®BlockStatementÍqÍt‘V³ExpressionStatementÍ|ÍmW®CallExpressionÍ|ÍlX°MemberExpressionÍ|ÍŠNªIdentifierÍ|Í…©goodsListNªIdentifierÍ†ÍŠ¤pushÂÂ‘O°ObjectExpressionÍ‹Ík—P¨PropertyÍšÍ¢ÂÂÂNªIdentifierÍšÍœ¢idY°UpdateExpressionÍÍ¢¢++ÂNªIdentifierÍÍ ¢id¤initP¨PropertyÍ±ÍÅÂÂÂNªIdentifierÍ±Íº©goodsNameX°MemberExpressionÍ¼ÍÅNªIdentifierÍ¼ÍÀ¤itemNªIdentifierÍÁÍÅ¤nameÂÂ¤initP¨PropertyÍÔÍåÂÂÂNªIdentifierÍÔÍÙ¥priceX°MemberExpressionÍÛÍåNªIdentifierÍÛÍß¤itemNªIdentifierÍàÍå¥priceÂÂ¤initP¨PropertyÍôÍÂÂÂNªIdentifierÍôÍü¨goodsImgW®CallExpressionÍşÍNªIdentifierÍşÍ¯getClothesImage‘Z°BinaryExpressionÍÍZ°BinaryExpressionÍÍNªIdentifierÍÍ¥index¡%Q§LiteralÍÍ¡4¡+Q§LiteralÍÍ¡1Â¤initP¨PropertyÍ+Í®ÂÂÂNªIdentifierÍ+Í>³advertisingLanguageO°ObjectExpressionÍ@Í®•P¨PropertyÍBÍPÂÂÂQ§LiteralÍBÍF¢id¤"id"Q§LiteralÍHÍPÎ  ¨16777236¤initP¨PropertyÍRÍ_ÂÂÂQ§LiteralÍRÍX¤type¦"type"Q§LiteralÍZÍ_Í'¥10003¤initP¨PropertyÍaÍkÂÂÂNªIdentifierÍaÍg¦paramsU¯ArrayExpressionÍiÍk¤initP¨PropertyÍmÍ•ÂÂÂQ§LiteralÍmÍyªbundleName¬"bundleName"Q§LiteralÍ{Í•¸com.example.list_harmonyº"com.example.list_harmony"¤initP¨PropertyÍ—Í¬ÂÂÂQ§LiteralÍ—Í£ªmoduleName¬"moduleName"Q§LiteralÍ¥Í¬¥entry§"entry"¤init¤initP¨PropertyÍ½Í5ÂÂÂNªIdentifierÍ½ÍÅ¨evaluateO°ObjectExpressionÍÇÍ5•P¨PropertyÍÉÍ×ÂÂÂQ§LiteralÍÉÍÍ¢id¤"id"Q§LiteralÍÏÍ×Î  ¨16777240¤initP¨PropertyÍÙÍæÂÂÂQ§LiteralÍÙÍß¤type¦"type"Q§LiteralÍáÍæÍ'¥10003¤initP¨PropertyÍèÍòÂÂÂNªIdentifierÍèÍî¦paramsU¯ArrayExpressionÍğÍò¤initP¨PropertyÍôÍÂÂÂQ§LiteralÍôÍ ªbundleName¬"bundleName"Q§LiteralÍÍ¸com.example.list_harmonyº"com.example.list_harmony"¤initP¨PropertyÍÍ3ÂÂÂQ§LiteralÍÍ*ªmoduleName¬"moduleName"Q§LiteralÍ,Í3¥entry§"entry"¤init¤initP¨PropertyÍDÍ`ÂÂÂNªIdentifierÍDÍL¨categoryX°MemberExpressionÍNÍ`NªIdentifierÍNÍXªCATEGORIESNªIdentifierÍYÍ`§CLOTHESÂÂ¤initÂÂV³ExpressionStatementÍ‹Í©W®CallExpressionÍ‹Í¨X°MemberExpressionÍ‹Í˜NªIdentifierÍ‹Í¥wearsNªIdentifierÍ‘Í˜§forEachÂÂ‘R·ArrowFunctionExpressionÍ™Í§ÀÂÂÂ’NªIdentifierÍšÍ¤itemNªIdentifierÍ Í¥¥indexS®BlockStatementÍªÍ§‘V³ExpressionStatementÍµÍ W®CallExpressionÍµÍŸX°MemberExpressionÍµÍÃNªIdentifierÍµÍ¾©goodsListNªIdentifierÍ¿ÍÃ¤pushÂÂ‘O°ObjectExpressionÍÄÍ—P¨PropertyÍÓÍÛÂÂÂNªIdentifierÍÓÍÕ¢idY°UpdateExpressionÍ×ÍÛ¢++ÂNªIdentifierÍ×ÍÙ¢id¤initP¨PropertyÍêÍşÂÂÂNªIdentifierÍêÍó©goodsNameX°MemberExpressionÍõÍşNªIdentifierÍõÍù¤itemNªIdentifierÍúÍş¤nameÂÂ¤initP¨PropertyÍÍÂÂÂNªIdentifierÍÍ¥priceX°MemberExpressionÍÍNªIdentifierÍÍ¤itemNªIdentifierÍÍ¥priceÂÂ¤initP¨PropertyÍ-ÍRÂÂÂNªIdentifierÍ-Í5¨goodsImgW®CallExpressionÍ7ÍRNªIdentifierÍ7ÍC¬getWearImage‘Z°BinaryExpressionÍDÍQZ°BinaryExpressionÍDÍMNªIdentifierÍDÍI¥index¡%Q§LiteralÍLÍM¡4¡+Q§LiteralÍPÍQ¡1Â¤initP¨PropertyÍaÍäÂÂÂNªIdentifierÍaÍt³advertisingLanguageO°ObjectExpressionÍvÍä•P¨PropertyÍxÍ†ÂÂÂQ§LiteralÍxÍ|¢id¤"id"Q§LiteralÍ~Í†Î  ¨16777236¤initP¨PropertyÍˆÍ•ÂÂÂQ§LiteralÍˆÍ¤type¦"type"Q§LiteralÍÍ•Í'¥10003¤initP¨PropertyÍ—Í¡ÂÂÂNªIdentifierÍ—Í¦paramsU¯ArrayExpressionÍŸÍ¡¤initP¨PropertyÍ£ÍËÂÂÂQ§LiteralÍ£Í¯ªbundleName¬"bundleName"Q§LiteralÍ±ÍË¸com.example.list_harmonyº"com.example.list_harmony"¤initP¨PropertyÍÍÍâÂÂÂQ§LiteralÍÍÍÙªmoduleName¬"moduleName"Q§LiteralÍÛÍâ¥entry§"entry"¤init¤initP¨PropertyÍóÍkÂÂÂNªIdentifierÍóÍû¨evaluateO°ObjectExpressionÍıÍk•P¨PropertyÍÿÍÂÂÂQ§LiteralÍÿÍ¢id¤"id"Q§LiteralÍÍÎ  ¨16777240¤initP¨PropertyÍÍÂÂÂQ§LiteralÍÍ¤type¦"type"Q§LiteralÍÍÍ'¥10003¤initP¨PropertyÍÍ(ÂÂÂNªIdentifierÍÍ$¦paramsU¯ArrayExpressionÍ&Í(¤initP¨PropertyÍ*ÍRÂÂÂQ§LiteralÍ*Í6ªbundleName¬"bundleName"Q§LiteralÍ8ÍR¸com.example.list_harmonyº"com.example.list_harmony"¤initP¨PropertyÍTÍiÂÂÂQ§LiteralÍTÍ`ªmoduleName¬"moduleName"Q§LiteralÍbÍi¥entry§"entry"¤init¤initP¨PropertyÍzÍ“ÂÂÂNªIdentifierÍzÍ‚¨categoryX°MemberExpressionÍ„Í“NªIdentifierÍ„ÍªCATEGORIESNªIdentifierÍÍ“¤WEARÂÂ¤initÂÂV³ExpressionStatementÍ¾ÍñW®CallExpressionÍ¾ÍğX°MemberExpressionÍ¾ÍÕNªIdentifierÍ¾ÍÍ¯homeFurnishingsNªIdentifierÍÎÍÕ§forEachÂÂ‘R·ArrowFunctionExpressionÍÖÍïÀÂÂÂ’NªIdentifierÍ×ÍÛ¤itemNªIdentifierÍİÍâ¥indexS®BlockStatementÍçÍï‘V³ExpressionStatementÍòÍèW®CallExpressionÍòÍçX°MemberExpressionÍòÍ NªIdentifierÍòÍû©goodsListNªIdentifierÍüÍ ¤pushÂÂ‘O°ObjectExpressionÍÍæ—P¨PropertyÍÍÂÂÂNªIdentifierÍÍ¢idY°UpdateExpressionÍÍ¢++ÂNªIdentifierÍÍ¢id¤initP¨PropertyÍ'Í;ÂÂÂNªIdentifierÍ'Í0©goodsNameX°MemberExpressionÍ2Í;NªIdentifierÍ2Í6¤itemNªIdentifierÍ7Í;¤nameÂÂ¤initP¨PropertyÍJÍ[ÂÂÂNªIdentifierÍJÍO¥priceX°MemberExpressionÍQÍ[NªIdentifierÍQÍU¤itemNªIdentifierÍVÍ[¥priceÂÂ¤initP¨PropertyÍjÍÂÂÂNªIdentifierÍjÍr¨goodsImgW®CallExpressionÍtÍNªIdentifierÍtÍ€¬getHomeImage‘Z°BinaryExpressionÍÍZ°BinaryExpressionÍÍŠNªIdentifierÍÍ†¥index¡%Q§LiteralÍ‰ÍŠ¡4¡+Q§LiteralÍÍ¡1Â¤initP¨PropertyÍÍ!ÂÂÂNªIdentifierÍÍ±³advertisingLanguageO°ObjectExpressionÍ³Í!•P¨PropertyÍµÍÃÂÂÂQ§LiteralÍµÍ¹¢id¤"id"Q§LiteralÍ»ÍÃÎ  ¨16777236¤initP¨PropertyÍÅÍÒÂÂÂQ§LiteralÍÅÍË¤type¦"type"Q§LiteralÍÍÍÒÍ'¥10003¤initP¨PropertyÍÔÍŞÂÂÂNªIdentifierÍÔÍÚ¦paramsU¯ArrayExpressionÍÜÍŞ¤initP¨PropertyÍàÍÂÂÂQ§LiteralÍàÍìªbundleName¬"bundleName"Q§LiteralÍîÍ¸com.example.list_harmonyº"com.example.list_harmony"¤initP¨PropertyÍ
+ÍÂÂÂQ§LiteralÍ
+ÍªmoduleName¬"moduleName"Q§LiteralÍÍ¥entry§"entry"¤init¤initP¨PropertyÍ0Í¨ÂÂÂNªIdentifierÍ0Í8¨evaluateO°ObjectExpressionÍ:Í¨•P¨PropertyÍ<ÍJÂÂÂQ§LiteralÍ<Í@¢id¤"id"Q§LiteralÍBÍJÎ  ¨16777240¤initP¨PropertyÍLÍYÂÂÂQ§LiteralÍLÍR¤type¦"type"Q§LiteralÍTÍYÍ'¥10003¤initP¨PropertyÍ[ÍeÂÂÂNªIdentifierÍ[Ía¦paramsU¯ArrayExpressionÍcÍe¤initP¨PropertyÍgÍÂÂÂQ§LiteralÍgÍsªbundleName¬"bundleName"Q§LiteralÍuÍ¸com.example.list_harmonyº"com.example.list_harmony"¤initP¨PropertyÍ‘Í¦ÂÂÂQ§LiteralÍ‘ÍªmoduleName¬"moduleName"Q§LiteralÍŸÍ¦¥entry§"entry"¤init¤initP¨PropertyÍ·ÍÛÂÂÂNªIdentifierÍ·Í¿¨categoryX°MemberExpressionÍÁÍÛNªIdentifierÍÁÍËªCATEGORIESNªIdentifierÍÌÍÛ¯HOME_FURNISHINGÂÂ¤initÂÂT¯ReturnStatementÍ÷ÍNªIdentifierÍşÍ©goodsListÀK¶ExportNamedDeclarationÍÛÍ!R³FunctionDeclarationÍâÍ!NªIdentifierÍëÍ »getRefreshedGoodsByCategoryÂÂÂ‘NªIdentifierÍ Í ¨categoryS®BlockStatementÍ Í!”L³VariableDeclarationÍ Í A‘M²VariableDeclaratorÍ Í @NªIdentifierÍ Í !¥goodsW®CallExpressionÍ $Í @NªIdentifierÍ $Í 6²getGoodsByCategory‘NªIdentifierÍ 7Í ?¨categoryÂ£letV³ExpressionStatementÍ TÍ pÔr[–¤type¥start£end¨operator¤left¥right´AssignmentExpressionÍ TÍ o¡=NªIdentifierÍ TÍ Y¥goodsW®CallExpressionÍ \Í oNªIdentifierÍ \Í h¬shuffleArray‘NªIdentifierÍ iÍ n¥goodsÂÔr\–¤type¥start£end¤testªconsequent©alternate«IfStatementÍ ‹Í çZ°BinaryExpressionÍ Í §X°MemberExpressionÍ Í ›NªIdentifierÍ Í ”¥goodsNªIdentifierÍ •Í ›¦lengthÂÂ¡<NªIdentifierÍ Í §©PAGE_SIZES®BlockStatementÍ ©Í ç‘V³ExpressionStatementÍ ´Í à[´AssignmentExpressionÍ ´Í ß¡=NªIdentifierÍ ´Í ¹¥goodsW®CallExpressionÍ ¼Í ßNªIdentifierÍ ¼Í Í±fillArrayWithLoop’NªIdentifierÍ ÎÍ Ó¥goodsNªIdentifierÍ ÕÍ Ş©PAGE_SIZEÂÀT¯ReturnStatementÍ íÍ!W®CallExpressionÍ ôÍ!X°MemberExpressionÍ ôÍ ÿNªIdentifierÍ ôÍ ù¥goodsNªIdentifierÍ úÍ ÿ¥sliceÂÂ’Q§LiteralÍ! Í! ¡0NªIdentifierÍ!Í!©PAGE_SIZEÂÀK¶ExportNamedDeclarationÍ,ÙÍ-2R³FunctionDeclarationÍ,àÍ-2NªIdentifierÍ,éÍ,ö­initGoodsDataÂÂÂS®BlockStatementÍ,ùÍ-2‘T¯ReturnStatementÍ- Í-/W®CallExpressionÍ-Í-.NªIdentifierÍ-Í-²getGoodsByCategory‘X°MemberExpressionÍ-Í--NªIdentifierÍ-Í-$ªCATEGORIESNªIdentifierÍ-%Í--¨SELECTEDÂÂÂÀ‘Ôr]•¤type¥start£endªspecifiers¦source±ImportDeclarationÍiÍ®’Ôr^•¤type¥start£end¨imported¥local¯ImportSpecifierÍrÍ{NªIdentifierÍrÍ{©PAGE_SIZENªIdentifierÍrÍ{©PAGE_SIZE^¯ImportSpecifierÍ}ÍŠNªIdentifierÍ}ÍŠ­FEATURED_SIZENªIdentifierÍ}ÍŠ­FEATURED_SIZEQ§LiteralÍ’Í­¹../common/CommonConstants»'../common/CommonConstants'

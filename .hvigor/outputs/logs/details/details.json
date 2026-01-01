@@ -2,11 +2,8 @@
   "HVIGOR_OHOS_PLUGIN": {
     "MODULES": [
       {
-        "MODULE_NAME": "1043bfc77febe75fafec0c4309faccf1",
-        "API_TYPE": "stageMode",
-        "INCREMENTAL_TASKS": {
-          "COMPILE_ARKTS": true
-        }
+        "MODULE_NAME": "923fe53966c6cd9343e11af776cd4b05be315ea4b200b02e4d5dfb0f929b73bf",
+        "API_TYPE": "stageMode"
       }
     ],
     "NATIVE_COMPILER": "Default",
@@ -18,24 +15,27 @@
     "IS_PARALLEL": true,
     "IS_HVIGORFILE_TYPE_CHECK": false,
     "TASK_TIME": {
-      "1043bfc77febe75fafec0c4309faccf1": {
-        "CreateModuleInfo": 1717200,
-        "ConfigureCmake": 733100,
-        "PreCheckSyscap": 1157200,
-        "GeneratePkgContextInfo": 9415200,
-        "ProcessIntegratedHsp": 2639800,
-        "BuildNativeWithCmake": 952900,
-        "SyscapTransform": 6777300,
-        "ProcessStartupConfig": 3284800,
-        "BuildNativeWithNinja": 3769200,
-        "BuildJS": 5704800,
-        "CompileArkTS": 2046415600,
-        "ProcessCompiledResources": 982600,
-        "PackageHap": 49470400,
-        "PackingCheck": 8616700,
-        "SignHap": 1403800,
-        "CollectDebugSymbol": 795700,
-        "assembleHap": 655600
+      "923fe53966c6cd9343e11af776cd4b05be315ea4b200b02e4d5dfb0f929b73bf": {
+        "PreBuild": 33292300,
+        "CreateModuleInfo": 616700,
+        "MergeProfile": 5033300,
+        "CreateBuildProfile": 2472400,
+        "PreCheckSyscap": 541300,
+        "GeneratePkgContextInfo": 4437000,
+        "ProcessProfile": 132436900,
+        "ProcessRouterMap": 3890000,
+        "ProcessShareConfig": 2929800,
+        "ProcessStartupConfig": 4385400,
+        "PreviewProcessResource": 2123800,
+        "GenerateLoaderJson": 15347300,
+        "PreviewCompileResource": 628238200,
+        "PreviewHookCompileResource": 365800,
+        "CopyPreviewProfile": 6187600,
+        "ReplacePreviewerPage": 545100,
+        "buildPreviewerResource": 217900,
+        "PreviewUpdateAssets": 3181500,
+        "PreviewArkTS": 8666677200,
+        "PreviewBuild": 247900
       }
     },
     "APIS": [
@@ -60,7 +60,7 @@
       "getStartParams"
     ],
     "CONFIG_PROPERTIES": {},
-    "TOTAL_TIME": 2554544100,
-    "BUILD_ID": "202512092358209020"
+    "TOTAL_TIME": 9740799800,
+    "BUILD_ID": "202601020446139390"
   }
 }

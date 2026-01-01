@@ -1,0 +1,448 @@
+Ôr@Ÿªassertions¤code´customTransformCache¬dependencies¢id¤meta±moduleSideEffects¬originalCode±originalSourcemap«resolvedIds®sourcemapChainµsyntheticNamedExportsµtransformDependencies®transformFiles¨cacheAstÔrAÚ)§if (!("finalizeConstruction" in ViewPU.prototype)) {
+    Reflect.set(ViewPU.prototype, "finalizeConstruction", () => { });
+}
+/*
+ * Copyright (c) 2023 Huawei Device Co., Ltd.
+ * Licensed under the Apache License,Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import { LAYOUT_WIDTH_OR_HEIGHT, NORMAL_FONT_SIZE, GOODS_EVALUATE_FONT_SIZE, SEARCH_HEIGHT, SEARCH_MARGIN } from '../common/CommonConstants';
+export default class SearchBox extends ViewPU {
+    constructor(parent, params, __localStorage, elmtId = -1, paramsLambda = undefined, extraInfo) {
+        super(parent, __localStorage, elmtId, extraInfo);
+        if (typeof paramsLambda === "function") {
+            this.paramsGenerator_ = paramsLambda;
+        }
+        this.__searchText = new ObservedPropertySimplePU('', this, "searchText");
+        this.__callback = new SynchedPropertyObjectOneWayPU(params.callback, this, "callback");
+        this.__placeholder = new SynchedPropertySimpleOneWayPU(params.placeholder, this, "placeholder");
+        this.setInitiallyProvidedValue(params);
+        this.finalizeConstruction();
+    }
+    setInitiallyProvidedValue(params) {
+        if (params.searchText !== undefined) {
+            this.searchText = params.searchText;
+        }
+        if (params.placeholder === undefined) {
+            this.__placeholder.set('è¯·è¾“å…¥æœç´¢å…³é”®è¯');
+        }
+    }
+    updateStateVars(params) {
+        this.__callback.reset(params.callback);
+        this.__placeholder.reset(params.placeholder);
+    }
+    purgeVariableDependenciesOnElmtId(rmElmtId) {
+        this.__searchText.purgeDependencyOnElmtId(rmElmtId);
+        this.__callback.purgeDependencyOnElmtId(rmElmtId);
+        this.__placeholder.purgeDependencyOnElmtId(rmElmtId);
+    }
+    aboutToBeDeleted() {
+        this.__searchText.aboutToBeDeleted();
+        this.__callback.aboutToBeDeleted();
+        this.__placeholder.aboutToBeDeleted();
+        SubscriberManager.Get().delete(this.id__());
+        this.aboutToBeDeletedInternal();
+    }
+    get searchText() {
+        return this.__searchText.get();
+    }
+    set searchText(newValue) {
+        this.__searchText.set(newValue);
+    }
+    get callback() {
+        return this.__callback.get();
+    }
+    set callback(newValue) {
+        this.__callback.set(newValue);
+    }
+    get placeholder() {
+        return this.__placeholder.get();
+    }
+    set placeholder(newValue) {
+        this.__placeholder.set(newValue);
+    }
+    /**
+     * å¤„ç†æœç´¢
+     */
+    handleSearch() {
+        if (this.searchText.trim() && this.callback?.onSearch) {
+            this.callback.onSearch(this.searchText.trim());
+        }
+    }
+    /**
+     * æ¸…é™¤æœç´¢æ–‡æœ¬
+     */
+    clearSearch() {
+        this.searchText = '';
+        if (this.callback?.onSearch) {
+            this.callback.onSearch('');
+        }
+    }
+    /**
+     * æ„å»ºæ¸…é™¤æŒ‰é’®
+     */
+    buildClearButton(parent = null) {
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            If.create();
+            if (this.searchText.length > 0) {
+                this.ifElseBranchUpdateFunction(0, () => {
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Row.create();
+                        Row.debugLine("entry/src/main/ets/view/SearchBoxComponent.ets(67:7)", "entry");
+                        Context.animation({
+                            duration: 200,
+                            curve: Curve.EaseOut
+                        });
+                        Row.width(20);
+                        Row.height(20);
+                        Row.justifyContent(FlexAlign.Center);
+                        Row.alignItems(VerticalAlign.Center);
+                        Row.backgroundColor({ "id": 16777298, "type": 10001, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" });
+                        Row.borderRadius(10);
+                        Row.onClick(() => this.clearSearch());
+                        Context.animation(null);
+                    }, Row);
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Text.create('Ã—');
+                        Text.debugLine("entry/src/main/ets/view/SearchBoxComponent.ets(68:9)", "entry");
+                        Text.fontSize(18);
+                        Text.fontColor({ "id": 16777233, "type": 10001, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" });
+                        Text.fontWeight(FontWeight.Bold);
+                    }, Text);
+                    Text.pop();
+                    Row.pop();
+                });
+            }
+            else {
+                this.ifElseBranchUpdateFunction(1, () => {
+                });
+            }
+        }, If);
+        If.pop();
+    }
+    initialRender() {
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // æœç´¢æ¡†å®¹å™¨
+            Column.create();
+            Column.debugLine("entry/src/main/ets/view/SearchBoxComponent.ets(89:5)", "entry");
+            // æœç´¢æ¡†å®¹å™¨
+            Column.width(LAYOUT_WIDTH_OR_HEIGHT);
+            // æœç´¢æ¡†å®¹å™¨
+            Column.padding({ top: 12, left: 16, right: 16, bottom: 8 });
+            // æœç´¢æ¡†å®¹å™¨
+            Column.backgroundColor({ "id": 16777302, "type": 10001, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" });
+        }, Column);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // æœç´¢æ¡†é¡¶éƒ¨åŒºåŸŸï¼ˆæœç´¢è¾“å…¥æ¡†å’Œæœç´¢æŒ‰é’®ï¼‰
+            Row.create();
+            Row.debugLine("entry/src/main/ets/view/SearchBoxComponent.ets(91:7)", "entry");
+            // æœç´¢æ¡†é¡¶éƒ¨åŒºåŸŸï¼ˆæœç´¢è¾“å…¥æ¡†å’Œæœç´¢æŒ‰é’®ï¼‰
+            Row.width('100%');
+            // æœç´¢æ¡†é¡¶éƒ¨åŒºåŸŸï¼ˆæœç´¢è¾“å…¥æ¡†å’Œæœç´¢æŒ‰é’®ï¼‰
+            Row.alignItems(VerticalAlign.Center);
+        }, Row);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // æœç´¢è¾“å…¥æ¡†
+            Row.create();
+            Row.debugLine("entry/src/main/ets/view/SearchBoxComponent.ets(93:9)", "entry");
+            Context.animation({
+                duration: 300,
+                curve: Curve.EaseOut
+            });
+            // æœç´¢è¾“å…¥æ¡†
+            Row.height(SEARCH_HEIGHT);
+            // æœç´¢è¾“å…¥æ¡†
+            Row.padding({ left: 12, right: 12 });
+            // æœç´¢è¾“å…¥æ¡†
+            Row.backgroundColor({ "id": 16777301, "type": 10001, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" });
+            // æœç´¢è¾“å…¥æ¡†
+            Row.borderRadius(20);
+            // æœç´¢è¾“å…¥æ¡†
+            Row.layoutWeight(1);
+            Context.animation(null);
+        }, Row);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // æœç´¢è¾“å…¥æ¡†
+            TextInput.create({
+                text: this.searchText,
+                placeholder: this.placeholder
+            });
+            TextInput.debugLine("entry/src/main/ets/view/SearchBoxComponent.ets(95:11)", "entry");
+            // æœç´¢è¾“å…¥æ¡†
+            TextInput.fontSize(NORMAL_FONT_SIZE);
+            // æœç´¢è¾“å…¥æ¡†
+            TextInput.fontColor({ "id": 16777304, "type": 10001, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" });
+            // æœç´¢è¾“å…¥æ¡†
+            TextInput.backgroundColor(Color.Transparent);
+            // æœç´¢è¾“å…¥æ¡†
+            TextInput.borderRadius(0);
+            // æœç´¢è¾“å…¥æ¡†
+            TextInput.layoutWeight(1);
+            // æœç´¢è¾“å…¥æ¡†
+            TextInput.maxLines(1);
+            // æœç´¢è¾“å…¥æ¡†
+            TextInput.onChange((value) => {
+                this.searchText = value;
+            });
+            // æœç´¢è¾“å…¥æ¡†
+            TextInput.onSubmit(() => {
+                this.handleSearch();
+            });
+            // æœç´¢è¾“å…¥æ¡†
+            TextInput.placeholderFont({ size: GOODS_EVALUATE_FONT_SIZE });
+            // æœç´¢è¾“å…¥æ¡†
+            TextInput.placeholderColor({ "id": 16777299, "type": 10001, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" });
+        }, TextInput);
+        // æ¸…é™¤æŒ‰é’®
+        this.buildClearButton.bind(this)();
+        // æœç´¢è¾“å…¥æ¡†
+        Row.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // æœç´¢æŒ‰é’®
+            Row.create();
+            Row.debugLine("entry/src/main/ets/view/SearchBoxComponent.ets(128:9)", "entry");
+            Context.animation({
+                duration: 200,
+                curve: Curve.EaseOut
+            });
+            // æœç´¢æŒ‰é’®
+            Row.height(SEARCH_HEIGHT);
+            // æœç´¢æŒ‰é’®
+            Row.padding({ left: 16, right: 16 });
+            // æœç´¢æŒ‰é’®
+            Row.backgroundColor({ "id": 16777300, "type": 10001, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" });
+            // æœç´¢æŒ‰é’®
+            Row.borderRadius(20);
+            // æœç´¢æŒ‰é’®
+            Row.margin({ left: SEARCH_MARGIN });
+            // æœç´¢æŒ‰é’®
+            Row.onClick(() => this.handleSearch());
+            Context.animation(null);
+        }, Row);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Text.create('æœç´¢');
+            Text.debugLine("entry/src/main/ets/view/SearchBoxComponent.ets(129:11)", "entry");
+            Text.fontSize(GOODS_EVALUATE_FONT_SIZE);
+            Text.fontColor(Color.White);
+            Text.fontWeight(FontWeight.Medium);
+        }, Text);
+        Text.pop();
+        // æœç´¢æŒ‰é’®
+        Row.pop();
+        // æœç´¢æ¡†é¡¶éƒ¨åŒºåŸŸï¼ˆæœç´¢è¾“å…¥æ¡†å’Œæœç´¢æŒ‰é’®ï¼‰
+        Row.pop();
+        // æœç´¢æ¡†å®¹å™¨
+        Column.pop();
+    }
+    rerender() {
+        this.updateDirtyElements();
+    }
+}
+//# sourceMappingURL=SearchBoxComponent.js.mapÂ‘Ù[C:\Users\24505\Documents\GitHub\Yigofang_Mall\entry\src\main\ets\common\CommonConstants.etsÙ\C:\Users\24505\Documents\GitHub\Yigofang_Mall\entry\src\main\ets\view\SearchBoxComponent.etsÔrBœªmoduleName±isLocalDependency¯isNodeEntryFile§pkgPath±belongProjectPath§pkgNameªpkgVersion±dependencyPkgInfo¯hostModulesInfo°belongModulePath§checker¬shouldEmitJs¥entryÃÂÙ3C:\Users\24505\Documents\GitHub\Yigofang_Mall\entryÙ-C:\Users\24505\Documents\GitHub\Yigofang_Mall¥entry¥1.0.0Ô  ‘ÔrC’²hostDependencyName®hostModuleName´./SearchBoxComponent¥entryÙ3C:\Users\24505\Documents\GitHub\Yigofang_Mall\entryÔrDÜ ®¬getNodeCount²getIdentifierCount®getSymbolCount¬getTypeCountµgetInstantiationCountµgetRelationCacheSizes±isUndefinedSymbol±isArgumentsSymbol¯isUnknownSymbol¯getMergedSymbol®getDiagnostics´getGlobalDiagnostics´getRecursionIdentity¶getUnmatchedProperties¹getTypeOfSymbolAtLocation¯getTypeOfSymbolÙ(getSymbolsOfParameterPropertyDeclaration·getDeclaredTypeOfSymbol³getPropertiesOfType±getPropertyOfTypeÙ"getPrivateIdentifierPropertyOfType·getTypeOfPropertyOfType²getIndexInfoOfType³getIndexInfosOfTypeºgetIndexInfosOfIndexSymbol³getSignaturesOfType²getIndexTypeOfType¬getIndexType¬getBaseTypes¸getBaseTypeOfLiteralType®getWidenedType³getTypeFromTypeNode°getParameterTypeÙ$getParameterIdentifierNameAtPosition¸getPromisedTypeOfPromise®getAwaitedType¸getReturnTypeOfSignature®isNullableType¯getNullableType²getNonNullableType²getNonOptionalType°getTypeArguments®typeToTypeNodeÙ$indexInfoToIndexSignatureDeclaration¿signatureToSignatureDeclaration²symbolToEntityName²symbolToExpression¬symbolToNodeÙ!symbolToTypeParameterDeclarations¼symbolToParameterDeclarationºtypeParameterToDeclaration±getSymbolsInScope³getSymbolAtLocation·getIndexInfosAtLocationÙ!getShorthandAssignmentValueSymbolÙ#getExportSpecifierLocalTargetSymbol·getExportSymbolOfSymbol±getTypeAtLocationºgetTypeAtLocationForLinterÙ tryGetTypeAtLocationWithoutCheckºgetTypeOfAssignmentPatternÙ*getPropertySymbolOfDestructuringAssignment±signatureToString¬typeToString®symbolToStringµtypePredicateToString®writeSignature©writeType«writeSymbol²writeTypePredicate¼getAugmentedPropertiesOfType®getRootSymbols²getSymbolOfExpando±getContextualTypeÙ(getContextualTypeForObjectLiteralElementÙ#getContextualTypeForArgumentAtIndexÙ getContextualTypeForJsxAttribute²isContextSensitiveÙ!getTypeOfPropertyOfContextualTypeµgetFullyQualifiedNameÙ#tryGetResolvedSignatureWithoutCheck´getResolvedSignatureÙ/getResolvedSignatureForStringLiteralCompletionsÙ$getResolvedSignatureForSignatureHelpµgetExpandedParameters¹hasEffectiveRestParameterºcontainsArgumentsReference°getConstantValueµisValidPropertyAccessÙ#isValidPropertyAccessForCompletions»getSignatureFromDeclarationºisImplementationOfOverload¹getImmediateAliasedSymbol°getAliasedSymbol¯getEmitResolver²getExportsOfModule¿getExportsAndPropertiesOfModuleÙ forEachExportAndPropertyOfModule¯getSymbolWalker±getAmbientModules¹getJsxIntrinsicTagNamesAt³isOptionalParameter»tryGetMemberInModuleExportsÙ(tryGetMemberInModuleExportsAndProperties´tryFindAmbientModuleÙ(tryFindAmbientModuleWithoutAugmentations¯getApparentType¬getUnionType²isTypeAssignableTo³createAnonymousType¯createSignature¬createSymbol¯createIndexInfoªgetAnyType­getStringType­getNumberType±createPromiseType¯createArrayType¹getElementTypeOfArrayType®getBooleanType¬getFalseType«getTrueType«getVoidType°getUndefinedType«getNullType¯getESSymbolType¬getNeverType¯getOptionalType®getPromiseType²getPromiseLikeType´getAsyncIterableType²isSymbolAccessible«isArrayType«isTupleType¯isArrayLikeTypeÙ#isTypeInvalidDueToUnionDiscriminantºgetExactOptionalProperties¿getAllPossiblePropertiesOfTypesÙ(getSuggestedSymbolForNonexistentPropertyÙ#getSuggestionForNonexistentPropertyÙ,getSuggestedSymbolForNonexistentJSXAttributeÙ&getSuggestedSymbolForNonexistentSymbolÙ!getSuggestionForNonexistentSymbolÙ&getSuggestedSymbolForNonexistentModuleÙ!getSuggestionForNonexistentExportÙ+getSuggestedSymbolForNonexistentClassMember·getBaseConstraintOfType»getDefaultFromTypeParameter«resolveName¯getJsxNamespaceµgetJsxFragmentFactory¸getAccessibleSymbolChain»getTypePredicateOfSignature¹resolveExternalModuleName»resolveExternalModuleSymbol°tryGetThisTypeAt¹getTypeArgumentConstraint¸getSuggestionDiagnostics¸runWithCancellationTokenÙ3getLocalTypeParametersOfClassOrInterfaceOrTypeAlias´isDeclarationVisible´isPropertyAccessible»getTypeOnlyAliasDeclaration¿getMemberOverrideModifierStatusÙ!isTypeParameterPossiblyReferenced²getConstEnumRelate´clearConstEnumRelateµdeleteConstEnumRelateÙ$getTypeArgumentsForResolvedSignatureµgetCheckedSourceFilesÙ"collectHaveTsNoCheckFilesForLinter·clearQualifiedNameCache®isStaticRecord²isStaticSourceFileÔ  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  Ô  ÃÃÚx/*
+ * Copyright (c) 2023 Huawei Device Co., Ltd.
+ * Licensed under the Apache License,Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import {
+  LAYOUT_WIDTH_OR_HEIGHT,
+  NORMAL_FONT_SIZE,
+  GOODS_EVALUATE_FONT_SIZE,
+  SEARCH_HEIGHT,
+  SEARCH_MARGIN,
+  SEARCH_PADDING
+} from '../common/CommonConstants';
+
+/**
+ * æœç´¢æ¡†ç»„ä»¶
+ * æ”¯æŒæœç´¢æ–‡æœ¬è¾“å…¥ã€æ¸…é™¤ã€æœç´¢ç­‰åŠŸèƒ½
+ */
+interface GeneratedTypeLiteralInterface_1 {
+  onSearch: (keyword: string) => void;
+}
+
+@Component
+export default struct SearchBox {
+  // æœç´¢æ–‡æœ¬
+  @State searchText: string = '';
+  // æœç´¢å›è°ƒå‡½æ•°
+  @Prop callback?: GeneratedTypeLiteralInterface_1;
+  // å ä½ç¬¦æ–‡æœ¬
+  @Prop placeholder: string = 'è¯·è¾“å…¥æœç´¢å…³é”®è¯';
+
+  /**
+   * å¤„ç†æœç´¢
+   */
+  private handleSearch() {
+    if (this.searchText.trim() && this.callback?.onSearch) {
+      this.callback.onSearch(this.searchText.trim());
+    }
+  }
+
+  /**
+   * æ¸…é™¤æœç´¢æ–‡æœ¬
+   */
+  private clearSearch() {
+    this.searchText = '';
+    if (this.callback?.onSearch) {
+      this.callback.onSearch('');
+    }
+  }
+
+  /**
+   * æ„å»ºæ¸…é™¤æŒ‰é’®
+   */
+  @Builder
+  buildClearButton() {
+    if (this.searchText.length > 0) {
+      Row() {
+        Text('Ã—')
+          .fontSize(18)
+          .fontColor($r('app.color.white'))
+          .fontWeight(FontWeight.Bold)
+      }
+      .width(20)
+      .height(20)
+      .justifyContent(FlexAlign.Center)
+      .alignItems(VerticalAlign.Center)
+      .backgroundColor($r('app.color.clear_button_bg'))
+      .borderRadius(10)
+      .onClick(() => this.clearSearch())
+      .animation({
+        duration: 200,
+        curve: Curve.EaseOut
+      })
+    }
+  }
+
+  build() {
+    // æœç´¢æ¡†å®¹å™¨
+    Column() {
+      // æœç´¢æ¡†é¡¶éƒ¨åŒºåŸŸï¼ˆæœç´¢è¾“å…¥æ¡†å’Œæœç´¢æŒ‰é’®ï¼‰
+      Row() {
+        // æœç´¢è¾“å…¥æ¡†
+        Row() {
+          // æœç´¢è¾“å…¥æ¡†
+          TextInput({
+            text: this.searchText,
+            placeholder: this.placeholder
+          })
+            .fontSize(NORMAL_FONT_SIZE)
+            .fontColor($r('app.color.search_text'))
+            .backgroundColor(Color.Transparent)
+            .borderRadius(0)
+            .layoutWeight(1)
+            .maxLines(1)
+            .onChange((value: string) => {
+              this.searchText = value;
+            })
+            .onSubmit(() => {
+              this.handleSearch();
+            })
+            .placeholderFont({ size: GOODS_EVALUATE_FONT_SIZE })
+            .placeholderColor($r('app.color.placeholder_text'))
+
+          // æ¸…é™¤æŒ‰é’®
+          this.buildClearButton()
+        }
+        .height(SEARCH_HEIGHT)
+        .padding({ left: 12, right: 12 })
+        .backgroundColor($r('app.color.search_bg'))
+        .borderRadius(20)
+        .layoutWeight(1)
+        .animation({
+          duration: 300,
+          curve: Curve.EaseOut
+        })
+
+        // æœç´¢æŒ‰é’®
+        Row() {
+          Text('æœç´¢')
+            .fontSize(GOODS_EVALUATE_FONT_SIZE)
+            .fontColor(Color.White)
+            .fontWeight(FontWeight.Medium)
+        }
+        .height(SEARCH_HEIGHT)
+        .padding({ left: 16, right: 16 })
+        .backgroundColor($r('app.color.primary'))
+        .borderRadius(20)
+        .margin({ left: SEARCH_MARGIN })
+        .onClick(() => this.handleSearch())
+        .animation({
+          duration: 200,
+          curve: Curve.EaseOut
+        })
+      }
+      .width('100%')
+      .alignItems(VerticalAlign.Center)
+    }
+    .width(LAYOUT_WIDTH_OR_HEIGHT)
+    .padding({ top: 12, left: 16, right: 16, bottom: 8 })
+    .backgroundColor($r('app.color.search_container_bg'))
+  }
+}ÀÔrE‘¹../common/CommonConstantsÔrF—ªassertions¨external¢id¤meta±moduleSideEffectsªresolvedByµsyntheticNamedExportsAÂÙ[C:\Users\24505\Documents\GitHub\Yigofang_Mall\entry\src\main\ets\common\CommonConstants.etsAÃªoh-resolveÂ“ÔrG–§version¤fileªsourceRoot§sources¥names¨mappingsµSearchBoxComponent.js ‘¶SearchBoxComponent.etsÜ õ‘”    ‘” Ü ”   ” ”	 ” ”! ”1 ”3 ”ÌK ”ÌM ”ÌZ ”Ì\ ”Ìi ”Ìk ”Ìq ”ÌŒ "”Ì #–”  ! ” !” !” !” !” !‘”   ’”9 #”; # ‘” ’”# '”- '(’”% %”- %’”( '”3 '’” #	” #’” #	” #’” %” %’” %” %’” '” '’” '” '‘” )‘” +’” ,
+” ,Ÿ” -” -” -” -” -” -”  -”" -”& -"”* -&”+ -'”3 -/”5 -1”= -9”? -;Ÿ” .” .
+” .” .” .”" .”# .”' .!”( ."”2 .,”3 .-”7 .1”9 .3”: .4”; .5‘”	 /’” 0” 0‘” 2‘” 4’” 5
+” 5—” 6” 6” 6	” 6” 6” 6” 6˜” 7” 7” 7” 7” 7” 7”# 7”% 7!š” 8” 8
+” 8” 8” 8”" 8”# 8”% 8”& 8 ”' 8!‘”	 9’” :” :‘” <‘” >’” Ì@” Ì@š” ÌA” ÌA” ÌA” ÌA” ÌA”  ÌA”& ÌA”) ÌA!”* ÌA"”, ÌA$’” ÌB” ÌB	“”  ÌO”) ÌO”* ÌO”” ÌP”$ ÌP”& ÌP”) ÌP–” ÌQ”! ÌQ”# ÌQ”( ÌQ”) ÌQ”0 ÌQ‘” ÌR–” ÌB” ÌB	” ÌH”! ÌH”" ÌH”$ ÌH–” ÌB” ÌB	” ÌI”" ÌI”# ÌI”% ÌI˜” ÌB” ÌB	” ÌJ”* ÌJ”+ ÌJ”4 ÌJ”5 ÌJ ”; ÌJ&˜” ÌB” ÌB	” ÌK”& ÌK”' ÌK”4 ÌK”5 ÌK ”; ÌK&”” ÌB” ÌB	” ÌL”+ ÌL–” ÌB” ÌB	” ÌM”( ÌM”) ÌM”+ ÌMœ” ÌB” ÌB	” ÌN”# ÌN”$ ÌN”' ÌN”) ÌN”* ÌN”. ÌN”/ ÌN”: ÌN%”< ÌN'’”  ÌO”) ÌO”” ÌC” ÌC”$ ÌC”' ÌC–” ÌC” ÌC” ÌD”% ÌD”& ÌD”( ÌD”” ÌC” ÌC” ÌE”& ÌE˜” ÌC” ÌC” ÌF”' ÌF”( ÌF”2 ÌF ”3 ÌF!”7 ÌF%’” ÌC” ÌC’” ÌB” ÌB	‘” ÌS‘” ÌS‘” ÌT‘” ÌV’” ÌW” ÌW’” ÌX” ÌX
+’” ÌW” ÌW–” ÌX” ÌX
+” Ì“” Ì“
+” Ì“”/ Ì“!’” ÌW” ÌWÜ ” ÌX” ÌX
+” Ì”” Ì”” Ì”” Ì””  Ì””" Ì””$ Ì””& Ì””* Ì””, Ì””. Ì” ”0 Ì”"”5 Ì”'”7 Ì”)”9 Ì”+”; Ì”-”ÌA Ì”3”ÌC Ì”5”ÌD Ì”6”ÌF Ì”8’” ÌW” ÌW”” ÌX” ÌX
+” Ì•”" Ì•’” ÌY”" ÌY’” ÌZ” ÌZ	’” ÌY”" ÌY–” ÌZ” ÌZ	” Ì” Ì” Ì” Ì’” ÌY”" ÌY˜” ÌZ” ÌZ	” Ì‘” Ì‘” Ì‘”( Ì‘”) Ì‘ ”/ Ì‘&’” Ì[” Ì[’” Ì\” Ì\“” Ìy	” Ìy” Ìy”” Ìz
+” Ìz” Ìz” Ìz–” Ì{
+” Ì{” Ì{” Ì{” Ì{”$ Ì{‘” Ì|	’” Ì[” Ì[–” Ì\” Ì\” Ìt	” Ìt” Ìt”$ Ìt’” Ì[” Ì[” Ì\” Ì\” Ìu	” Ìu” Ìu” Ìu” Ìu”  Ìu”" Ìu”$ Ìu”) Ìu"”+ Ìu$”- Ìu&”/ Ìu(’” Ì[” Ì[”” Ì\” Ì\” Ìv	” Ìv’” Ì[” Ì[–” Ì\” Ì\” Ìw	” Ìw” Ìw” Ìw’” Ì[” Ì[–” Ì\” Ì\” Ìx	” Ìx” Ìx” Ìx’” Ìy	” Ìy’” Ì]
+” Ì]“” Ì^
+” Ì^” Ì^–” Ì_” Ì_” Ì_” Ì_” Ì_”% Ì_!–” Ì`” Ì`” Ì`”! Ì`”" Ì`”- Ì`)‘” Ìa’” Ì]
+” Ì]–” Ì^
+” Ì^” Ìb” Ìb” Ìb”/ Ìb&’” Ì]
+” Ì]”” Ì^
+” Ì^” Ìc” Ìc’” Ì]
+” Ì]˜” Ì^
+” Ì^” Ìd”% Ìd”& Ìd”+ Ìd"”, Ìd#”7 Ìd.’” Ì]
+” Ì]–” Ì^
+” Ì^” Ìe”" Ìe”# Ìe”$ Ìe’” Ì]
+” Ì]–” Ì^
+” Ì^” Ìf”" Ìf”# Ìf”$ Ìf’” Ì]
+” Ì]–” Ì^
+” Ì^” Ìg” Ìg” Ìg”  Ìg’” Ì]
+” Ì]™” Ì^
+” Ì^” Ìh” Ìh” Ìh”  Ìh”% Ìh$”' Ìh&”) Ìh(—” Ìi” Ìi” Ìi” Ìi”" Ìi ”' Ìi%”( Ìi&’” Ìj” Ìj’” Ì]
+” Ì]—” Ì^
+” Ì^” Ìk” Ìk” Ìk”" Ìk”$ Ìk–” Ìl” Ìl” Ìl”! Ìl”# Ìl!”$ Ìl"’” Ìm” Ìm’” Ì]
+” Ì]š” Ì^
+” Ì^” Ìn”% Ìn”& Ìn”( Ìn”, Ìn#”. Ìn%”ÌF Ìn=”ÌH Ìn?’” Ì]
+” Ì]”” Ì^
+” Ì^” Ìo”& Ìo’” Ìq
+” Ìq•” Ìr
+” Ìr” Ìr” Ìr”* Ìr!’” Ì[” Ì[’” Ì\” Ì\’” Ì~” Ì~’” Ì” Ì“” Ì‹	” Ì‹” Ì‹”” ÌŒ
+” ÌŒ” ÌŒ” ÌŒ–” Ì
+” Ì” Ì” Ì” Ì”$ Ì‘” Ì	’” Ì~” Ì~–” Ì” Ì” Ì…	” Ì…” Ì…”$ Ì…’” Ì~” Ì~” Ì” Ì” Ì†	” Ì†” Ì†” Ì†” Ì†”  Ì†”" Ì†”$ Ì†”) Ì†"”+ Ì†$”- Ì†&”/ Ì†(’” Ì~” Ì~”” Ì” Ì” Ì‡	” Ì‡’” Ì~” Ì~–” Ì” Ì” Ìˆ	” Ìˆ” Ìˆ” Ìˆ’” Ì~” Ì~š” Ì” Ì” Ì‰	” Ì‰” Ì‰” Ì‰” Ì‰” Ì‰”, Ì‰%”. Ì‰'’” Ì~” Ì~œ” Ì” Ì” ÌŠ	” ÌŠ” ÌŠ” ÌŠ” ÌŠ” ÌŠ”" ÌŠ”# ÌŠ”/ ÌŠ(”1 ÌŠ*’” Ì‹	” Ì‹”” Ì€
+” Ì€” Ì€” Ì€–” Ì€
+” Ì€” Ì” Ì” Ì”2 Ì.˜” Ì€
+” Ì€” Ì‚” Ì‚” Ì‚”  Ì‚”! Ì‚”& Ì‚"˜” Ì€
+” Ì€” Ìƒ” Ìƒ” Ìƒ”& Ìƒ"”' Ìƒ#”- Ìƒ)’” Ì€
+” Ì€’” Ì~” Ì~’” Ì” Ì’” ÌY” ÌY’” ÌZ” ÌZ	’” ÌW” ÌW’” ÌX” ÌX
+‘” Ì–ÔrH–§version¤file§sources®sourcesContent¥names¨mappingsÀ‘À‘ÀÜ ú‘”    ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”  	 ‘”  
+ ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”    ‘”  ! ‘”  " ‘”  # ‘”  $ ‘”  % ‘”  & ‘”  ' ‘”  ( ‘”  ) ‘”  * ‘”  + ‘”  , ‘”  - ‘”  . ‘”  / ‘”  0 ‘”  1 ‘”  2 ‘”  3 ‘”  4 ‘”  5 ‘”  6 ‘”  7 ‘”  8 ‘”  9 ‘”  : ‘”  ; ‘”  < ‘”  = ‘”  > ‘”  ? ‘”  Ì@ ‘”  ÌA ‘”  ÌB ‘”  ÌC ‘”  ÌD ‘”  ÌE ‘”  ÌF ‘”  ÌG ‘”  ÌH ‘”  ÌI ‘”  ÌJ ‘”  ÌK ‘”  ÌL ‘”  ÌM ‘”  ÌN ‘”  ÌO ‘”  ÌP ‘”  ÌQ ‘”  ÌR ‘”  ÌS ‘”  ÌT ‘”  ÌU ‘”  ÌV ‘”  ÌW ‘”  ÌX ‘”  ÌY ‘”  ÌZ ‘”  Ì[ ‘”  Ì\ ‘”  Ì] ‘”  Ì^ ‘”  Ì_ ‘”  Ì` ‘”  Ìa ‘”  Ìb ‘”  Ìc ‘”  Ìd ‘”  Ìe ‘”  Ìf ‘”  Ìg ‘”  Ìh ‘”  Ìi ‘”  Ìj ‘”  Ìk ‘”  Ìl ‘”  Ìm ‘”  Ìn ‘”  Ìo ‘”  Ìp ‘”  Ìq ‘”  Ìr ‘”  Ìs ‘”  Ìt ‘”  Ìu ‘”  Ìv ‘”  Ìw ‘”  Ìx ‘”  Ìy ‘”  Ìz ‘”  Ì{ ‘”  Ì| ‘”  Ì} ‘”  Ì~ ‘”  Ì ‘”  Ì€ ‘”  Ì ‘”  Ì‚ ‘”  Ìƒ ‘”  Ì„ ‘”  Ì… ‘”  Ì† ‘”  Ì‡ ‘”  Ìˆ ‘”  Ì‰ ‘”  ÌŠ ‘”  Ì‹ ‘”  ÌŒ ‘”  Ì ‘”  Ì ‘”  Ì ‘”  Ì ‘”  Ì‘ ‘”  Ì’ ‘”  Ì“ ‘”  Ì” ‘”  Ì• ‘”  Ì– ‘”  Ì— ‘”  Ì˜ ‘”  Ì™ ‘”  Ìš ‘”  Ì› ‘”  Ìœ ‘”  Ì ‘”  Ì ‘”  ÌŸ ‘”  Ì  ‘”  Ì¡ ‘”  Ì¢ ‘”  Ì£ ‘”  Ì¤ ‘”  Ì¥ ‘”  Ì¦ ‘”  Ì§ ‘”  Ì¨ ‘”  Ì© ‘”  Ìª ‘”  Ì« ‘”  Ì¬ ‘”  Ì­ ‘”  Ì® ‘”  Ì¯ ‘”  Ì° ‘”  Ì± ‘”  Ì² ‘”  Ì³ ‘”  Ì´ ‘”  Ìµ ‘”  Ì¶ ‘”  Ì· ‘”  Ì¸ ‘”  Ì¹ ‘”  Ìº ‘”  Ì» ‘”  Ì¼ ‘”  Ì½ ‘”  Ì¾ ‘”  Ì¿ ‘”  ÌÀ ‘”  ÌÁ ‘”  ÌÂ ‘”  ÌÃ ‘”  ÌÄ ‘”  ÌÅ ‘”  ÌÆ ‘”  ÌÇ ‘”  ÌÈ ‘”  ÌÉ ‘”  ÌÊ ‘”  ÌË ‘”  ÌÌ ‘”  ÌÍ ‘”  ÌÎ ‘”  ÌÏ ‘”  ÌĞ ‘”  ÌÑ ‘”  ÌÒ ‘”  ÌÓ ‘”  ÌÔ ‘”  ÌÕ ‘”  ÌÖ ‘”  Ì× ‘”  ÌØ ‘”  ÌÙ ‘”  ÌÚ ‘”  ÌÛ ‘”  ÌÜ ‘”  Ìİ ‘”  ÌŞ ‘”  Ìß ‘”  Ìà ‘”  Ìá ‘”  Ìâ ‘”  Ìã ‘”  Ìä ‘”  Ìå ‘”  Ìæ ‘”  Ìç ‘”  Ìè ‘”  Ìé ‘”  Ìê ‘”  Ìë ‘”  Ìì ‘”  Ìí ‘”  Ìî ‘”  Ìï ‘”  Ìğ ‘”  Ìñ ‘”  Ìò ‘”  Ìó ‘”  Ìô ‘”  Ìõ ‘”  Ìö ‘”  Ì÷ ‘”  Ìø ‘”  Ìù ÔrI’§missing¦pluginÃ¦genAbcÂÔ  ÔrJ”²dynamicImportCache¹exportAllDeclarationCache»exportNamedDeclarationCache«importCache‘ÔrK•¤type¥start£endªspecifiers¦source±ImportDeclarationÍéÍv•ÔrL•¤type¥start£end¨imported¥local¯ImportSpecifierÍòÍÔrM”¤type¥start£end¤nameªIdentifierÍòÍ¶LAYOUT_WIDTH_OR_HEIGHTMªIdentifierÍòÍ¶LAYOUT_WIDTH_OR_HEIGHTL¯ImportSpecifierÍ
+ÍMªIdentifierÍ
+Í°NORMAL_FONT_SIZEMªIdentifierÍ
+Í°NORMAL_FONT_SIZEL¯ImportSpecifierÍÍ4MªIdentifierÍÍ4¸GOODS_EVALUATE_FONT_SIZEMªIdentifierÍÍ4¸GOODS_EVALUATE_FONT_SIZEL¯ImportSpecifierÍ6ÍCMªIdentifierÍ6ÍC­SEARCH_HEIGHTMªIdentifierÍ6ÍC­SEARCH_HEIGHTL¯ImportSpecifierÍEÍRMªIdentifierÍEÍR­SEARCH_MARGINMªIdentifierÍEÍR­SEARCH_MARGINÔrN•¤type¥start£end¥value£raw§LiteralÍZÍu¹../common/CommonConstants»'../common/CommonConstants'
