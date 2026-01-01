@@ -110,24 +110,24 @@ export default struct TabBar {
    */
   @Builder
   buildRefreshView() {
-    Column() {
-      Row() {
-        Image($r('app.media.refreshing'))
-          .width(40)
-          .height(40)
-          .margin({ right: 20 })
-        Text(this.refreshText)
-          .fontSize(NORMAL_FONT_SIZE)
-          .fontColor($r('app.color.gray'))
-      }
-      .justifyContent(FlexAlign.Center)
-      .width('100%')
-      .height(60)
-      .backgroundColor($r('app.color.white'))
-    }
-    .width('100%')
-    .height(60)
-    .offset({ y: this.pullDownOffset })
+    // Column() {
+    //   Row() {
+    //     Image($r('app.media.refreshing'))
+    //       .width(40)
+    //       .height(40)
+    //       .margin({ right: 20 })
+    //     Text(this.refreshText)
+    //       .fontSize(NORMAL_FONT_SIZE)
+    //       .fontColor($r('app.color.gray'))
+    //   }
+    //   .justifyContent(FlexAlign.Center)
+    //   .width('100%')
+    //   .height(60)
+    //   .backgroundColor($r('app.color.white'))
+    // }
+    // .width('100%')
+    // .height(60)
+    // .offset({ y: this.pullDownOffset })
   }
 
   /**
@@ -199,7 +199,7 @@ export default struct TabBar {
   build() {
     // 标签页容器
     Tabs() {
-      // 第一个标签内容（商品列表页）
+      // 第一个标签内容（商品列表页）c
       TabContent() {
         // 使用Column包裹以便实现下拉刷新
         Column() {
