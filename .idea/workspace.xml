@@ -3,12 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="1f95a541-56ed-4fea-b44b-cc1448b20666" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entry/src/main/ets/common/CommonConstants.ets" beforeDir="false" afterPath="$PROJECT_DIR$/entry/src/main/ets/common/CommonConstants.ets" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entry/src/main/ets/view/GoodsListComponent.ets" beforeDir="false" afterPath="$PROJECT_DIR$/entry/src/main/ets/view/GoodsListComponent.ets" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entry/src/main/ets/viewmodel/InitialData.ets" beforeDir="false" afterPath="$PROJECT_DIR$/entry/src/main/ets/viewmodel/InitialData.ets" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entry/src/main/ets/viewmodel/ListDataSource.ets" beforeDir="false" afterPath="$PROJECT_DIR$/entry/src/main/ets/viewmodel/ListDataSource.ets" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entry/src/main/resources/base/element/string.json" beforeDir="false" afterPath="$PROJECT_DIR$/entry/src/main/resources/base/element/string.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entry/src/main/resources/base/media/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/entry/src/main/resources/base/media/icon.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,13 +22,13 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "127.0.0.1:5555": "5373812891767269899427",
+    "127.0.0.1:5555": "5373812891767270952956",
     "Application.entry.executor": "Run",
-    "MODULE_HAP_TIME": "{\"127.0.0.1:5555entry\":\"2026-01-01T12:18:17.039721Z\"}",
+    "MODULE_HAP_TIME": "{\"127.0.0.1:5555entry\":\"2026-01-01T12:35:50.697286400Z\"}",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "ace.nodejs.version": "18.20.1",
-    "git-widget-placeholder": "bce40032",
+    "git-widget-placeholder": "daefacc5",
     "last_opened_file_path": "E:/GithubProjects/Yigofang_Mall",
     "projectSizeLastTraceTimestamp-9c30861540aae56eb2235629dabdd7cfb3b54b82938407b5a3bf5bf81649": "1765295014205",
     "projectSizeLastTraceTimestamp-c4bd905ad363288c20205958d3ed6534e2018530fea3d4010e0f1fc38b07": "1765280413489",
@@ -117,5 +111,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="JavaScript">
+          <url>file://$PROJECT_DIR$/entry/src/main/ets/view/GoodsListComponent.ets</url>
+          <line>153</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
