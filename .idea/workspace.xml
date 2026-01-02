@@ -3,13 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1f95a541-56ed-4fea-b44b-cc1448b20666" name="更改" comment="merge branch 'Hong-ho-main'">
       <change beforePath="$PROJECT_DIR$/.hvigor/cache/file-cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/.hvigor/cache/file-cache.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.hvigor/cache/meta.json" beforeDir="false" afterPath="$PROJECT_DIR$/.hvigor/cache/meta.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.hvigor/outputs/logs/details/details.json" beforeDir="false" afterPath="$PROJECT_DIR$/.hvigor/outputs/logs/details/details.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.hvigor/outputs/sync/fileCache.json" beforeDir="false" afterPath="$PROJECT_DIR$/.hvigor/outputs/sync/fileCache.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.hvigor/outputs/sync/output.json" beforeDir="false" afterPath="$PROJECT_DIR$/.hvigor/outputs/sync/output.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entry/src/main/ets/view/GoodsListComponent.ets" beforeDir="false" afterPath="$PROJECT_DIR$/entry/src/main/ets/view/GoodsListComponent.ets" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entry/src/main/ets/viewmodel/ListDataSource.ets" beforeDir="false" afterPath="$PROJECT_DIR$/entry/src/main/ets/viewmodel/ListDataSource.ets" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,9 +48,9 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "127.0.0.1:5555": "5377903851767382096227",
+    "127.0.0.1:5555": "5377903851767387430091",
     "Application.entry.executor": "Run",
-    "MODULE_HAP_TIME": "{\"127.0.0.1:5555entry\":\"2026-01-02T19:27:46.535013700Z\"}",
+    "MODULE_HAP_TIME": "{\"127.0.0.1:5555entry\":\"2026-01-02T20:57:09.800633400Z\"}",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "ace.nodejs.version": "18.20.1",

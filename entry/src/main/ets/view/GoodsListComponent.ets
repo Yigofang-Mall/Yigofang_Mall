@@ -289,27 +289,25 @@ export default struct GoodsList {
 
   build() {
     Column() {
-      // 排序按钮（仅在非搜索模式下显示）
-      if (!this.isSearchMode) {
-        Row() {
-          Button(this.getSortButtonText())
-            .type(ButtonType.Normal)
-            .fontSize(commonConst.NORMAL_FONT_SIZE)
-            .backgroundColor('#F5F5F5')
-            .fontColor(Color.Black)
-            .borderRadius(20)
-            .height(36)
-            .padding({ left: 16, right: 16 })
-            .onClick(() => {
-              this.openSortDialog();
-            })
-        }
-        .width('100%')
-        .height(50)
-        .justifyContent(FlexAlign.End)
-        .padding({ right: 16, top: 8, bottom: 8 })
-        .transition(TransitionEffect.OPACITY.animation({ duration: 200 }))
+      // 排序按钮（在所有模式下都显示）
+      Row() {
+        Button(this.getSortButtonText())
+          .type(ButtonType.Normal)
+          .fontSize(commonConst.NORMAL_FONT_SIZE)
+          .backgroundColor('#F5F5F5')
+          .fontColor(Color.Black)
+          .borderRadius(20)
+          .height(36)
+          .padding({ left: 16, right: 16 })
+          .onClick(() => {
+            this.openSortDialog();
+          })
       }
+      .width('100%')
+      .height(50)
+      .justifyContent(FlexAlign.End)
+      .padding({ right: 16, top: 8, bottom: 8 })
+      .transition(TransitionEffect.OPACITY.animation({ duration: 200 }))
 
       // 商品列表内容
       Row() {
