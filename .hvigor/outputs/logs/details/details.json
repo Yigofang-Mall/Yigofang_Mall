@@ -16,26 +16,20 @@
     "IS_HVIGORFILE_TYPE_CHECK": false,
     "TASK_TIME": {
       "923fe53966c6cd9343e11af776cd4b05be315ea4b200b02e4d5dfb0f929b73bf": {
-        "PreBuild": 33292300,
-        "CreateModuleInfo": 616700,
-        "MergeProfile": 5033300,
-        "CreateBuildProfile": 2472400,
-        "PreCheckSyscap": 541300,
-        "GeneratePkgContextInfo": 4437000,
-        "ProcessProfile": 132436900,
-        "ProcessRouterMap": 3890000,
-        "ProcessShareConfig": 2929800,
-        "ProcessStartupConfig": 4385400,
-        "PreviewProcessResource": 2123800,
-        "GenerateLoaderJson": 15347300,
-        "PreviewCompileResource": 628238200,
-        "PreviewHookCompileResource": 365800,
-        "CopyPreviewProfile": 6187600,
-        "ReplacePreviewerPage": 545100,
-        "buildPreviewerResource": 217900,
-        "PreviewUpdateAssets": 3181500,
-        "PreviewArkTS": 8666677200,
-        "PreviewBuild": 247900
+        "init": 538200,
+        "CreateModuleInfo": 730500,
+        "PreCheckSyscap": 316600,
+        "GeneratePkgContextInfo": 6097100,
+        "ProcessStartupConfig": 1073300,
+        "PreviewProcessResource": 1486000,
+        "PreviewHookCompileResource": 360900,
+        "ReplacePreviewerPage": 331600,
+        "buildPreviewerResource": 207600,
+        "PreviewArkTS": 4323264000,
+        "PreviewBuild": 182700
+      },
+      "APP": {
+        "init": 228400
       }
     },
     "APIS": [
@@ -46,6 +40,8 @@
       "getAllNodes",
       "getRootNode",
       "getNodeName",
+      "getStartParams",
+      "buildFinished",
       "getNodePath",
       "subNodes",
       "getExtraOption",
@@ -56,11 +52,10 @@
       "getProductName",
       "nodesEvaluated",
       "getParameter",
-      "getCommandEntryTask",
-      "getStartParams"
+      "getCommandEntryTask"
     ],
     "CONFIG_PROPERTIES": {},
-    "TOTAL_TIME": 9740799800,
-    "BUILD_ID": "202601020446139390"
+    "BUILD_ID": "202601021240061410",
+    "TOTAL_TIME": 4483543400
   }
 }
