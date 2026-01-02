@@ -23,6 +23,34 @@
     {
       "name": "dividerColor",
       "value": "#E0E0E0"
+    },
+    {
+      "name": "primary",
+      "value": "#007DFF"
+    },
+    {
+      "name": "search_bg",
+      "value": "#F5F5F5"
+    },
+    {
+      "name": "search_icon_bg",
+      "value": "#E8E8E8"
+    },
+    {
+      "name": "clear_button_bg",
+      "value": "#999999"
+    },
+    {
+      "name": "search_text",
+      "value": "#333333"
+    },
+    {
+      "name": "placeholder_text",
+      "value": "#999999"
+    },
+    {
+      "name": "search_container_bg",
+      "value": "#FAFAFA"
     }
   ]
 }

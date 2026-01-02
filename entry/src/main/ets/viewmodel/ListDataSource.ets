@@ -14,6 +14,7 @@
  */
 
 import { GoodsListItemType, getRefreshedGoodsByCategory, CATEGORIES } from './InitialData';
+import { searchGoodsByKeyword } from './SearchUtils';
 import { MAX_DATA_LENGTH, MAGNIFICATION } from '../common/CommonConstants';
 
 /**
@@ -70,32 +71,34 @@ export class ListDataSource implements IDataSource {
       for (let i = 0; i < 10 && this.dataArray.length < MAX_DATA_LENGTH; i++) {
         const id = startId + i;
         const imageIndex = id % 4; // 0-3，刚好匹配每个分类的4张图片
-        let goodsName: ResourceStr = $r('app.string.goodsName');
+        let goodsName: string = $r('app.string.goodsName').toString();
         let price: ResourceStr = getPriceByIndex(id);
 
         // 根据当前分类，匹配对应分类的【专属商品名称+专属价格】
         switch (this.category) {
           case CATEGORIES.MOBILE_PHONE:
-            goodsName = $r(`app.string.goods_name_phone_${imageIndex + 1}`);
+            goodsName = $r(`app.string.goods_name_phone_${imageIndex + 1}`).toString();
             price = $r(`app.string.goods_price_phone_${imageIndex + 1}`);
             break;
           case CATEGORIES.CLOTHES:
-            goodsName = $r(`app.string.goods_name_clothes_${imageIndex + 1}`);
+            goodsName = $r(`app.string.goods_name_clothes_${imageIndex + 1}`).toString();
             price = $r(`app.string.goods_price_clothes_${imageIndex + 1}`);
             break;
           case CATEGORIES.WEAR:
-            goodsName = $r(`app.string.goods_name_wear_${imageIndex + 1}`);
+            goodsName = $r(`app.string.goods_name_wear_${imageIndex + 1}`).toString();
             price = $r(`app.string.goods_price_wear_${imageIndex + 1}`);
             break;
           case CATEGORIES.HOME_FURNISHING:
-            goodsName = $r(`app.string.goods_name_home_${imageIndex + 1}`);
+            goodsName = $r(`app.string.goods_name_home_${imageIndex + 1}`).toString();
             price = $r(`app.string.goods_price_home_${imageIndex + 1}`);
             break;
           default:
           // 默认分类用原来的通用名称
-            goodsName = id % 2 === 0 ? $r('app.string.goodsName') : $r('app.string.another_goodsName');
+            goodsName = (id % 2 === 0 ? $r('app.string.goodsName') : $r('app.string.another_goodsName')).toString();
             break;
         }
+
+
 
         newData.push({
           id: id,
@@ -152,6 +155,25 @@ export class ListDataSource implements IDataSource {
         listener.onDataReloaded?.();
       });
     }
+  }
+
+  /**
+   * 搜索商品
+   */
+  searchGoods(keyword: string): void {
+    if (keyword.trim() === '') {
+      // 如果搜索关键词为空，显示当前分类的所有商品
+      this.dataArray = getRefreshedGoodsByCategory(this.category);
+    } else {
+      // 根据关键词搜索商品
+      this.dataArray = searchGoodsByKeyword(this.category, keyword.trim());
+    }
+    this.currentIndex = this.dataArray.length;
+
+    // 通知数据刷新
+    this.listeners.forEach(listener => {
+      listener.onDataReloaded?.();
+    });
   }
 }
 
@@ -233,3 +255,4 @@ function getHomeImage(index: number): Resource {
     default: return $r('app.media.home1');
   }
 }
+

@@ -13,12 +13,11 @@
  * limitations under the License.
  */
 
-import { PAGE_SIZE, FEATURED_SIZE } from '../common/CommonConstants';
-
+import { PAGE_SIZE, FEATURED_SIZE, SEARCH_RESULT_MAX, SEARCH_RESULT_MIN } from '../common/CommonConstants';
 // 商品列表项类型
 export interface GoodsListItemType {
   id: number;
-  goodsName: ResourceStr;
+  goodsName: string; // 直接使用字符串而不是ResourceStr
   price: ResourceStr;
   goodsImg: Resource;
   advertisingLanguage: ResourceStr;
@@ -52,52 +51,115 @@ export function initTabBarData(): Resource[] {
     $r('app.string.home_furnishing')
   ];
 }
-
 // 获取所有分类的商品数据
+interface GeneratedTypeLiteralInterface_phone {
+  name: string;
+  price: ResourceStr;
+}
+
+interface GeneratedTypeLiteralInterface_clothes {
+  name: string;
+  price: ResourceStr;
+}
+
+interface GeneratedTypeLiteralInterface_wear {
+  name: string;
+  price: ResourceStr;
+}
+
+interface GeneratedTypeLiteralInterface_home {
+  name: string;
+  price: ResourceStr;
+}
 
 export function getAllGoods(): GoodsListItemType[] {
   const goodsList: GoodsListItemType[] = [];
+  let id = 1;
 
-  // 每个分类生成20个商品
-  const categories = [CATEGORIES.MOBILE_PHONE, CATEGORIES.CLOTHES, CATEGORIES.WEAR, CATEGORIES.HOME_FURNISHING];
-  categories.forEach(category => {
-    for (let i = 1; i <= 20; i++) {
-      const id = goodsList.length + 1;
-      const imageIndex = id % 4;
-      let goodsName: ResourceStr = $r('app.string.goodsName');
-      let price: ResourceStr = $r('app.string.price_199');
+  // 手机分类商品
+  const mobilePhones: Array<GeneratedTypeLiteralInterface_phone> = [
+    { name: 'vivo X300 Pro新品蔡司2亿APO超级长焦天玑9500拍照手机官方旗舰店官网正品', price: $r('app.string.goods_price_phone_1') },
+    { name: 'HUAWEI Mate 80 麒麟9020芯片 第二代红枫影像 鸿蒙AI 华为直屏鸿蒙智能手机华为官方旗舰店', price: $r('app.string.goods_price_phone_2') },
+    { name: 'Apple/苹果 iPhone 17 Pro Max 手机 A19 Pro芯片 2025新款 全新未拆封，官方正品', price: $r('app.string.goods_price_phone_3') },
+    { name: '小米17 Pro手机新品上市小米徕卡联合研发小米官方旗舰店官网小米澎湃OS小米17pro', price: $r('app.string.goods_price_phone_4') },
+  ];
 
-      // 按分类匹配专属商品名称 + 专属价格
-      switch (category) {
-        case CATEGORIES.MOBILE_PHONE:
-          goodsName = $r(`app.string.goods_name_phone_${imageIndex + 1}`);
-          price = $r(`app.string.goods_price_phone_${imageIndex + 1}`);
-          break;
-        case CATEGORIES.CLOTHES:
-          goodsName = $r(`app.string.goods_name_clothes_${imageIndex + 1}`);
-          price = $r(`app.string.goods_price_clothes_${imageIndex + 1}`);
-          break;
-        case CATEGORIES.WEAR:
-          goodsName = $r(`app.string.goods_name_wear_${imageIndex + 1}`);
-          price = $r(`app.string.goods_price_wear_${imageIndex + 1}`);
-          break;
-        case CATEGORIES.HOME_FURNISHING:
-          goodsName = $r(`app.string.goods_name_home_${imageIndex + 1}`);
-          price = $r(`app.string.goods_price_home_${imageIndex + 1}`);
-          break;
-      }
+  // 服装分类商品
+  const clothes: Array<GeneratedTypeLiteralInterface_clothes> = [
+    { name: '花纱羊毛混纺半高领毛衣开衫老钱棕色灰色百搭cleanfit', price: $r('app.string.goods_price_clothes_1') },
+    { name: 'OUR LEGACY Evening男士黑色Polo衫休闲宽松复古针织开衫外套', price: $r('app.string.goods_price_clothes_2') },
+    { name: 'No day off「烧边牛角扣」羊毛混纺针织亨利领毛衣纯色基础长袖男', price: $r('app.string.goods_price_clothes_3') },
+    { name: '高知感舒芙蕾休闲复古慵懒羊毛混纺毛织开衫外套', price: $r('app.string.goods_price_clothes_4') },
+  ];
 
-      goodsList.push({
-        id: id,
-        goodsName: goodsName,
-        price: price,
-        goodsImg: getImageByCategoryAndIndex(category, imageIndex),
-        advertisingLanguage: $r('app.string.advertising_language'),
-        evaluate: $r('app.string.evaluate'),
-        category: category
-      });
-    }
+  // 穿戴分类商品
+  const wears: Array<GeneratedTypeLiteralInterface_wear> = [
+    { name: 'Apple Watch Series 11 GPS + 蜂窝款 44mm 钛金属表壳 海洋表带 智能手表', price: $r('app.string.goods_price_wear_1') },
+    { name: '【新品上市】Huawei/华为 WATCH GT 6智能手表21天超长续航华为手机专卖店智能穿戴设备健康全新骑行体验', price: $r('app.string.goods_price_wear_2') },
+    { name: '小米手环10智能手环运动健康防水睡眠心率全面屏长续航小米手环9升级款', price: $r('app.string.goods_price_wear_3') },
+    { name: '三星/Samsung Galaxy Watch8 智能手表 运动AI心率监测睡眠监测血氧血压心率适配三星三折叠', price: $r('app.string.goods_price_wear_4') },
+  ];
+
+  // 家居分类商品
+  const homeFurnishings: Array<GeneratedTypeLiteralInterface_home> = [
+    { name: '草地浮游水气缸桌面灯摆件氛围小夜灯鱼缸', price: $r('app.string.goods_price_home_1') },
+    { name: '物有引力 财火灯 复古氛围灯卧室床头小夜灯充电民宿装饰圣诞创意', price: $r('app.string.goods_price_home_2') },
+    { name: '现代轻奢椭圆形装饰托盘样板房创意家居餐桌茶几水果盘收纳盘摆件', price: $r('app.string.goods_price_home_3') },
+    { name: '原木奶油风客厅装饰画趣味猫咪沙发背景墙挂画立体砂岩高级感壁画', price: $r('app.string.goods_price_home_4') },
+  ];
+
+  // 生成手机商品
+  mobilePhones.forEach((item, index) => {
+    goodsList.push({
+      id: id++,
+      goodsName: item.name,
+      price: item.price,
+      goodsImg: getPhoneImage(index % 4 + 1),
+      advertisingLanguage: $r('app.string.advertising_language'),
+      evaluate: $r('app.string.evaluate'),
+      category: CATEGORIES.MOBILE_PHONE
+    });
   });
+
+  // 生成服装商品
+  clothes.forEach((item, index) => {
+    goodsList.push({
+      id: id++,
+      goodsName: item.name,
+      price: item.price,
+      goodsImg: getClothesImage(index % 4 + 1),
+      advertisingLanguage: $r('app.string.advertising_language'),
+      evaluate: $r('app.string.evaluate'),
+      category: CATEGORIES.CLOTHES
+    });
+  });
+
+  // 生成穿戴商品
+  wears.forEach((item, index) => {
+    goodsList.push({
+      id: id++,
+      goodsName: item.name,
+      price: item.price,
+      goodsImg: getWearImage(index % 4 + 1),
+      advertisingLanguage: $r('app.string.advertising_language'),
+      evaluate: $r('app.string.evaluate'),
+      category: CATEGORIES.WEAR
+    });
+  });
+
+  // 生成家居商品
+  homeFurnishings.forEach((item, index) => {
+    goodsList.push({
+      id: id++,
+      goodsName: item.name,
+      price: item.price,
+      goodsImg: getHomeImage(index % 4 + 1),
+      advertisingLanguage: $r('app.string.advertising_language'),
+      evaluate: $r('app.string.evaluate'),
+      category: CATEGORIES.HOME_FURNISHING
+    });
+  });
+
   return goodsList;
 }
 
@@ -156,49 +218,7 @@ export function getRefreshedGoodsByCategory(category: string): GoodsListItemType
   return goods.slice(0, PAGE_SIZE);
 }
 
-// 根据索引获取价格
-function getPriceByIndex(index: number): ResourceStr {
-  const prices = [
-    $r('app.string.price_199'),
-    $r('app.string.price_265'),
-    $r('app.string.price_810'),
-    $r('app.string.price_999')
-  ];
-  return prices[index % 4];
-}
-
-// 根据索引获取图片
-// 根据分类获取图片资源
-function getImageByCategoryAndIndex(category: string, index: number): Resource {
-  const imageIndex = (index % 4) + 1;
-
-  switch (category) {
-    case CATEGORIES.SELECTED:
-      return getSelectedImage(imageIndex);
-    case CATEGORIES.MOBILE_PHONE:
-      return getPhoneImage(imageIndex);
-    case CATEGORIES.CLOTHES:
-      return getClothesImage(imageIndex);
-    case CATEGORIES.WEAR:
-      return getWearImage(imageIndex);
-    case CATEGORIES.HOME_FURNISHING:
-      return getHomeImage(imageIndex);
-    default:
-      return $r('app.media.goodsImg');
-  }
-}
-
 // 定义每个分类的图片获取函数
-function getSelectedImage(index: number): Resource {
-  switch (index) {
-    case 1: return $r('app.media.goodsImg');
-    case 2: return $r('app.media.goodsImg_2');
-    case 3: return $r('app.media.goodsImg_3');
-    case 4: return $r('app.media.goodsImg_4');
-    default: return $r('app.media.goodsImg');
-  }
-}
-
 function getPhoneImage(index: number): Resource {
   switch (index) {
     case 1: return $r('app.media.phone1');
