@@ -181,6 +181,21 @@ export function getRefreshedGoodsByCategory(category: string): GoodsListItemType
     if (goods.length < PAGE_SIZE) {
         goods = fillArrayWithLoop(goods, PAGE_SIZE);
     }
+    // 控制台日志：展示新建商品的数据
+    console.log('=== 商品刷新日志 ===');
+    console.log('分类:', category);
+    console.log('刷新后商品数量:', goods.length);
+    console.log('新建商品数据:');
+    goods.forEach((item, index) => {
+        console.log(`  商品 ${index + 1}:`);
+        console.log(`    ID: ${item.id}`);
+        console.log(`    名称: ${item.goodsName}`);
+        console.log(`    分类: ${item.category}`);
+        console.log(`    广告语: ${item.advertisingLanguage}`);
+        console.log(`    评价: ${item.evaluate}`);
+        console.log(`    ---`);
+    });
+    console.log('=== 刷新完成 ===');
     return goods.slice(0, PAGE_SIZE);
 }
 // 定义每个分类的图片获取函数

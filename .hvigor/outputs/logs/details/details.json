@@ -16,20 +16,19 @@
     "IS_HVIGORFILE_TYPE_CHECK": false,
     "TASK_TIME": {
       "923fe53966c6cd9343e11af776cd4b05be315ea4b200b02e4d5dfb0f929b73bf": {
-        "init": 538200,
-        "CreateModuleInfo": 730500,
-        "PreCheckSyscap": 316600,
-        "GeneratePkgContextInfo": 6097100,
-        "ProcessStartupConfig": 1073300,
-        "PreviewProcessResource": 1486000,
-        "PreviewHookCompileResource": 360900,
-        "ReplacePreviewerPage": 331600,
-        "buildPreviewerResource": 207600,
-        "PreviewArkTS": 4323264000,
-        "PreviewBuild": 182700
-      },
-      "APP": {
-        "init": 228400
+        "CreateModuleInfo": 335600,
+        "PreCheckSyscap": 198500,
+        "GeneratePkgContextInfo": 2468700,
+        "ProcessStartupConfig": 579900,
+        "PreviewProcessResource": 860200,
+        "PreviewCompileResource": 466894600,
+        "PreviewHookCompileResource": 222400,
+        "CopyPreviewProfile": 4135800,
+        "ReplacePreviewerPage": 359800,
+        "buildPreviewerResource": 187300,
+        "PreviewUpdateAssets": 2046100,
+        "PreviewArkTS": 4524072000,
+        "PreviewBuild": 151800
       }
     },
     "APIS": [
@@ -40,8 +39,6 @@
       "getAllNodes",
       "getRootNode",
       "getNodeName",
-      "getStartParams",
-      "buildFinished",
       "getNodePath",
       "subNodes",
       "getExtraOption",
@@ -52,10 +49,11 @@
       "getProductName",
       "nodesEvaluated",
       "getParameter",
-      "getCommandEntryTask"
+      "getCommandEntryTask",
+      "getStartParams"
     ],
     "CONFIG_PROPERTIES": {},
-    "BUILD_ID": "202601021240061410",
-    "TOTAL_TIME": 4483543400
+    "TOTAL_TIME": 5132454700,
+    "BUILD_ID": "202601021711325000"
   }
 }

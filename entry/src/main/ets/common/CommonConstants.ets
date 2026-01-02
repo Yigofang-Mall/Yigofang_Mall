@@ -78,9 +78,6 @@ export const REFRESH_DELAY: number = 1000; // 模拟网络延迟
 export const LAZY_LOAD_THRESHOLD: number = 6; // 懒加载触发阈值
 export const INITIAL_LOAD_COUNT: number = 20; // 初始加载数量
 
-// 搜索相关常量
-export const SEARCH_RESULT_MAX: number = 20; // 搜索结果最大显示数量
-export const SEARCH_RESULT_MIN: number = 6; // 搜索结果最小显示数量
 
 // 搜索框相关常量
 export const SEARCH_HEIGHT: string = '40vp'; // 搜索框高度

@@ -6,7 +6,7 @@ interface SearchBox_Params {
     callback?: GeneratedTypeLiteralInterface_1;
     placeholder?: string;
 }
-import { LAYOUT_WIDTH_OR_HEIGHT, NORMAL_FONT_SIZE, GOODS_EVALUATE_FONT_SIZE, SEARCH_HEIGHT, SEARCH_MARGIN } from "@bundle:com.example.list_harmony/entry/ets/common/CommonConstants";
+import { LAYOUT_WIDTH_OR_HEIGHT, NORMAL_FONT_SIZE, GOODS_EVALUATE_FONT_SIZE, SEARCH_HEIGHT, SEARCH_MARGIN, } from "@bundle:com.example.list_harmony/entry/ets/common/CommonConstants";
 /**
  * 搜索框组件
  * 支持搜索文本输入、清除、搜索等功能
@@ -101,7 +101,7 @@ export default class SearchBox extends ViewPU {
                 this.ifElseBranchUpdateFunction(0, () => {
                     this.observeComponentCreation2((elmtId, isInitialRender) => {
                         Row.create();
-                        Row.debugLine("entry/src/main/ets/view/SearchBoxComponent.ets(67:7)", "entry");
+                        Row.debugLine("entry/src/main/ets/view/SearchBoxComponent.ets(66:7)", "entry");
                         Context.animation({
                             duration: 200,
                             curve: Curve.EaseOut
@@ -117,7 +117,7 @@ export default class SearchBox extends ViewPU {
                     }, Row);
                     this.observeComponentCreation2((elmtId, isInitialRender) => {
                         Text.create('×');
-                        Text.debugLine("entry/src/main/ets/view/SearchBoxComponent.ets(68:9)", "entry");
+                        Text.debugLine("entry/src/main/ets/view/SearchBoxComponent.ets(67:9)", "entry");
                         Text.fontSize(18);
                         Text.fontColor({ "id": 16777233, "type": 10001, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" });
                         Text.fontWeight(FontWeight.Bold);
@@ -137,7 +137,7 @@ export default class SearchBox extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 搜索框容器
             Column.create();
-            Column.debugLine("entry/src/main/ets/view/SearchBoxComponent.ets(89:5)", "entry");
+            Column.debugLine("entry/src/main/ets/view/SearchBoxComponent.ets(88:5)", "entry");
             // 搜索框容器
             Column.width(LAYOUT_WIDTH_OR_HEIGHT);
             // 搜索框容器
@@ -148,7 +148,7 @@ export default class SearchBox extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 搜索框顶部区域（搜索输入框和搜索按钮）
             Row.create();
-            Row.debugLine("entry/src/main/ets/view/SearchBoxComponent.ets(91:7)", "entry");
+            Row.debugLine("entry/src/main/ets/view/SearchBoxComponent.ets(90:7)", "entry");
             // 搜索框顶部区域（搜索输入框和搜索按钮）
             Row.width('100%');
             // 搜索框顶部区域（搜索输入框和搜索按钮）
@@ -157,7 +157,7 @@ export default class SearchBox extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 搜索输入框
             Row.create();
-            Row.debugLine("entry/src/main/ets/view/SearchBoxComponent.ets(93:9)", "entry");
+            Row.debugLine("entry/src/main/ets/view/SearchBoxComponent.ets(92:9)", "entry");
             Context.animation({
                 duration: 300,
                 curve: Curve.EaseOut
@@ -180,7 +180,7 @@ export default class SearchBox extends ViewPU {
                 text: this.searchText,
                 placeholder: this.placeholder
             });
-            TextInput.debugLine("entry/src/main/ets/view/SearchBoxComponent.ets(95:11)", "entry");
+            TextInput.debugLine("entry/src/main/ets/view/SearchBoxComponent.ets(94:11)", "entry");
             // 搜索输入框
             TextInput.fontSize(NORMAL_FONT_SIZE);
             // 搜索输入框
@@ -213,7 +213,7 @@ export default class SearchBox extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 搜索按钮
             Row.create();
-            Row.debugLine("entry/src/main/ets/view/SearchBoxComponent.ets(128:9)", "entry");
+            Row.debugLine("entry/src/main/ets/view/SearchBoxComponent.ets(127:9)", "entry");
             Context.animation({
                 duration: 200,
                 curve: Curve.EaseOut
@@ -234,7 +234,7 @@ export default class SearchBox extends ViewPU {
         }, Row);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('搜索');
-            Text.debugLine("entry/src/main/ets/view/SearchBoxComponent.ets(129:11)", "entry");
+            Text.debugLine("entry/src/main/ets/view/SearchBoxComponent.ets(128:11)", "entry");
             Text.fontSize(GOODS_EVALUATE_FONT_SIZE);
             Text.fontColor(Color.White);
             Text.fontWeight(FontWeight.Medium);

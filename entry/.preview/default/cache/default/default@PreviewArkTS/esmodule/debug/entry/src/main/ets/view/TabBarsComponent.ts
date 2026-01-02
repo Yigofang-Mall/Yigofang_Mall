@@ -186,14 +186,14 @@ export default class TabBar extends ViewPU {
     firstTabBar(parent = null) {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
-            Column.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(80:5)", "entry");
+            Column.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(79:5)", "entry");
             Column.width(LAYOUT_WIDTH_OR_HEIGHT);
             Column.height(LAYOUT_WIDTH_OR_HEIGHT);
             Column.justifyContent(FlexAlign.Center);
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create({ "id": 16777281, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" });
-            Text.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(81:7)", "entry");
+            Text.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(80:7)", "entry");
             Text.fontSize(this.tabsIndex === 0 ? BIGGER_FONT_SIZE : NORMAL_FONT_SIZE);
             Text.fontColor(this.tabsIndex === 0 ? Color.Black : { "id": 16777231, "type": 10001, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" });
             Text.maxLines(MAX_LINES_TEXT);
@@ -211,14 +211,14 @@ export default class TabBar extends ViewPU {
     otherTabBar(content: Resource, index: number, parent = null) {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
-            Column.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(102:5)", "entry");
+            Column.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(101:5)", "entry");
             Column.width(LAYOUT_WIDTH_OR_HEIGHT);
             Column.height(LAYOUT_WIDTH_OR_HEIGHT);
             Column.justifyContent(FlexAlign.Center);
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create(content);
-            Text.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(103:7)", "entry");
+            Text.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(102:7)", "entry");
             Text.fontSize(this.tabsIndex === index + 1 ? BIGGER_FONT_SIZE : NORMAL_FONT_SIZE);
             Text.fontColor(this.tabsIndex === index + 1 ? Color.Black : { "id": 16777231, "type": 10001, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" });
             Text.maxLines(MAX_LINES_TEXT);
@@ -234,14 +234,14 @@ export default class TabBar extends ViewPU {
     buildRefreshView(parent = null) {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
-            Column.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(122:5)", "entry");
+            Column.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(121:5)", "entry");
             Column.width('100%');
             Column.height(60);
             Column.offset({ y: this.pullDownOffset });
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Row.create();
-            Row.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(123:7)", "entry");
+            Row.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(122:7)", "entry");
             Row.justifyContent(FlexAlign.Center);
             Row.width('100%');
             Row.height(60);
@@ -249,14 +249,14 @@ export default class TabBar extends ViewPU {
         }, Row);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Image.create({ "id": 16777295, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" });
-            Image.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(124:9)", "entry");
+            Image.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(123:9)", "entry");
             Image.width(40);
             Image.height(40);
             Image.margin({ right: 20 });
         }, Image);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create(this.refreshText);
-            Text.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(128:9)", "entry");
+            Text.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(127:9)", "entry");
             Text.fontSize(NORMAL_FONT_SIZE);
             Text.fontColor({ "id": 16777231, "type": 10001, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" });
         }, Text);
@@ -352,7 +352,7 @@ export default class TabBar extends ViewPU {
     initialRender() {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
-            Column.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(235:5)", "entry");
+            Column.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(234:5)", "entry");
         }, Column);
         {
             this.observeComponentCreation2((elmtId, isInitialRender) => {
@@ -364,7 +364,7 @@ export default class TabBar extends ViewPU {
                             onSearch: (keyword: string): void => this.handleSearch(keyword)
                         },
                         placeholder: '搜索商品...'
-                    }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/view/TabBarsComponent.ets", line: 237, col: 7 });
+                    }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/view/TabBarsComponent.ets", line: 236, col: 7 });
                     ViewPU.create(componentCall);
                     let paramsLambda = () => {
                         return {
@@ -389,7 +389,7 @@ export default class TabBar extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 标签页容器
             Tabs.create();
-            Tabs.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(245:7)", "entry");
+            Tabs.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(244:7)", "entry");
             // 标签页容器
             Tabs.onChange((index: number) => {
                 this.tabsIndex = index;
@@ -415,7 +415,7 @@ export default class TabBar extends ViewPU {
                 this.observeComponentCreation2((elmtId, isInitialRender) => {
                     // 使用Column包裹以便实现下拉刷新
                     Column.create();
-                    Column.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(249:11)", "entry");
+                    Column.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(248:11)", "entry");
                     // 使用Column包裹以便实现下拉刷新
                     Column.width('100%');
                     // 使用Column包裹以便实现下拉刷新
@@ -449,7 +449,7 @@ export default class TabBar extends ViewPU {
                                 category: this.getCategoryByIndex(0),
                                 searchResults: this.searchResults,
                                 isSearchMode: this.isSearchMode
-                            }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/view/TabBarsComponent.ets", line: 256, col: 13 });
+                            }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/view/TabBarsComponent.ets", line: 255, col: 13 });
                             ViewPU.create(componentCall);
                             let paramsLambda = () => {
                                 return {
@@ -473,7 +473,7 @@ export default class TabBar extends ViewPU {
                 Column.pop();
             });
             TabContent.tabBar({ builder: this.firstTabBar.bind(this) });
-            TabContent.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(247:9)", "entry");
+            TabContent.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(246:9)", "entry");
         }, TabContent);
         TabContent.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
@@ -485,7 +485,7 @@ export default class TabBar extends ViewPU {
                     TabContent.create(() => {
                         this.observeComponentCreation2((elmtId, isInitialRender) => {
                             Column.create();
-                            Column.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(274:13)", "entry");
+                            Column.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(273:13)", "entry");
                             Column.width('100%');
                             Column.height('100%');
                         }, Column);
@@ -499,7 +499,7 @@ export default class TabBar extends ViewPU {
                                         category: this.getCategoryByIndex(index + 1),
                                         searchResults: this.searchResults,
                                         isSearchMode: this.isSearchMode
-                                    }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/view/TabBarsComponent.ets", line: 277, col: 15 });
+                                    }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/view/TabBarsComponent.ets", line: 276, col: 15 });
                                     ViewPU.create(componentCall);
                                     let paramsLambda = () => {
                                         return {
@@ -524,7 +524,7 @@ export default class TabBar extends ViewPU {
                     TabContent.tabBar({ builder: () => {
                             this.otherTabBar.call(this, item, index);
                         } });
-                    TabContent.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(273:11)", "entry");
+                    TabContent.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(272:11)", "entry");
                 }, TabContent);
                 TabContent.pop();
             };

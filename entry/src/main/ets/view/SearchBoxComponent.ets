@@ -19,7 +19,6 @@ import {
   GOODS_EVALUATE_FONT_SIZE,
   SEARCH_HEIGHT,
   SEARCH_MARGIN,
-  SEARCH_PADDING
 } from '../common/CommonConstants';
 
 /**

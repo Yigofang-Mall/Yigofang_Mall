@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { PAGE_SIZE, FEATURED_SIZE, SEARCH_RESULT_MAX, SEARCH_RESULT_MIN } from '../common/CommonConstants';
+import { PAGE_SIZE, FEATURED_SIZE } from '../common/CommonConstants';
 // 商品列表项类型
 export interface GoodsListItemType {
   id: number;
@@ -215,6 +215,23 @@ export function getRefreshedGoodsByCategory(category: string): GoodsListItemType
   if (goods.length < PAGE_SIZE) {
     goods = fillArrayWithLoop(goods, PAGE_SIZE);
   }
+  
+  // 控制台日志：展示新建商品的数据
+  console.log('=== 商品刷新日志 ===');
+  console.log('分类:', category);
+  console.log('刷新后商品数量:', goods.length);
+  console.log('新建商品数据:');
+  goods.forEach((item, index) => {
+    console.log(`  商品 ${index + 1}:`);
+    console.log(`    ID: ${item.id}`);
+    console.log(`    名称: ${item.goodsName}`);
+    console.log(`    分类: ${item.category}`);
+    console.log(`    广告语: ${item.advertisingLanguage}`);
+    console.log(`    评价: ${item.evaluate}`);
+    console.log(`    ---`);
+  });
+  console.log('=== 刷新完成 ===');
+  
   return goods.slice(0, PAGE_SIZE);
 }
 
