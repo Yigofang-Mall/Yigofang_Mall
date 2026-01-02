@@ -16,6 +16,8 @@
 import { GoodsListItemType, getRefreshedGoodsByCategory, CATEGORIES } from './InitialData';
 import { searchGoodsByKeyword } from './SearchUtils';
 import { MAX_DATA_LENGTH } from '../common/CommonConstants';
+import { SortType } from '../view/SortDialogComponent';
+import { sortGoodsList } from './SortUtils';
 
 /**
  * List数据源类，用于LazyForEach懒加载
@@ -26,6 +28,8 @@ export class ListDataSource implements IDataSource {
   private currentIndex: number = 0;
   private category: string = CATEGORIES.SELECTED;
   private maxLoadedIndex: number = 0; // 记录已加载的最大索引
+  private currentSortType: SortType = SortType.RECOMMEND; // 当前排序类型
+  private isLazyLoadEnabled: boolean = true; // 是否启用懒加载
 
   constructor(category: string = CATEGORIES.SELECTED) {
     this.category = category;
@@ -40,8 +44,8 @@ export class ListDataSource implements IDataSource {
   }
 
   getData(index: number): GoodsListItemType {
-    // 如果索引超出当前数据范围，预加载更多数据
-    if (index >= this.dataArray.length - 6 && this.dataArray.length < MAX_DATA_LENGTH) {
+    // 如果启用懒加载且索引超出当前数据范围，预加载更多数据
+    if (this.isLazyLoadEnabled && index >= this.dataArray.length - 6 && this.dataArray.length < MAX_DATA_LENGTH) {
       this.pushData();
     }
 
@@ -108,6 +112,9 @@ export class ListDataSource implements IDataSource {
         this.maxLoadedIndex += newData.length;
         this.currentIndex = this.dataArray.length;
 
+        // 应用当前排序（确保新加载的数据也按排序规则排列）
+        this.applySort();
+
         // 通知数据变化
         this.listeners.forEach(listener => {
           listener.onDataAdd?.(startIndex);
@@ -136,6 +143,17 @@ export class ListDataSource implements IDataSource {
       this.currentIndex = this.dataArray.length;
       this.maxLoadedIndex = this.dataArray.length; // 重置最大索引
       
+      // 如果当前是排序模式（非推荐排序），加载所有数据
+      if (this.currentSortType !== SortType.RECOMMEND) {
+        this.isLazyLoadEnabled = false;
+        this.loadAllData();
+      } else {
+        this.isLazyLoadEnabled = true;
+      }
+      
+      // 应用当前排序
+      this.applySort();
+      
       console.log('刷新后数据长度:', this.dataArray.length);
       console.log('重置最大索引为:', this.maxLoadedIndex);
 
@@ -161,6 +179,17 @@ export class ListDataSource implements IDataSource {
       this.dataArray = getRefreshedGoodsByCategory(category);
       this.currentIndex = this.dataArray.length;
       this.maxLoadedIndex = this.dataArray.length; // 重置最大索引
+      
+      // 如果当前是排序模式（非推荐排序），加载所有数据
+      if (this.currentSortType !== SortType.RECOMMEND) {
+        this.isLazyLoadEnabled = false;
+        this.loadAllData();
+      } else {
+        this.isLazyLoadEnabled = true;
+      }
+      
+      // 应用当前排序
+      this.applySort();
       
       console.log('切换后数据长度:', this.dataArray.length);
       console.log('重置最大索引为:', this.maxLoadedIndex);
@@ -192,6 +221,9 @@ export class ListDataSource implements IDataSource {
     this.currentIndex = this.dataArray.length;
     this.maxLoadedIndex = this.dataArray.length; // 重置最大索引
     
+    // 应用当前排序
+    this.applySort();
+    
     console.log('搜索结果数量:', this.dataArray.length);
     console.log('重置最大索引为:', this.maxLoadedIndex);
 
@@ -201,6 +233,150 @@ export class ListDataSource implements IDataSource {
     });
     
     console.log('=== 搜索完成 ===');
+  }
+
+  /**
+   * 设置排序类型
+   */
+  setSortType(sortType: SortType): void {
+    if (this.currentSortType !== sortType) {
+      console.log('========================================');
+      console.log('=== ListDataSource.setSortType ===');
+      console.log(`从排序类型: ${this.currentSortType} 切换到: ${sortType}`);
+      console.log(`当前分类: ${this.category}`);
+      console.log(`排序前数据数量: ${this.dataArray.length}`);
+      console.log(`排序前最大索引: ${this.maxLoadedIndex}`);
+      
+      this.currentSortType = sortType;
+      
+      // 如果排序类型不是推荐排序，禁用懒加载并加载所有数据
+      if (sortType !== SortType.RECOMMEND) {
+        console.log('价格排序模式：禁用懒加载，加载所有数据');
+        this.isLazyLoadEnabled = false;
+        this.loadAllData();
+        console.log(`加载所有数据后，数据数量: ${this.dataArray.length}`);
+      } else {
+        // 推荐排序时启用懒加载
+        console.log('推荐排序模式：启用懒加载');
+        this.isLazyLoadEnabled = true;
+      }
+      
+      // 应用排序
+      console.log('开始应用排序...');
+      this.applySort();
+      
+      // 通知数据刷新
+      this.listeners.forEach(listener => {
+        listener.onDataReloaded?.();
+      });
+      
+      console.log(`排序后数据数量: ${this.dataArray.length}`);
+      console.log(`懒加载状态: ${this.isLazyLoadEnabled ? '启用' : '禁用'}`);
+      console.log('=== setSortType 完成 ===');
+      console.log('========================================\n');
+    } else {
+      console.log(`[排序] 排序类型未变化，跳过: ${sortType}`);
+    }
+  }
+
+  /**
+   * 获取当前排序类型
+   */
+  getSortType(): SortType {
+    return this.currentSortType;
+  }
+
+  /**
+   * 加载所有数据（禁用懒加载时使用）
+   */
+  private loadAllData(): void {
+    console.log('=== 加载所有数据（禁用懒加载） ===');
+    console.log('当前数据长度:', this.dataArray.length);
+    console.log('目标数据长度:', MAX_DATA_LENGTH);
+    
+    // 如果数据已经全部加载，直接返回
+    if (this.dataArray.length >= MAX_DATA_LENGTH) {
+      console.log('数据已全部加载');
+      return;
+    }
+    
+    // 一次性加载所有剩余数据
+    const newData: GoodsListItemType[] = [];
+    const startIndex = this.dataArray.length;
+    
+    for (let i = 0; i < MAX_DATA_LENGTH - this.dataArray.length; i++) {
+      const id = this.maxLoadedIndex + i + 1;
+      const imageIndex = id % 4; // 0-3，刚好匹配每个分类的4张图片
+      let goodsName: string = getGoodsNameByCategoryAndIndex(this.category, imageIndex);
+      let price: ResourceStr = getPriceByIndex(this.category, imageIndex);
+
+      newData.push({
+        id: id,
+        goodsName: goodsName,
+        price: price,
+        goodsImg: getImageByCategoryAndIndex(this.category, imageIndex),
+        advertisingLanguage: $r('app.string.advertising_language'),
+        evaluate: $r('app.string.evaluate'),
+        category: this.category
+      });
+    }
+
+    if (newData.length > 0) {
+      console.log('成功加载', newData.length, '个商品');
+      this.dataArray.push(...newData);
+      this.maxLoadedIndex += newData.length;
+      this.currentIndex = this.dataArray.length;
+      console.log('加载完成，当前总数据长度:', this.dataArray.length);
+    }
+    
+    console.log('=== 加载所有数据完成 ===');
+  }
+
+  /**
+   * 应用排序
+   */
+  private applySort(): void {
+    console.log('=== ListDataSource.applySort ===');
+    console.log(`当前排序类型: ${this.currentSortType}`);
+    console.log(`数据数组长度: ${this.dataArray.length}`);
+    console.log(`分类: ${this.category}`);
+    
+    if (this.currentSortType !== SortType.RECOMMEND) {
+      console.log('应用价格排序...');
+      const beforeSort = [...this.dataArray];
+      this.dataArray = sortGoodsList(this.dataArray, this.currentSortType);
+      
+      // 验证数据完整性
+      if (beforeSort.length !== this.dataArray.length) {
+        console.error(`[排序错误] 排序前后数据长度不一致: ${beforeSort.length} -> ${this.dataArray.length}`);
+      }
+      
+      // 检查是否有数据丢失
+      const beforeIds = beforeSort.map(item => item.id).sort();
+      const afterIds = this.dataArray.map(item => item.id).sort();
+      const lostIds = beforeIds.filter(id => !afterIds.includes(id));
+      if (lostIds.length > 0) {
+        console.error(`[排序错误] 排序后丢失的商品ID: ${lostIds.join(', ')}`);
+      }
+    } else {
+      console.log('推荐排序，不进行排序操作');
+    }
+    
+    console.log('=== applySort 完成 ===\n');
+  }
+
+  /**
+   * 获取所有数据（用于非懒加载模式）
+   */
+  getAllData(): GoodsListItemType[] {
+    return this.dataArray;
+  }
+
+  /**
+   * 是否启用懒加载
+   */
+  isLazyLoadMode(): boolean {
+    return this.isLazyLoadEnabled;
   }
 }
 
