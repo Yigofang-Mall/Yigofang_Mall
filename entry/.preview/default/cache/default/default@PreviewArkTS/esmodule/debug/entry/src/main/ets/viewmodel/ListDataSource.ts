@@ -463,7 +463,13 @@ function getPriceByIndex(category: string, imageIndex: number): ResourceStr {
             }
         default:
             // 默认价格
-            return { "id": 16777266, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+            switch (index) {
+                case 1: return { "id": 16777276, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+                case 2: return { "id": 16777277, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+                case 3: return { "id": 16777278, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+                case 4: return { "id": 16777279, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+                default: return { "id": 16777276, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+            }
     }
 }
 // 根据获取图片
@@ -481,7 +487,7 @@ function getImageByCategoryAndIndex(category: string, index: number): Resource {
         case CATEGORIES.HOME_FURNISHING:
             return getHomeImage(imageIndex);
         default:
-            return { "id": 16777219, "type": 20000, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" };
+            return getSelectedImage(imageIndex);
     }
 }
 // 定义每个分类的图片获取函数

@@ -753,14 +753,30 @@ export default class GoodsList extends ViewPU {
                                             Column.create();
                                             Column.debugLine("entry/src/main/ets/view/GoodsListComponent.ets(401:15)", "entry");
                                             Column.width('100%');
-                                            Column.height(100);
+                                            Column.height('100%');
                                             Column.justifyContent(FlexAlign.Center);
+                                            Column.alignItems(HorizontalAlign.Center);
                                         }, Column);
                                         this.observeComponentCreation2((elmtId, isInitialRender) => {
-                                            Text.create('没有找到相关商品');
+                                            Text.create('🔍');
                                             Text.debugLine("entry/src/main/ets/view/GoodsListComponent.ets(402:17)", "entry");
+                                            Text.fontSize(60);
+                                            Text.margin({ bottom: 20 });
+                                        }, Text);
+                                        Text.pop();
+                                        this.observeComponentCreation2((elmtId, isInitialRender) => {
+                                            Text.create('没有找到相关商品');
+                                            Text.debugLine("entry/src/main/ets/view/GoodsListComponent.ets(405:17)", "entry");
                                             Text.fontSize(commonConst.NORMAL_FONT_SIZE);
                                             Text.fontColor({ "id": 16777231, "type": 10001, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" });
+                                            Text.margin({ bottom: 10 });
+                                        }, Text);
+                                        Text.pop();
+                                        this.observeComponentCreation2((elmtId, isInitialRender) => {
+                                            Text.create('请尝试其他关键词');
+                                            Text.debugLine("entry/src/main/ets/view/GoodsListComponent.ets(409:17)", "entry");
+                                            Text.fontSize(commonConst.GOODS_EVALUATE_FONT_SIZE);
+                                            Text.fontColor({ "id": 16777228, "type": 10001, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" });
                                         }, Text);
                                         Text.pop();
                                         Column.pop();
@@ -785,7 +801,7 @@ export default class GoodsList extends ViewPU {
                             {
                                 const itemCreation2 = (elmtId, isInitialRender) => {
                                     ListItem.create(() => { }, false);
-                                    ListItem.debugLine("entry/src/main/ets/view/GoodsListComponent.ets(414:13)", "entry");
+                                    ListItem.debugLine("entry/src/main/ets/view/GoodsListComponent.ets(422:13)", "entry");
                                 };
                                 const observedDeepRender = () => {
                                     this.observeComponentCreation2(itemCreation2, ListItem);
@@ -816,13 +832,13 @@ export default class GoodsList extends ViewPU {
             };
             const itemCreation2 = (elmtId, isInitialRender) => {
                 ListItem.create(deepRenderFunction, true);
-                ListItem.debugLine("entry/src/main/ets/view/GoodsListComponent.ets(421:9)", "entry");
+                ListItem.debugLine("entry/src/main/ets/view/GoodsListComponent.ets(429:9)", "entry");
             };
             const deepRenderFunction = (elmtId, isInitialRender) => {
                 itemCreation(elmtId, isInitialRender);
                 this.observeComponentCreation2((elmtId, isInitialRender) => {
                     Column.create();
-                    Column.debugLine("entry/src/main/ets/view/GoodsListComponent.ets(422:11)", "entry");
+                    Column.debugLine("entry/src/main/ets/view/GoodsListComponent.ets(430:11)", "entry");
                     Column.width('100%');
                     Column.height(80);
                     Column.justifyContent(FlexAlign.Center);
@@ -833,7 +849,7 @@ export default class GoodsList extends ViewPU {
                         this.ifElseBranchUpdateFunction(0, () => {
                             this.observeComponentCreation2((elmtId, isInitialRender) => {
                                 Text.create('正在加载更多...');
-                                Text.debugLine("entry/src/main/ets/view/GoodsListComponent.ets(424:15)", "entry");
+                                Text.debugLine("entry/src/main/ets/view/GoodsListComponent.ets(432:15)", "entry");
                                 Text.fontSize(commonConst.NORMAL_FONT_SIZE);
                                 Text.fontColor({ "id": 16777228, "type": 10001, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" });
                                 Text.textAlign(TextAlign.Center);
@@ -842,11 +858,11 @@ export default class GoodsList extends ViewPU {
                             Text.pop();
                         });
                     }
-                    else if (this.hasReachedBottom) {
+                    else if (this.hasReachedBottom || this.sortedSearchResults.length <= 0) {
                         this.ifElseBranchUpdateFunction(1, () => {
                             this.observeComponentCreation2((elmtId, isInitialRender) => {
                                 Text.create({ "id": 16777283, "type": 10003, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" });
-                                Text.debugLine("entry/src/main/ets/view/GoodsListComponent.ets(430:15)", "entry");
+                                Text.debugLine("entry/src/main/ets/view/GoodsListComponent.ets(438:15)", "entry");
                                 Text.fontSize(commonConst.NORMAL_FONT_SIZE);
                                 Text.fontColor({ "id": 16777228, "type": 10001, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" });
                                 Text.textAlign(TextAlign.Center);
@@ -859,7 +875,7 @@ export default class GoodsList extends ViewPU {
                         this.ifElseBranchUpdateFunction(2, () => {
                             this.observeComponentCreation2((elmtId, isInitialRender) => {
                                 Text.create('滑动加载更多');
-                                Text.debugLine("entry/src/main/ets/view/GoodsListComponent.ets(436:15)", "entry");
+                                Text.debugLine("entry/src/main/ets/view/GoodsListComponent.ets(444:15)", "entry");
                                 Text.fontSize(commonConst.NORMAL_FONT_SIZE);
                                 Text.fontColor({ "id": 16777231, "type": 10001, params: [], "bundleName": "com.example.list_harmony", "moduleName": "entry" });
                                 Text.textAlign(TextAlign.Center);
@@ -899,7 +915,7 @@ export default class GoodsList extends ViewPU {
                                     onClose: () => {
                                         this.closeSortDialog();
                                     }
-                                }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/view/GoodsListComponent.ets", line: 455, col: 9 });
+                                }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/view/GoodsListComponent.ets", line: 463, col: 9 });
                                 ViewPU.create(componentCall);
                                 let paramsLambda = () => {
                                     return {

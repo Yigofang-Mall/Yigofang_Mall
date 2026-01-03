@@ -399,13 +399,21 @@ export default struct GoodsList {
             // 搜索结果为空时的提示
             ListItem() {
               Column() {
+                Text('🔍')
+                  .fontSize(60)
+                  .margin({ bottom: 20 })
                 Text('没有找到相关商品')
                   .fontSize(commonConst.NORMAL_FONT_SIZE)
                   .fontColor($r('app.color.gray'))
+                  .margin({ bottom: 10 })
+                Text('请尝试其他关键词')
+                  .fontSize(commonConst.GOODS_EVALUATE_FONT_SIZE)
+                  .fontColor($r('app.color.deepGray'))
               }
               .width('100%')
-              .height(100)
+              .height('100%')
               .justifyContent(FlexAlign.Center)
+              .alignItems(HorizontalAlign.Center)
             }
           }
         } else {
@@ -426,7 +434,7 @@ export default struct GoodsList {
                 .fontColor($r('app.color.deepGray'))
                 .textAlign(TextAlign.Center)
                 .width('100%')
-            } else if (this.hasReachedBottom) {
+            } else if (this.hasReachedBottom || this.sortedSearchResults.length <= 0) {
               Text($r('app.string.to_bottom'))
                 .fontSize(commonConst.NORMAL_FONT_SIZE)
                 .fontColor($r('app.color.deepGray'))

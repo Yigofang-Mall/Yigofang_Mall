@@ -539,7 +539,13 @@ function getPriceByIndex(category: string, imageIndex: number): ResourceStr {
       }
     default:
       // 默认价格
-      return $r('app.string.goods_price_phone_1');
+      switch (index) {
+        case 1: return $r('app.string.price_199');
+        case 2: return $r('app.string.price_265');
+        case 3: return $r('app.string.price_810');
+        case 4: return $r('app.string.price_999');
+        default: return $r('app.string.price_199');
+      }
   }
 }
 
@@ -559,7 +565,7 @@ function getImageByCategoryAndIndex(category: string, index: number): Resource {
     case CATEGORIES.HOME_FURNISHING:
       return getHomeImage(imageIndex);
     default:
-      return $r('app.media.goodsImg');
+      return getSelectedImage(imageIndex);
   }
 }
 

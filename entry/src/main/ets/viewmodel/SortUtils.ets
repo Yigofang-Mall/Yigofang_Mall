@@ -30,7 +30,6 @@ interface ResourceStrInternal {
 /**
  * 从ResourceStr中解析价格数字
  * 支持格式：¥199、¥265、¥810、¥999等
- * 注意：在 HarmonyOS 中，ResourceStr 需要通过特殊方式获取实际值
  * @param priceStr 价格字符串（ResourceStr）
  * @returns 价格数字，解析失败返回0
  */

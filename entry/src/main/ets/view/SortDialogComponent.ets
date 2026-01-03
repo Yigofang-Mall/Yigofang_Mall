@@ -53,6 +53,19 @@ export default struct SortDialog {
   // 价格区间筛选状态
   @State minPrice: string = '';
   @State maxPrice: string = '';
+  // 是否在编辑价格区间
+  @State isEditingPriceRange: boolean = false;
+
+  aboutToAppear() {
+    // 当当前排序是价格区间筛选时，初始化编辑状态
+    this.isEditingPriceRange = this.currentSort === SortType.PRICE_RANGE;
+    
+    // 如果有现有的价格筛选条件，填充输入框
+    if (this.currentPriceFilter) {
+      this.minPrice = this.currentPriceFilter.minPrice.toString();
+      this.maxPrice = this.currentPriceFilter.maxPrice.toString();
+    }
+  }
 
   /**
    * 处理排序选择
@@ -60,9 +73,20 @@ export default struct SortDialog {
   private handleSortSelect(sortType: SortType) {
     if (sortType === SortType.PRICE_RANGE) {
       // 价格区间筛选需要输入价格范围
-      console.log('价格区间筛选需要设置价格范围');
+      if (this.currentSort !== SortType.PRICE_RANGE) {
+        // 首次点击价格区间筛选，展开编辑界面
+        this.isEditingPriceRange = true;
+        console.log('展开价格区间筛选编辑界面');
+      } else {
+        // 如果已经在编辑价格区间，则切换编辑状态
+        this.isEditingPriceRange = !this.isEditingPriceRange;
+        console.log('切换价格区间筛选编辑状态:', this.isEditingPriceRange);
+      }
       return;
     }
+
+    // 其他排序方式，重置价格区间编辑状态
+    this.resetEditingState();
 
     if (this.onSortSelected) {
       this.onSortSelected(sortType);
@@ -108,6 +132,14 @@ export default struct SortDialog {
   private handlePriceRangeReset() {
     this.minPrice = '';
     this.maxPrice = '';
+    this.isEditingPriceRange = false;
+  }
+
+  /**
+   * 重置编辑状态
+   */
+  private resetEditingState() {
+    this.isEditingPriceRange = false;
   }
 
   /**
@@ -158,10 +190,10 @@ export default struct SortDialog {
       Row() {
         Text('价格区间筛选')
           .fontSize(NORMAL_FONT_SIZE)
-          .fontColor(this.currentSort === SortType.PRICE_RANGE ? Color.Blue : Color.Black)
-          .fontWeight(this.currentSort === SortType.PRICE_RANGE ? FontWeight.Medium : FontWeight.Normal)
+          .fontColor(this.currentSort === SortType.PRICE_RANGE || this.isEditingPriceRange ? Color.Blue : Color.Black)
+          .fontWeight(this.currentSort === SortType.PRICE_RANGE || this.isEditingPriceRange ? FontWeight.Medium : FontWeight.Normal)
         
-        if (this.currentSort === SortType.PRICE_RANGE) {
+        if (this.currentSort === SortType.PRICE_RANGE || this.isEditingPriceRange) {
           Text('✓')
             .fontSize(NORMAL_FONT_SIZE)
             .fontColor(Color.Blue)
@@ -253,7 +285,7 @@ export default struct SortDialog {
     }
     .width('100%')
     .padding({ left: 20, right: 20, top: 16, bottom: 16 })
-    .backgroundColor(this.currentSort === SortType.PRICE_RANGE ? '#F0F8FF' : Color.White)
+    .backgroundColor(this.currentSort === SortType.PRICE_RANGE || this.isEditingPriceRange ? '#F0F8FF' : Color.White)
     .borderRadius(8)
   }
 
