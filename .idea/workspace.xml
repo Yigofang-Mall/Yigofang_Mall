@@ -1,7 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1f95a541-56ed-4fea-b44b-cc1448b20666" name="更改" comment="merge branch 'Hong-ho-main'" />
+    <list default="true" id="1f95a541-56ed-4fea-b44b-cc1448b20666" name="更改" comment="排序、搜索">
+      <change beforePath="$PROJECT_DIR$/.hvigor/cache/file-cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/.hvigor/cache/file-cache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.hvigor/cache/meta.json" beforeDir="false" afterPath="$PROJECT_DIR$/.hvigor/cache/meta.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.hvigor/outputs/logs/details/details.json" beforeDir="false" afterPath="$PROJECT_DIR$/.hvigor/outputs/logs/details/details.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.hvigor/outputs/sync/fileCache.json" beforeDir="false" afterPath="$PROJECT_DIR$/.hvigor/outputs/sync/fileCache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.hvigor/outputs/sync/output.json" beforeDir="false" afterPath="$PROJECT_DIR$/.hvigor/outputs/sync/output.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.deveco/module/entry.cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.deveco/module/entry.cache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.deveco/project.cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.deveco/project.cache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/PreviewBuildParam.json" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/PreviewBuildParam.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/config/buildConfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/config/buildConfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/.tsbuildinfo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/.tsbuildinfo.linter" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/.tsbuildinfo.linter" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/ResourceTable.txt" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/ResourceTable.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/compiler.cache/plugins/plugins.msgpack" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/compiler.cache/plugins/plugins.msgpack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/dep_info.json" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/dep_info.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/entry/src/main/ets/common/CommonConstants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/entry/src/main/ets/common/CommonConstants.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/entry/src/main/ets/entryability/EntryAbility.ts" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/entry/src/main/ets/entryability/EntryAbility.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/entry/src/main/ets/pages/ListIndex.ts" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/entry/src/main/ets/pages/ListIndex.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/entry/src/main/ets/view/GoodsListComponent.protoBin" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/entry/src/main/ets/view/GoodsListComponent.protoBin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/entry/src/main/ets/view/GoodsListComponent.ts" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/entry/src/main/ets/view/GoodsListComponent.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/entry/src/main/ets/view/SearchBoxComponent.ts" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/entry/src/main/ets/view/SearchBoxComponent.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/entry/src/main/ets/view/TabBarsComponent.protoBin" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/entry/src/main/ets/view/TabBarsComponent.protoBin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/entry/src/main/ets/view/TabBarsComponent.ts" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/entry/src/main/ets/view/TabBarsComponent.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/entry/src/main/ets/viewmodel/InitialData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/entry/src/main/ets/viewmodel/InitialData.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/entry/src/main/ets/viewmodel/ListDataSource.protoBin" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/entry/src/main/ets/viewmodel/ListDataSource.protoBin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/entry/src/main/ets/viewmodel/ListDataSource.ts" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/entry/src/main/ets/viewmodel/ListDataSource.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/entry/src/main/ets/viewmodel/SearchUtils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/entry/src/main/ets/viewmodel/SearchUtils.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/filesInfo.txt" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/filesInfo.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/modules.cache" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/modules.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/npmEntries.txt" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/npmEntries.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/sourceMaps.json" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/sourceMaps.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/watch_logs.cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/cache/default/default@PreviewArkTS/esmodule/debug/watch_logs.cache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/generated/profile/default/BuildProfile.ets" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/generated/profile/default/BuildProfile.ets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/generated/r/default/ResourceTable.h" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/generated/r/default/ResourceTable.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/intermediates/assets/default/ets/modules.abc" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/intermediates/assets/default/ets/modules.abc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/intermediates/assets/default/ets/sourceMaps.map" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/intermediates/assets/default/ets/sourceMaps.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/intermediates/loader/default/loader.json" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/intermediates/loader/default/loader.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/intermediates/merge_profile/default/module.json" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/intermediates/merge_profile/default/module.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/intermediates/process_profile/default/module.json" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/intermediates/process_profile/default/module.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/intermediates/res/default/ResourceTable.txt" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/intermediates/res/default/ResourceTable.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/intermediates/res/default/ids_map/id_defined.json" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/intermediates/res/default/ids_map/id_defined.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/.preview/default/intermediates/res/default/resources/base/profile/main_pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/entry/.preview/default/intermediates/res/default/resources/base/profile/main_pages.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/ets/view/GoodsListComponent.ets" beforeDir="false" afterPath="$PROJECT_DIR$/entry/src/main/ets/view/GoodsListComponent.ets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/ets/view/SortDialogComponent.ets" beforeDir="false" afterPath="$PROJECT_DIR$/entry/src/main/ets/view/SortDialogComponent.ets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/ets/view/TabBarsComponent.ets" beforeDir="false" afterPath="$PROJECT_DIR$/entry/src/main/ets/view/TabBarsComponent.ets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/ets/viewmodel/ListDataSource.ets" beforeDir="false" afterPath="$PROJECT_DIR$/entry/src/main/ets/viewmodel/ListDataSource.ets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/ets/viewmodel/SortUtils.ets" beforeDir="false" afterPath="$PROJECT_DIR$/entry/src/main/ets/viewmodel/SortUtils.ets" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -26,7 +74,7 @@
   <component name="HiLogStateProjectLevelPreference">
     <panelStates>
       <hilogPanelState>
-        <option name="filterName" value="User logs of selected app" />
+        <option name="filterName" value="No filters" />
         <option name="logPanelType" value="ONLINE" />
         <option name="processName" value="com.example.list_harmony" />
       </hilogPanelState>
@@ -43,24 +91,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "127.0.0.1:5555": "5377903851767387430091",
-    "Application.entry.executor": "Run",
-    "MODULE_HAP_TIME": "{\"127.0.0.1:5555entry\":\"2026-01-02T20:57:09.800633400Z\"}",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "ace.nodejs.version": "18.20.1",
-    "last_opened_file_path": "C:/Users/24505/Documents/GitHub/Yigofang_Mall/entry/src/main/ets/viewmodel",
-    "projectSizeLastTraceTimestamp-05ea5c946757c6d6ed619247f0c7f8f2d2023e55a1be8a2624748a6eaedf": "1767327846810",
-    "projectSizeLastTraceTimestamp-6c124ed2cec1170f35018b825856bf7fca51bfcb9a07373bd70e043a728d": "1767379997417",
-    "projectSizeLastTraceTimestamp-9c30861540aae56eb2235629dabdd7cfb3b54b82938407b5a3bf5bf81649": "1765295014205",
-    "projectSizeLastTraceTimestamp-c4bd905ad363288c20205958d3ed6534e2018530fea3d4010e0f1fc38b07": "1765280413489",
-    "resolution": "1080*2340",
-    "settings.editor.selected.configurable": "CodeGenie.CodeElf.Plugin",
-    "shape": "phone"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;127.0.0.1:5555&quot;: &quot;5377903851767387430091&quot;,
+    &quot;Application.entry.executor&quot;: &quot;Run&quot;,
+    &quot;MODULE_HAP_TIME&quot;: &quot;{\&quot;127.0.0.1:5555entry\&quot;:\&quot;2026-01-02T20:57:09.800633400Z\&quot;}&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;ace.nodejs.version&quot;: &quot;18.20.1&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feat&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/24505/Documents/GitHub/Yigofang_Mall/entry/src/main/ets/viewmodel&quot;,
+    &quot;projectSizeLastTraceTimestamp-05ea5c946757c6d6ed619247f0c7f8f2d2023e55a1be8a2624748a6eaedf&quot;: &quot;1767327846810&quot;,
+    &quot;projectSizeLastTraceTimestamp-6c124ed2cec1170f35018b825856bf7fca51bfcb9a07373bd70e043a728d&quot;: &quot;1767379997417&quot;,
+    &quot;projectSizeLastTraceTimestamp-9c30861540aae56eb2235629dabdd7cfb3b54b82938407b5a3bf5bf81649&quot;: &quot;1765295014205&quot;,
+    &quot;projectSizeLastTraceTimestamp-c4bd905ad363288c20205958d3ed6534e2018530fea3d4010e0f1fc38b07&quot;: &quot;1765280413489&quot;,
+    &quot;resolution&quot;: &quot;1080*2340&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;CodeGenie.CodeElf.Plugin&quot;,
+    &quot;shape&quot;: &quot;phone&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\24505\Documents\GitHub\Yigofang_Mall\entry\src\main\ets\viewmodel" />
@@ -146,6 +195,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="merge branch 'Hong-ho-main'" />
     <MESSAGE value="修复了商品懒加载无法正确显示名称的问题" />
-    <option name="LAST_COMMIT_MESSAGE" value="修复了商品懒加载无法正确显示名称的问题" />
+    <MESSAGE value="排序、搜索" />
+    <option name="LAST_COMMIT_MESSAGE" value="排序、搜索" />
   </component>
 </project>

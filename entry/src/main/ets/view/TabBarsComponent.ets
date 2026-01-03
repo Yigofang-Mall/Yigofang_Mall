@@ -232,14 +232,6 @@ export default struct TabBar {
 
   build() {
     Column() {
-      // 搜索框
-      SearchBox({
-        callback: {
-          onSearch: (keyword: string): void => this.handleSearch(keyword)
-        },
-        placeholder: '搜索商品...'
-      })
-
       // 标签页容器
       Tabs() {
         // 第一个标签内容（商品列表页）
@@ -252,10 +244,8 @@ export default struct TabBar {
             }
 
             // 商品列表组件（精选页）
-            GoodsList({ 
-              category: this.getCategoryByIndex(0),
-              searchResults: this.searchResults,
-              isSearchMode: this.isSearchMode
+            GoodsList({
+              category: this.getCategoryByIndex(0)
             })
           }
           .width('100%')
@@ -274,9 +264,7 @@ export default struct TabBar {
               // 商品列表组件（其他分类页）
               // 使用索引+1来对应分类数组中的位置
               GoodsList({ 
-                category: this.getCategoryByIndex(index + 1),
-                searchResults: this.searchResults,
-                isSearchMode: this.isSearchMode
+                category: this.getCategoryByIndex(index + 1)
               })
             }
             .width('100%')

@@ -16,15 +16,15 @@
 import * as commonConst from '../common/CommonConstants';
 import { GoodsListItemType } from '../viewmodel/InitialData';
 import { ListDataSource } from '../viewmodel/ListDataSource';
-import SortDialog, { SortType } from './SortDialogComponent';
+import SortDialog, { SortType, PriceRangeFilter } from './SortDialogComponent';
 import { saveSortType, getSortType } from '../viewmodel/PreferencesUtils';
+import { searchGoodsByKeyword } from '../viewmodel/SearchUtils';
 import { sortGoodsList } from '../viewmodel/SortUtils';
 
 /**
  * 商品列表组件
  * 使用LazyForEach实现商品列表的懒加载渲染
  * 支持触底加载更多功能
- * 支持搜索结果显示
  */
 @Component
 export default struct GoodsList {
@@ -35,54 +35,56 @@ export default struct GoodsList {
   // 记录触摸结束点Y坐标
   private endTouchOffsetY: number = 0;
   // 是否正在加载
-  @State isLoading: boolean = false;
+  private isLoading: boolean = false;
+  // 是否已经到达底部（没有更多数据）
+  @State hasReachedBottom: boolean = false;
   // 是否正在刷新
   @State isRefreshing: boolean = false;
   // 分类
   @Prop category: string = 'selected';
-  // 搜索结果商品列表
-  @Prop searchResults: GoodsListItemType[] = [];
-  // 是否为搜索模式
-  @Prop isSearchMode: boolean = false;
-  // 是否显示排序弹窗
+
+  // 新增：搜索相关状态
+  @State searchKeyword: string = '';
+  @State isSearchMode: boolean = false;
   @State showSortDialog: boolean = false;
-  // 当前排序类型
   @State currentSortType: SortType = SortType.RECOMMEND;
-  // 排序后的搜索结果（用于搜索模式）
+  @State currentPriceFilter: PriceRangeFilter | null = null;
+  // 搜索结果相关状态
+  @State searchResults: GoodsListItemType[] = [];
   @State sortedSearchResults: GoodsListItemType[] = [];
-  // 是否使用懒加载（排序时禁用）
   @State useLazyLoad: boolean = true;
 
   aboutToAppear() {
     // 当分类改变时，更新数据源
     this.goodsListData.setCategory(this.category);
-    
-    // 加载保存的排序类型
-    const savedSortType = getSortType();
-    this.currentSortType = savedSortType;
-    this.goodsListData.setSortType(savedSortType);
-    
-    // 更新懒加载状态
-    this.useLazyLoad = this.goodsListData.isLazyLoadMode();
+
+    // 初始化排序类型
+    this.currentSortType = getSortType();
+    this.goodsListData.setSortType(this.currentSortType);
+
+    // 延迟初始化底部状态，确保数据源完全初始化
+    setTimeout(() => {
+      this.updateBottomStatus();
+      console.log('组件初始化完成，是否到达底部:', this.hasReachedBottom);
+    }, 100);
   }
 
-  /**
-   * 监听搜索结果显示变化，应用排序
-   */
-  aboutToUpdate() {
-    // 当分类改变时，更新数据源和懒加载状态
-    this.goodsListData.setCategory(this.category);
-    this.useLazyLoad = this.goodsListData.isLazyLoadMode();
-    
-    // 当搜索结果变化时，应用当前排序
+  // 新增：统一更新底部状态的方法
+  private updateBottomStatus() {
     if (this.isSearchMode) {
-      if (this.searchResults.length > 0) {
-        this.sortedSearchResults = sortGoodsList(this.searchResults, this.currentSortType);
-      } else {
-        // 清空排序后的搜索结果
-        this.sortedSearchResults = [];
-      }
+      // 搜索模式下，底部状态由搜索结果数量决定
+      this.hasReachedBottom = this.sortedSearchResults.length > 0;
+    } else {
+      // 正常模式下，检查是否还有更多数据
+      const canLoadMore = this.goodsListData.canLoadMore();
+      this.hasReachedBottom = !canLoadMore;
+      console.log(`底部状态更新: canLoadMore=${canLoadMore}, hasReachedBottom=${this.hasReachedBottom}`);
     }
+  }
+
+  // 监听数据源变化，更新底部状态
+  aboutToUpdate() {
+    this.updateBottomStatus();
   }
 
   // 处理下拉刷新
@@ -100,7 +102,49 @@ export default struct GoodsList {
     }, commonConst.REFRESH_DELAY);
   }
 
-  // 构建单个商品项
+  // 新增：处理搜索
+  private handleSearch(keyword: string) {
+    console.log('=== GoodsListComponent.handleSearch ===');
+    console.log('搜索关键词:', keyword);
+    console.log('当前分类:', this.category);
+    
+    this.searchKeyword = keyword;
+    this.isSearchMode = keyword.trim().length > 0;
+    
+    if (this.isSearchMode) {
+      // 搜索模式下，禁用懒加载
+      this.useLazyLoad = false;
+      
+      // 执行搜索
+      this.searchResults = searchGoodsByKeyword(this.category, keyword.trim());
+      console.log('搜索结果数量:', this.searchResults.length);
+      
+      // 应用当前排序
+      if (this.searchResults.length > 0) {
+        this.sortedSearchResults = sortGoodsList(this.searchResults, this.currentSortType, this.currentPriceFilter || undefined);
+        console.log('排序后搜索结果数量:', this.sortedSearchResults.length);
+      } else {
+        this.sortedSearchResults = [];
+      }
+    } else {
+      // 非搜索模式，恢复懒加载
+      this.useLazyLoad = true;
+      // 清空搜索结果
+      this.searchResults = [];
+      this.sortedSearchResults = [];
+    }
+    
+    // 更新底部状态
+    this.updateBottomStatus();
+    
+    console.log('搜索模式:', this.isSearchMode);
+    console.log('懒加载状态:', this.useLazyLoad);
+    console.log('=== handleSearch 完成 ===\n');
+  }
+
+  /**
+   * 构建单个商品项
+   */
   @Builder
   buildGoodsItem(item: GoodsListItemType) {
     Row() {
@@ -165,10 +209,8 @@ export default struct GoodsList {
     .width(commonConst.LAYOUT_WIDTH_OR_HEIGHT)
   }
 
-  /**
-   * 处理排序选择
-   */
-  private handleSortSelect(sortType: SortType) {
+  // 新增：处理排序选择
+  private handleSortSelect(sortType: SortType, priceFilter?: PriceRangeFilter) {
     console.log('========================================');
     console.log('=== GoodsListComponent.handleSortSelect ===');
     console.log(`选择的排序类型: ${sortType}`);
@@ -177,6 +219,15 @@ export default struct GoodsList {
     console.log(`当前分类: ${this.category}`);
     
     this.currentSortType = sortType;
+    
+    // 如果是价格区间筛选，保存筛选条件
+    if (sortType === SortType.PRICE_RANGE && priceFilter) {
+      this.currentPriceFilter = priceFilter;
+      console.log(`价格区间筛选条件: ¥${priceFilter.minPrice} - ¥${priceFilter.maxPrice}`);
+    } else {
+      // 其他排序方式清除价格筛选条件
+      this.currentPriceFilter = null;
+    }
     
     // 保存排序类型
     saveSortType(sortType);
@@ -189,7 +240,7 @@ export default struct GoodsList {
       
       if (this.searchResults.length > 0) {
         console.log('开始排序搜索结果...');
-        this.sortedSearchResults = sortGoodsList(this.searchResults, sortType);
+        this.sortedSearchResults = sortGoodsList(this.searchResults, sortType, priceFilter);
         console.log(`排序后结果数量: ${this.sortedSearchResults.length}`);
       } else {
         console.log('搜索结果为空，无需排序');
@@ -201,7 +252,7 @@ export default struct GoodsList {
       const dataCount = this.goodsListData.getAllData().length;
       console.log(`数据源商品数量: ${dataCount}`);
       
-      this.goodsListData.setSortType(sortType);
+      this.goodsListData.setSortType(sortType, priceFilter);
       
       // 更新懒加载状态
       this.useLazyLoad = this.goodsListData.isLazyLoadMode();
@@ -216,49 +267,27 @@ export default struct GoodsList {
       }
     }
     
+    // 更新底部状态
+    this.updateBottomStatus();
+    
     console.log('=== handleSortSelect 完成 ===');
     console.log('========================================\n');
   }
 
-  /**
-   * 显示排序弹窗
-   */
+  // 新增：打开排序弹窗
   private openSortDialog() {
     this.showSortDialog = true;
   }
 
-  /**
-   * 隐藏排序弹窗
-   */
+  // 新增：关闭排序弹窗
   private closeSortDialog() {
     this.showSortDialog = false;
   }
 
-  /**
-   * 获取排序按钮文本
-   */
-  private getSortButtonText(): string {
-    switch (this.currentSortType) {
-      case SortType.RECOMMEND:
-        return '推荐排序';
-      case SortType.PRICE_LOW_TO_HIGH:
-        return '价格↑';
-      case SortType.PRICE_HIGH_TO_LOW:
-        return '价格↓';
-      default:
-        return '排序';
-    }
-  }
-
-  // 处理触摸事件（仅在非搜索模式下）
+  // 新增：处理触摸事件
   private handleTouch(event?: TouchEvent) {
-    // 搜索模式下不处理触摸事件
-    if (this.isSearchMode) {
-      return;
-    }
-    
-    // 排序模式下禁用懒加载，不处理触底加载更多
-    if (!this.useLazyLoad) {
+    // 搜索模式下或懒加载禁用时禁用触摸事件处理
+    if (this.isSearchMode || !this.useLazyLoad) {
       return;
     }
 
@@ -271,13 +300,23 @@ export default struct GoodsList {
         break;
       case TouchType.Move: // 触摸移动
         this.endTouchOffsetY = event.touches[0].y;
-        // 判断是否向上滑动且接近底部，如果是则加载更多数据（仅在懒加载模式下）
+        // 判断是否向上滑动且接近底部，如果是则加载更多数据
         if (this.startTouchOffsetY - this.endTouchOffsetY > 100 && !this.isLoading && this.useLazyLoad) {
-          this.isLoading = true;
-          this.goodsListData.pushData();
-          setTimeout(() => {
-            this.isLoading = false;
-          }, 500);
+          // 先检查是否还有更多数据可以加载
+          if (this.goodsListData.canLoadMore()) {
+            console.log('可以加载更多数据，开始加载...');
+            this.isLoading = true;
+            this.goodsListData.pushData();
+            setTimeout(() => {
+              this.isLoading = false;
+              // 检查加载后是否还有更多数据
+              this.updateBottomStatus();
+              console.log('加载完成，是否到达底部:', this.hasReachedBottom);
+            }, 500);
+          } else {
+            console.log('没有更多数据可以加载，已到达底部');
+            this.updateBottomStatus();
+          }
         }
         // 判断是否下拉刷新
         if (this.endTouchOffsetY - this.startTouchOffsetY > 100 && !this.isRefreshing) {
@@ -288,139 +327,137 @@ export default struct GoodsList {
   }
 
   build() {
+    // 整体容器 - 垂直布局
     Column() {
-      // 排序按钮（在所有模式下都显示）
+      // 搜索框和排序按钮区域
       Row() {
-        Button(this.getSortButtonText())
-          .type(ButtonType.Normal)
-          .fontSize(commonConst.NORMAL_FONT_SIZE)
+        // 搜索框
+        TextInput({ placeholder: '搜索商品...' })
+          .type(InputType.Normal)
+          .width('70%')
+          .height(40)
+          .fontSize(14)
           .backgroundColor('#F5F5F5')
-          .fontColor(Color.Black)
-          .borderRadius(20)
-          .height(36)
-          .padding({ left: 16, right: 16 })
+          .onChange((value: string) => {
+            this.handleSearch(value);
+          })
+          .onSubmit(() => {
+            // 回车搜索
+            this.handleSearch(this.searchKeyword);
+          })
+
+        // 排序按钮
+        Button('排序')
+          .fontSize(14)
+          .fontColor(Color.White)
+          .backgroundColor('#007DFF')
+          .height(40)
+          .width('25%')
+          .margin({ left: 10 })
           .onClick(() => {
             this.openSortDialog();
           })
       }
       .width('100%')
-      .height(50)
-      .justifyContent(FlexAlign.End)
-      .padding({ right: 16, top: 8, bottom: 8 })
-      .transition(TransitionEffect.OPACITY.animation({ duration: 200 }))
+      .padding({ left: 16, right: 16, top: 8, bottom: 8 })
+      .justifyContent(FlexAlign.SpaceBetween)
 
-      // 商品列表内容
-      Row() {
-        // 如果是搜索模式且有搜索结果
-        if (this.isSearchMode && this.searchResults.length > 0) {
-          // 显示搜索结果（使用排序后的结果）
-          List({ space: commonConst.LIST_ITEM_SPACE }) {
-            ForEach(
-              this.sortedSearchResults.length > 0 ? this.sortedSearchResults : this.searchResults,
-              (item: GoodsListItemType) => {
-                ListItem() {
-                  this.buildGoodsItem(item)
-                }
-              },
-              (item: GoodsListItemType) => item.id.toString()
-            )
-          }
-          .width('100%')
-          .height('100%')
-          .edgeEffect(EdgeEffect.Spring) // 使用弹簧效果
-        } else if (this.isSearchMode && this.searchResults.length === 0) {
-          // 搜索模式但没有搜索结果
-          Column() {
-            Text('🔍')
-              .fontSize(60)
-              .margin({ bottom: 20 })
-            Text('没有找到相关商品')
-              .fontSize(commonConst.NORMAL_FONT_SIZE)
-              .fontColor($r('app.color.gray'))
-              .margin({ bottom: 10 })
-            Text('请尝试其他关键词')
-              .fontSize(commonConst.GOODS_EVALUATE_FONT_SIZE)
-              .fontColor($r('app.color.deepGray'))
-          }
-          .width('100%')
-          .height('100%')
-          .justifyContent(FlexAlign.Center)
-          .alignItems(HorizontalAlign.Center)
-        } else {
-          // 正常商品列表模式
-          List({ space: commonConst.LIST_ITEM_SPACE }) {
-            // 根据是否启用懒加载选择不同的渲染方式
-            if (this.useLazyLoad) {
-              // 使用懒加载方式渲染列表项（推荐排序模式）
-              LazyForEach(this.goodsListData, (item: GoodsListItemType) => {
-                ListItem() {
-                  this.buildGoodsItem(item)
-                }
-                // 监听触摸事件，实现触底加载更多
-                .onTouch((event?: TouchEvent) => {
-                  this.handleTouch(event);
-                })
-              }, (item: GoodsListItemType) => item.id.toString())
-            } else {
-              // 使用普通ForEach渲染（排序模式，已加载所有数据）
-              ForEach(this.goodsListData.getAllData(), (item: GoodsListItemType) => {
-                ListItem() {
-                  this.buildGoodsItem(item)
-                }
-              }, (item: GoodsListItemType) => item.id.toString())
+      // 商品列表容器
+      List({ space: commonConst.LIST_ITEM_SPACE }) {
+        // 刷新提示放在列表顶部
+        if (this.isRefreshing) {
+          ListItem() {
+            Row() {
+              // 刷新图标
+              Image($r('app.media.refreshing'))
+                .width(commonConst.ICON_WIDTH)
+                .height(commonConst.ICON_HEIGHT)
+                .alignSelf(ItemAlign.Center)
+              // 刷新状态文本
+              Text('正在刷新...')
+                .fontSize(commonConst.NORMAL_FONT_SIZE)
+                .fontColor($r('app.color.deepGray'))
+                .textAlign(TextAlign.Center)
+                .width('100%')
             }
+            .width('100%')
+            .height(60)
+            .justifyContent(FlexAlign.Center)
           }
-          .width('100%')
-          .height('100%')
-          .edgeEffect(EdgeEffect.Spring) // 使用弹簧效果
         }
 
-        // 状态提示信息
-        Column() {
-          // 刷新提示
-          if (this.isRefreshing) {
-            Text('正在刷新...')
-              .fontSize(commonConst.NORMAL_FONT_SIZE)
-              .fontColor($r('app.color.deepGray'))
-              .textAlign(TextAlign.Center)
+        // 条件渲染：根据搜索模式显示不同的内容
+        if (this.isSearchMode) {
+          // 搜索模式下显示搜索结果
+          if (this.sortedSearchResults.length > 0) {
+            ForEach(this.sortedSearchResults, (item: GoodsListItemType) => {
+              ListItem() {
+                this.buildGoodsItem(item)
+              }
+            }, (item: GoodsListItemType) => item.id.toString())
+          } else {
+            // 搜索结果为空时的提示
+            ListItem() {
+              Column() {
+                Text('没有找到相关商品')
+                  .fontSize(commonConst.NORMAL_FONT_SIZE)
+                  .fontColor($r('app.color.gray'))
+              }
               .width('100%')
-              .margin({ top: 20, bottom: 20 })
+              .height(100)
+              .justifyContent(FlexAlign.Center)
+            }
           }
-          // 加载更多提示（仅在非搜索模式下显示）
-          else if (!this.isSearchMode) {
+        } else {
+          // 正常模式下使用懒加载方式渲染列表项
+          LazyForEach(this.goodsListData, (item: GoodsListItemType, index: number) => {
+            ListItem() {
+              this.buildGoodsItem(item)
+            }
+          }, (item: GoodsListItemType) => item.id.toString())
+        }
+
+        // 加载更多提示放在列表底部
+        ListItem() {
+          Column() {
             if (this.isLoading) {
               Text('正在加载更多...')
                 .fontSize(commonConst.NORMAL_FONT_SIZE)
                 .fontColor($r('app.color.deepGray'))
                 .textAlign(TextAlign.Center)
                 .width('100%')
-                .margin({ top: 20, bottom: 40 })
-            } else {
+            } else if (this.hasReachedBottom) {
               Text($r('app.string.to_bottom'))
                 .fontSize(commonConst.NORMAL_FONT_SIZE)
                 .fontColor($r('app.color.deepGray'))
                 .textAlign(TextAlign.Center)
                 .width('100%')
-                .margin({ top: 20, bottom: 40 })
+            } else {
+              Text('滑动加载更多')
+                .fontSize(commonConst.NORMAL_FONT_SIZE)
+                .fontColor($r('app.color.gray'))
+                .textAlign(TextAlign.Center)
+                .width('100%')
             }
           }
+          .width('100%')
+          .height(80)
+          .justifyContent(FlexAlign.Center)
         }
-        .justifyContent(FlexAlign.Center)
-        .width(commonConst.LAYOUT_WIDTH_OR_HEIGHT)
-        .height('100%')
-        .backgroundColor($r('app.color.primaryBgColor'))
       }
-      .justifyContent(FlexAlign.Center)
-      .width(commonConst.LAYOUT_WIDTH_OR_HEIGHT)
+      .width('100%')
       .height('100%')
+      .edgeEffect(EdgeEffect.Spring) // 使用弹簧效果
+      .backgroundColor($r('app.color.primaryBgColor'))
 
       // 排序弹窗
       if (this.showSortDialog) {
         SortDialog({
           isVisible: this.showSortDialog,
           currentSort: this.currentSortType,
-          onSortSelected: (sortType: SortType) => {
-            this.handleSortSelect(sortType);
+          currentPriceFilter: this.currentPriceFilter,
+          onSortSelected: (sortType: SortType, priceFilter?: PriceRangeFilter) => {
+            this.handleSortSelect(sortType, priceFilter);
             this.closeSortDialog();
           },
           onClose: () => {
@@ -429,8 +466,11 @@ export default struct GoodsList {
         })
       }
     }
-    .width(commonConst.LAYOUT_WIDTH_OR_HEIGHT)
+    .width('100%')
     .height('100%')
-    .backgroundColor($r('app.color.primaryBgColor'))
+    // 处理触摸事件（仅在非搜索模式下）
+    .onTouch((event?: TouchEvent) => {
+      this.handleTouch(event);
+    })
   }
 }

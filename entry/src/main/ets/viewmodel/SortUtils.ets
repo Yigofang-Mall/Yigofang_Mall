@@ -14,7 +14,7 @@
  */
 
 import { GoodsListItemType } from './InitialData';
-import { SortType } from '../view/SortDialogComponent';
+import { SortType, PriceRangeFilter } from '../view/SortDialogComponent';
 
 /**
  * ResourceStr 内部结构接口（用于类型安全访问）
@@ -160,15 +160,53 @@ export function parsePrice(priceStr: ResourceStr): number {
 }
 
 /**
- * 对商品列表进行排序
+ * 根据价格区间筛选商品
+ * @param goodsList 商品列表
+ * @param priceFilter 价格区间筛选条件
+ * @returns 筛选后的商品列表
+ */
+export function filterGoodsByPriceRange(goodsList: GoodsListItemType[], priceFilter: PriceRangeFilter): GoodsListItemType[] {
+  console.log('========================================');
+  console.log('=== 开始价格区间筛选 ===');
+  console.log(`价格区间: ¥${priceFilter.minPrice} - ¥${priceFilter.maxPrice}`);
+  console.log(`筛选前商品数量: ${goodsList.length}`);
+
+  // 打印筛选前的商品信息
+  console.log('\n【筛选前的商品列表】');
+  goodsList.forEach((item, index) => {
+    const price = parsePrice(item.price);
+    console.log(`  [${index + 1}] ID: ${item.id}, 名称: ${item.goodsName.toString().substring(0, 30)}..., 价格: ${price}`);
+  });
+
+  // 进行价格区间筛选
+  const filteredList = goodsList.filter(item => {
+    const price = parsePrice(item.price);
+    const isInRange = price >= priceFilter.minPrice && price <= priceFilter.maxPrice;
+    
+    console.log(`  [筛选] 商品ID: ${item.id}, 价格: ${price}, 在区间内: ${isInRange}`);
+    
+    return isInRange;
+  });
+
+  console.log(`\n筛选后商品数量: ${filteredList.length}`);
+  console.log('=== 价格区间筛选完成 ===');
+  console.log('========================================\n');
+
+  return filteredList;
+}
+
+/**
+ * 对商品列表进行排序和筛选
  * @param goodsList 商品列表
  * @param sortType 排序类型
- * @returns 排序后的商品列表
+ * @param priceFilter 价格区间筛选条件（可选）
+ * @returns 排序和筛选后的商品列表
  */
-export function sortGoodsList(goodsList: GoodsListItemType[], sortType: SortType): GoodsListItemType[] {
+export function sortGoodsList(goodsList: GoodsListItemType[], sortType: SortType, priceFilter?: PriceRangeFilter): GoodsListItemType[] {
   console.log('========================================');
   console.log('=== 开始排序商品列表 ===');
   console.log(`排序类型: ${sortType}`);
+  console.log(`价格筛选: ${priceFilter ? `¥${priceFilter.minPrice} - ¥${priceFilter.maxPrice}` : '无'}`);
   console.log(`排序前商品数量: ${goodsList.length}`);
   
   // 打印排序前的商品信息
@@ -179,7 +217,14 @@ export function sortGoodsList(goodsList: GoodsListItemType[], sortType: SortType
   });
   
   // 创建新数组，避免修改原数组
-  const sortedList = [...goodsList];
+  let processedList = [...goodsList];
+
+  // 首先进行价格区间筛选
+  if (priceFilter) {
+    console.log('\n【价格区间筛选】开始筛选...');
+    processedList = filterGoodsByPriceRange(processedList, priceFilter);
+    console.log(`筛选后商品数量: ${processedList.length}`);
+  }
 
   switch (sortType) {
     case SortType.RECOMMEND:
@@ -190,7 +235,7 @@ export function sortGoodsList(goodsList: GoodsListItemType[], sortType: SortType
     case SortType.PRICE_LOW_TO_HIGH:
       // 价格从低到高
       console.log('\n【排序过程】价格从低到高排序');
-      sortedList.sort((a, b) => {
+      processedList.sort((a, b) => {
         const priceA = parsePrice(a.price);
         const priceB = parsePrice(b.price);
         const result = priceA - priceB;
@@ -204,7 +249,7 @@ export function sortGoodsList(goodsList: GoodsListItemType[], sortType: SortType
     case SortType.PRICE_HIGH_TO_LOW:
       // 价格从高到低
       console.log('\n【排序过程】价格从高到低排序');
-      sortedList.sort((a, b) => {
+      processedList.sort((a, b) => {
         const priceA = parsePrice(a.price);
         const priceB = parsePrice(b.price);
         const result = priceB - priceA;
@@ -215,6 +260,11 @@ export function sortGoodsList(goodsList: GoodsListItemType[], sortType: SortType
       });
       break;
 
+    case SortType.PRICE_RANGE:
+      // 价格区间筛选：不需要额外排序，保持价格区间内的顺序
+      console.log('\n【排序结果】价格区间筛选，不进行额外排序');
+      break;
+
     default:
       console.log('\n【排序结果】未知排序类型，保持原始顺序');
       break;
@@ -222,7 +272,7 @@ export function sortGoodsList(goodsList: GoodsListItemType[], sortType: SortType
   
   // 打印排序后的商品信息
   console.log('\n【排序后的商品列表】');
-  sortedList.forEach((item, index) => {
+  processedList.forEach((item, index) => {
     const price = parsePrice(item.price);
     // 尝试安全地获取价格字符串用于显示
     let priceDisplay = '';
@@ -242,28 +292,28 @@ export function sortGoodsList(goodsList: GoodsListItemType[], sortType: SortType
   // 验证排序结果
   if (sortType === SortType.PRICE_LOW_TO_HIGH) {
     console.log('\n【排序验证】价格从低到高');
-    for (let i = 1; i < sortedList.length; i++) {
-      const prevPrice = parsePrice(sortedList[i - 1].price);
-      const currPrice = parsePrice(sortedList[i].price);
+    for (let i = 1; i < processedList.length; i++) {
+      const prevPrice = parsePrice(processedList[i - 1].price);
+      const currPrice = parsePrice(processedList[i].price);
       if (prevPrice > currPrice) {
         console.error(`  [排序错误] 位置 ${i} 和 ${i + 1} 顺序错误: ${prevPrice} > ${currPrice}`);
       }
     }
   } else if (sortType === SortType.PRICE_HIGH_TO_LOW) {
     console.log('\n【排序验证】价格从高到低');
-    for (let i = 1; i < sortedList.length; i++) {
-      const prevPrice = parsePrice(sortedList[i - 1].price);
-      const currPrice = parsePrice(sortedList[i].price);
+    for (let i = 1; i < processedList.length; i++) {
+      const prevPrice = parsePrice(processedList[i - 1].price);
+      const currPrice = parsePrice(processedList[i].price);
       if (prevPrice < currPrice) {
         console.error(`  [排序错误] 位置 ${i} 和 ${i + 1} 顺序错误: ${prevPrice} < ${currPrice}`);
       }
     }
   }
   
-  console.log(`排序后商品数量: ${sortedList.length}`);
+  console.log(`最终商品数量: ${processedList.length}`);
   console.log('=== 排序完成 ===');
   console.log('========================================\n');
   
-  return sortedList;
+  return processedList;
 }
 

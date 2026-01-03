@@ -21,7 +21,16 @@ import { NORMAL_FONT_SIZE } from '../common/CommonConstants';
 export enum SortType {
   RECOMMEND = 'recommend',      // 推荐排序
   PRICE_LOW_TO_HIGH = 'price_asc',  // 价格从低到高
-  PRICE_HIGH_TO_LOW = 'price_desc'  // 价格从高到低
+  PRICE_HIGH_TO_LOW = 'price_desc', // 价格从高到低
+  PRICE_RANGE = 'price_range'   // 价格区间筛选
+}
+
+/**
+ * 价格区间筛选条件
+ */
+export interface PriceRangeFilter {
+  minPrice: number;  // 最低价格
+  maxPrice: number;  // 最高价格
 }
 
 /**
@@ -34,18 +43,71 @@ export default struct SortDialog {
   @Prop isVisible: boolean = false;
   // 当前选中的排序类型
   @Prop currentSort: SortType = SortType.RECOMMEND;
+  // 当前价格筛选条件
+  @Prop currentPriceFilter: PriceRangeFilter | null = null;
   // 排序选择回调
-  onSortSelected?: (sortType: SortType) => void;
+  onSortSelected?: (sortType: SortType, priceFilter?: PriceRangeFilter) => void;
   // 关闭弹窗回调
   onClose?: () => void;
+
+  // 价格区间筛选状态
+  @State minPrice: string = '';
+  @State maxPrice: string = '';
 
   /**
    * 处理排序选择
    */
   private handleSortSelect(sortType: SortType) {
+    if (sortType === SortType.PRICE_RANGE) {
+      // 价格区间筛选需要输入价格范围
+      console.log('价格区间筛选需要设置价格范围');
+      return;
+    }
+
     if (this.onSortSelected) {
       this.onSortSelected(sortType);
     }
+  }
+
+  /**
+   * 处理价格区间筛选确认
+   */
+  private handlePriceRangeConfirm() {
+    const minPrice = parseFloat(this.minPrice);
+    const maxPrice = parseFloat(this.maxPrice);
+
+    // 验证输入
+    if (isNaN(minPrice) || isNaN(maxPrice)) {
+      console.error('价格输入无效');
+      return;
+    }
+
+    if (minPrice < 0 || maxPrice < 0) {
+      console.error('价格不能为负数');
+      return;
+    }
+
+    if (minPrice > maxPrice) {
+      console.error('最低价格不能大于最高价格');
+      return;
+    }
+
+    const priceFilter: PriceRangeFilter = {
+      minPrice: minPrice,
+      maxPrice: maxPrice
+    };
+
+    if (this.onSortSelected) {
+      this.onSortSelected(SortType.PRICE_RANGE, priceFilter);
+    }
+  }
+
+  /**
+   * 重置价格区间输入
+   */
+  private handlePriceRangeReset() {
+    this.minPrice = '';
+    this.maxPrice = '';
   }
 
   /**
@@ -84,6 +146,115 @@ export default struct SortDialog {
     .onClick(() => {
       this.handleSortSelect(sortType);
     })
+  }
+
+  /**
+   * 构建价格区间筛选项
+   */
+  @Builder
+  buildPriceRangeItem() {
+    Column({ space: 16 }) {
+      // 价格区间标题
+      Row() {
+        Text('价格区间筛选')
+          .fontSize(NORMAL_FONT_SIZE)
+          .fontColor(this.currentSort === SortType.PRICE_RANGE ? Color.Blue : Color.Black)
+          .fontWeight(this.currentSort === SortType.PRICE_RANGE ? FontWeight.Medium : FontWeight.Normal)
+        
+        if (this.currentSort === SortType.PRICE_RANGE) {
+          Text('✓')
+            .fontSize(NORMAL_FONT_SIZE)
+            .fontColor(Color.Blue)
+            .margin({ left: 8 })
+        }
+      }
+      .width('100%')
+      .justifyContent(FlexAlign.SpaceBetween)
+      .alignItems(VerticalAlign.Center)
+
+      // 价格输入区域
+      Row({ space: 12 }) {
+        // 最低价输入
+        Column() {
+          Text('最低价')
+            .fontSize(12)
+            .fontColor('#666666')
+            .margin({ bottom: 4 })
+          
+          TextInput({ placeholder: '输入最低价', text: this.minPrice })
+            .type(InputType.Number)
+            .fontSize(14)
+            .backgroundColor('#F5F5F5')
+            .height(36)
+            .onChange((value: string) => {
+              this.minPrice = value;
+            })
+        }
+        .layoutWeight(1)
+
+        Text('—')
+          .fontSize(14)
+          .fontColor('#666666')
+          .alignSelf(ItemAlign.Center)
+
+        // 最高价输入
+        Column() {
+          Text('最高价')
+            .fontSize(12)
+            .fontColor('#666666')
+            .margin({ bottom: 4 })
+          
+          TextInput({ placeholder: '输入最高价', text: this.maxPrice })
+            .type(InputType.Number)
+            .fontSize(14)
+            .backgroundColor('#F5F5F5')
+            .height(36)
+            .onChange((value: string) => {
+              this.maxPrice = value;
+            })
+        }
+        .layoutWeight(1)
+      }
+      .width('100%')
+
+      // 确认和重置按钮
+      Row({ space: 12 }) {
+        Button('重置')
+          .fontSize(12)
+          .fontColor('#007DFF')
+          .backgroundColor('#E6F4FF')
+          .height(32)
+          .layoutWeight(1)
+          .onClick(() => {
+            this.handlePriceRangeReset();
+          })
+
+        Button('确认筛选')
+          .fontSize(12)
+          .fontColor(Color.White)
+          .backgroundColor('#007DFF')
+          .height(32)
+          .layoutWeight(1)
+          .onClick(() => {
+            this.handlePriceRangeConfirm();
+          })
+      }
+      .width('100%')
+
+      // 显示当前筛选条件
+      if (this.currentPriceFilter && this.currentSort === SortType.PRICE_RANGE) {
+        Text(`当前筛选: ¥${this.currentPriceFilter.minPrice} - ¥${this.currentPriceFilter.maxPrice}`)
+          .fontSize(12)
+          .fontColor('#007DFF')
+          .backgroundColor('#F0F8FF')
+          .padding({ top: 8, bottom: 8, left: 12, right: 12 })
+          .borderRadius(4)
+      }
+    }
+    .width('100%')
+    .padding({ left: 20, right: 20, top: 16, bottom: 16 })
+    .backgroundColor(this.currentSort === SortType.PRICE_RANGE ? '#F0F8FF' : Color.White)
+    .borderRadius(8)
   }
 
   build() {
@@ -135,6 +306,13 @@ export default struct SortDialog {
               .strokeWidth(1)
               .margin({ left: 20, right: 20 })
             this.buildSortItem('价格从高到低', SortType.PRICE_HIGH_TO_LOW)
+            Divider()
+              .color('#F5F5F5')
+              .strokeWidth(1)
+              .margin({ left: 20, right: 20 })
+
+            // 价格区间筛选项
+            this.buildPriceRangeItem()
           }
           .width('100%')
           .backgroundColor(Color.White)

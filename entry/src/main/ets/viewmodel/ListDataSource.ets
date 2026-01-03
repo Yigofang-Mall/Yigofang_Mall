@@ -16,7 +16,7 @@
 import { GoodsListItemType, getRefreshedGoodsByCategory, CATEGORIES } from './InitialData';
 import { searchGoodsByKeyword } from './SearchUtils';
 import { MAX_DATA_LENGTH } from '../common/CommonConstants';
-import { SortType } from '../view/SortDialogComponent';
+import { SortType, PriceRangeFilter } from '../view/SortDialogComponent';
 import { sortGoodsList } from './SortUtils';
 
 /**
@@ -29,6 +29,7 @@ export class ListDataSource implements IDataSource {
   private category: string = CATEGORIES.SELECTED;
   private maxLoadedIndex: number = 0; // 记录已加载的最大索引
   private currentSortType: SortType = SortType.RECOMMEND; // 当前排序类型
+  private currentPriceFilter: PriceRangeFilter | null = null; // 当前价格筛选条件
   private isLazyLoadEnabled: boolean = true; // 是否启用懒加载
 
   constructor(category: string = CATEGORIES.SELECTED) {
@@ -40,10 +41,27 @@ export class ListDataSource implements IDataSource {
   }
 
   totalCount(): number {
+    // 价格筛选模式下，返回实际数据长度，避免重复显示
+    if (this.currentPriceFilter) {
+      const filteredData = sortGoodsList(this.dataArray, this.currentSortType, this.currentPriceFilter);
+      return filteredData.length;
+    }
     return MAX_DATA_LENGTH;
   }
 
-  getData(index: number): GoodsListItemType {
+  /**
+   * 检查是否还能加载更多数据
+   * @returns true表示还能加载，false表示已达上限
+   */
+  canLoadMore(): boolean {
+    // 价格筛选模式下，不允许加载更多数据
+    if (this.currentPriceFilter) {
+      return false;
+    }
+    return this.dataArray.length < MAX_DATA_LENGTH;
+  }
+
+  getData(index: number): GoodsListItemType | undefined {
     // 如果启用懒加载且索引超出当前数据范围，预加载更多数据
     if (this.isLazyLoadEnabled && index >= this.dataArray.length - 6 && this.dataArray.length < MAX_DATA_LENGTH) {
       this.pushData();
@@ -51,10 +69,25 @@ export class ListDataSource implements IDataSource {
 
     // 如果索引有效，返回数据，否则返回最后一个数据
     if (index < this.dataArray.length) {
-      return this.dataArray[index];
+      // 如果启用了价格筛选，需要在返回数据前应用筛选
+      if (this.currentPriceFilter) {
+        const filteredData = sortGoodsList(this.dataArray, this.currentSortType, this.currentPriceFilter);
+        if (index < filteredData.length) {
+          return filteredData[index];
+        }
+        // 如果索引超出筛选后的数据范围，返回undefined
+        return undefined;
+      } else {
+        return this.dataArray[index];
+      }
     }
-    
-    // 如果索引超出范围，返回最后一个有效数据
+
+    // 如果索引超出范围，根据模式返回相应结果
+    if (this.currentPriceFilter) {
+      // 价格筛选模式下，超出范围返回undefined
+      return undefined;
+    }
+    // 普通模式下，返回最后一个数据
     return this.dataArray[this.dataArray.length - 1];
   }
 
@@ -136,6 +169,7 @@ export class ListDataSource implements IDataSource {
     console.log('=== 刷新数据调试日志 ===');
     console.log('刷新分类:', this.category);
     console.log('刷新前数据长度:', this.dataArray.length);
+    console.log('当前价格筛选:', this.currentPriceFilter ? `¥${this.currentPriceFilter.minPrice} - ¥${this.currentPriceFilter.maxPrice}` : '无');
     
     // 模拟网络延迟
     setTimeout(() => {
@@ -143,8 +177,9 @@ export class ListDataSource implements IDataSource {
       this.currentIndex = this.dataArray.length;
       this.maxLoadedIndex = this.dataArray.length; // 重置最大索引
       
-      // 如果当前是排序模式（非推荐排序），加载所有数据
-      if (this.currentSortType !== SortType.RECOMMEND) {
+      // 如果当前是排序模式（非推荐排序）或启用了价格筛选，加载所有数据
+      if (this.currentSortType !== SortType.RECOMMEND || this.currentPriceFilter) {
+        console.log('刷新数据：价格排序/筛选模式，禁用懒加载，加载所有数据');
         this.isLazyLoadEnabled = false;
         this.loadAllData();
       } else {
@@ -174,14 +209,16 @@ export class ListDataSource implements IDataSource {
       console.log('=== 切换分类调试日志 ===');
       console.log('从分类切换到:', category);
       console.log('切换前数据长度:', this.dataArray.length);
+      console.log('当前价格筛选:', this.currentPriceFilter ? `¥${this.currentPriceFilter.minPrice} - ¥${this.currentPriceFilter.maxPrice}` : '无');
       
       this.category = category;
       this.dataArray = getRefreshedGoodsByCategory(category);
       this.currentIndex = this.dataArray.length;
       this.maxLoadedIndex = this.dataArray.length; // 重置最大索引
       
-      // 如果当前是排序模式（非推荐排序），加载所有数据
-      if (this.currentSortType !== SortType.RECOMMEND) {
+      // 如果当前是排序模式（非推荐排序）或启用了价格筛选，加载所有数据
+      if (this.currentSortType !== SortType.RECOMMEND || this.currentPriceFilter) {
+        console.log('切换分类：价格排序/筛选模式，禁用懒加载，加载所有数据');
         this.isLazyLoadEnabled = false;
         this.loadAllData();
       } else {
@@ -238,20 +275,29 @@ export class ListDataSource implements IDataSource {
   /**
    * 设置排序类型
    */
-  setSortType(sortType: SortType): void {
-    if (this.currentSortType !== sortType) {
+  setSortType(sortType: SortType, priceFilter?: PriceRangeFilter): void {
+    const sortTypeChanged = this.currentSortType !== sortType;
+    const priceFilterChanged = JSON.stringify(this.currentPriceFilter) !== JSON.stringify(priceFilter);
+
+    if (sortTypeChanged || priceFilterChanged) {
       console.log('========================================');
       console.log('=== ListDataSource.setSortType ===');
       console.log(`从排序类型: ${this.currentSortType} 切换到: ${sortType}`);
+      console.log(`价格筛选变化: ${priceFilterChanged}`);
       console.log(`当前分类: ${this.category}`);
       console.log(`排序前数据数量: ${this.dataArray.length}`);
       console.log(`排序前最大索引: ${this.maxLoadedIndex}`);
       
-      this.currentSortType = sortType;
+      if (priceFilter) {
+        console.log(`价格区间筛选: ¥${priceFilter.minPrice} - ¥${priceFilter.maxPrice}`);
+      }
       
-      // 如果排序类型不是推荐排序，禁用懒加载并加载所有数据
-      if (sortType !== SortType.RECOMMEND) {
-        console.log('价格排序模式：禁用懒加载，加载所有数据');
+      this.currentSortType = sortType;
+      this.currentPriceFilter = priceFilter || null;
+      
+      // 如果排序类型不是推荐排序或启用了价格筛选，禁用懒加载并加载所有数据
+      if (sortType !== SortType.RECOMMEND || priceFilter) {
+        console.log('价格排序/筛选模式：禁用懒加载，加载所有数据');
         this.isLazyLoadEnabled = false;
         this.loadAllData();
         console.log(`加载所有数据后，数据数量: ${this.dataArray.length}`);
@@ -275,7 +321,7 @@ export class ListDataSource implements IDataSource {
       console.log('=== setSortType 完成 ===');
       console.log('========================================\n');
     } else {
-      console.log(`[排序] 排序类型未变化，跳过: ${sortType}`);
+      console.log(`[排序] 排序类型和价格筛选条件未变化，跳过`);
     }
   }
 
@@ -287,13 +333,37 @@ export class ListDataSource implements IDataSource {
   }
 
   /**
+   * 获取当前价格筛选条件
+   */
+  getPriceFilter(): PriceRangeFilter | null {
+    return this.currentPriceFilter;
+  }
+
+  /**
    * 加载所有数据（禁用懒加载时使用）
    */
   private loadAllData(): void {
     console.log('=== 加载所有数据（禁用懒加载） ===');
     console.log('当前数据长度:', this.dataArray.length);
     console.log('目标数据长度:', MAX_DATA_LENGTH);
+    console.log('当前价格筛选:', this.currentPriceFilter ? `¥${this.currentPriceFilter.minPrice} - ¥${this.currentPriceFilter.maxPrice}` : '无');
     
+    // 如果启用了价格筛选，加载数据时需要先加载所有原始数据，然后应用筛选
+    if (this.currentPriceFilter) {
+      console.log('价格筛选模式：加载所有原始数据，然后应用筛选');
+      this.loadAllDataForPriceFilter();
+    } else {
+      // 普通排序模式，加载所有数据
+      this.loadAllDataForNormalSort();
+    }
+    
+    console.log('=== 加载所有数据完成 ===');
+  }
+
+  /**
+   * 正常排序模式下加载所有数据
+   */
+  private loadAllDataForNormalSort(): void {
     // 如果数据已经全部加载，直接返回
     if (this.dataArray.length >= MAX_DATA_LENGTH) {
       console.log('数据已全部加载');
@@ -328,8 +398,50 @@ export class ListDataSource implements IDataSource {
       this.currentIndex = this.dataArray.length;
       console.log('加载完成，当前总数据长度:', this.dataArray.length);
     }
+  }
+
+  /**
+   * 价格筛选模式下加载所有数据
+   */
+  private loadAllDataForPriceFilter(): void {
+    // 在价格筛选模式下，我们需要加载足够的数据来确保筛选结果
+    // 由于不知道确切的筛选结果，我们加载比平时更多的数据
+    const targetLoadCount = Math.min(MAX_DATA_LENGTH, 200); // 加载最多200个商品进行筛选
     
-    console.log('=== 加载所有数据完成 ===');
+    // 如果数据已经足够加载，直接返回
+    if (this.dataArray.length >= targetLoadCount) {
+      console.log('数据已足够加载用于价格筛选');
+      return;
+    }
+    
+    // 加载更多数据用于价格筛选
+    const newData: GoodsListItemType[] = [];
+    const remainingCount = targetLoadCount - this.dataArray.length;
+    
+    for (let i = 0; i < remainingCount; i++) {
+      const id = this.maxLoadedIndex + i + 1;
+      const imageIndex = id % 4; // 0-3，刚好匹配每个分类的4张图片
+      let goodsName: string = getGoodsNameByCategoryAndIndex(this.category, imageIndex);
+      let price: ResourceStr = getPriceByIndex(this.category, imageIndex);
+
+      newData.push({
+        id: id,
+        goodsName: goodsName,
+        price: price,
+        goodsImg: getImageByCategoryAndIndex(this.category, imageIndex),
+        advertisingLanguage: $r('app.string.advertising_language'),
+        evaluate: $r('app.string.evaluate'),
+        category: this.category
+      });
+    }
+
+    if (newData.length > 0) {
+      console.log('价格筛选模式：成功加载', newData.length, '个商品');
+      this.dataArray.push(...newData);
+      this.maxLoadedIndex += newData.length;
+      this.currentIndex = this.dataArray.length;
+      console.log('价格筛选模式：当前总数据长度:', this.dataArray.length);
+    }
   }
 
   /**
@@ -340,17 +452,19 @@ export class ListDataSource implements IDataSource {
     console.log(`当前排序类型: ${this.currentSortType}`);
     console.log(`数据数组长度: ${this.dataArray.length}`);
     console.log(`分类: ${this.category}`);
+    console.log(`当前价格筛选: ${this.currentPriceFilter ? `¥${this.currentPriceFilter.minPrice} - ¥${this.currentPriceFilter.maxPrice}` : '无'}`);
     
-    if (this.currentSortType !== SortType.RECOMMEND) {
-      console.log('应用价格排序...');
+    if (this.currentSortType !== SortType.RECOMMEND || this.currentPriceFilter) {
+      console.log('应用价格排序/筛选...');
       const beforeSort = [...this.dataArray];
-      this.dataArray = sortGoodsList(this.dataArray, this.currentSortType);
-      
+
+      this.dataArray = sortGoodsList(this.dataArray, this.currentSortType, this.currentPriceFilter || undefined);
+
       // 验证数据完整性
       if (beforeSort.length !== this.dataArray.length) {
         console.error(`[排序错误] 排序前后数据长度不一致: ${beforeSort.length} -> ${this.dataArray.length}`);
       }
-      
+
       // 检查是否有数据丢失
       const beforeIds = beforeSort.map(item => item.id).sort();
       const afterIds = this.dataArray.map(item => item.id).sort();
@@ -369,7 +483,13 @@ export class ListDataSource implements IDataSource {
    * 获取所有数据（用于非懒加载模式）
    */
   getAllData(): GoodsListItemType[] {
-    return this.dataArray;
+    // 如果启用了价格筛选，返回筛选后的数据
+    if (this.currentPriceFilter) {
+      console.log(`getAllData: 价格筛选模式，返回筛选后数据`);
+      return sortGoodsList(this.dataArray, this.currentSortType, this.currentPriceFilter);
+    } else {
+      return this.dataArray;
+    }
   }
 
   /**

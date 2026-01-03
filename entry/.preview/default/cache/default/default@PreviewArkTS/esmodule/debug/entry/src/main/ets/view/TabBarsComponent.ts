@@ -19,7 +19,6 @@ import type { GoodsListItemType } from "@bundle:com.example.list_harmony/entry/e
 import { searchGoodsByKeyword } from "@bundle:com.example.list_harmony/entry/ets/viewmodel/SearchUtils";
 import { LAYOUT_WIDTH_OR_HEIGHT, NORMAL_FONT_SIZE, BIGGER_FONT_SIZE, MAX_OFFSET_Y, REFRESH_TIME, GOODS_EVALUATE_FONT_SIZE, MAX_LINES_TEXT } from "@bundle:com.example.list_harmony/entry/ets/common/CommonConstants";
 import GoodsList from "@bundle:com.example.list_harmony/entry/ets/view/GoodsListComponent";
-import SearchBox from "@bundle:com.example.list_harmony/entry/ets/view/SearchBoxComponent";
 export default class TabBar extends ViewPU {
     constructor(parent, params, __localStorage, elmtId = -1, paramsLambda = undefined, extraInfo) {
         super(parent, __localStorage, elmtId, extraInfo);
@@ -354,42 +353,10 @@ export default class TabBar extends ViewPU {
             Column.create();
             Column.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(234:5)", "entry");
         }, Column);
-        {
-            this.observeComponentCreation2((elmtId, isInitialRender) => {
-                if (isInitialRender) {
-                    let componentCall = new 
-                    // 搜索框
-                    SearchBox(this, {
-                        callback: {
-                            onSearch: (keyword: string): void => this.handleSearch(keyword)
-                        },
-                        placeholder: '搜索商品...'
-                    }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/view/TabBarsComponent.ets", line: 236, col: 7 });
-                    ViewPU.create(componentCall);
-                    let paramsLambda = () => {
-                        return {
-                            callback: {
-                                onSearch: (keyword: string): void => this.handleSearch(keyword)
-                            },
-                            placeholder: '搜索商品...'
-                        };
-                    };
-                    componentCall.paramsGenerator_ = paramsLambda;
-                }
-                else {
-                    this.updateStateVarsOfChildByElmtId(elmtId, {
-                        callback: {
-                            onSearch: (keyword: string): void => this.handleSearch(keyword)
-                        },
-                        placeholder: '搜索商品...'
-                    });
-                }
-            }, { name: "SearchBox" });
-        }
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 标签页容器
             Tabs.create();
-            Tabs.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(244:7)", "entry");
+            Tabs.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(236:7)", "entry");
             // 标签页容器
             Tabs.onChange((index: number) => {
                 this.tabsIndex = index;
@@ -415,7 +382,7 @@ export default class TabBar extends ViewPU {
                 this.observeComponentCreation2((elmtId, isInitialRender) => {
                     // 使用Column包裹以便实现下拉刷新
                     Column.create();
-                    Column.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(248:11)", "entry");
+                    Column.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(240:11)", "entry");
                     // 使用Column包裹以便实现下拉刷新
                     Column.width('100%');
                     // 使用Column包裹以便实现下拉刷新
@@ -446,25 +413,19 @@ export default class TabBar extends ViewPU {
                             let componentCall = new 
                             // 商品列表组件（精选页）
                             GoodsList(this, {
-                                category: this.getCategoryByIndex(0),
-                                searchResults: this.searchResults,
-                                isSearchMode: this.isSearchMode
-                            }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/view/TabBarsComponent.ets", line: 255, col: 13 });
+                                category: this.getCategoryByIndex(0)
+                            }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/view/TabBarsComponent.ets", line: 247, col: 13 });
                             ViewPU.create(componentCall);
                             let paramsLambda = () => {
                                 return {
-                                    category: this.getCategoryByIndex(0),
-                                    searchResults: this.searchResults,
-                                    isSearchMode: this.isSearchMode
+                                    category: this.getCategoryByIndex(0)
                                 };
                             };
                             componentCall.paramsGenerator_ = paramsLambda;
                         }
                         else {
                             this.updateStateVarsOfChildByElmtId(elmtId, {
-                                category: this.getCategoryByIndex(0),
-                                searchResults: this.searchResults,
-                                isSearchMode: this.isSearchMode
+                                category: this.getCategoryByIndex(0)
                             });
                         }
                     }, { name: "GoodsList" });
@@ -473,7 +434,7 @@ export default class TabBar extends ViewPU {
                 Column.pop();
             });
             TabContent.tabBar({ builder: this.firstTabBar.bind(this) });
-            TabContent.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(246:9)", "entry");
+            TabContent.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(238:9)", "entry");
         }, TabContent);
         TabContent.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
@@ -485,7 +446,7 @@ export default class TabBar extends ViewPU {
                     TabContent.create(() => {
                         this.observeComponentCreation2((elmtId, isInitialRender) => {
                             Column.create();
-                            Column.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(273:13)", "entry");
+                            Column.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(263:13)", "entry");
                             Column.width('100%');
                             Column.height('100%');
                         }, Column);
@@ -496,25 +457,19 @@ export default class TabBar extends ViewPU {
                                     // 商品列表组件（其他分类页）
                                     // 使用索引+1来对应分类数组中的位置
                                     GoodsList(this, {
-                                        category: this.getCategoryByIndex(index + 1),
-                                        searchResults: this.searchResults,
-                                        isSearchMode: this.isSearchMode
-                                    }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/view/TabBarsComponent.ets", line: 276, col: 15 });
+                                        category: this.getCategoryByIndex(index + 1)
+                                    }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/view/TabBarsComponent.ets", line: 266, col: 15 });
                                     ViewPU.create(componentCall);
                                     let paramsLambda = () => {
                                         return {
-                                            category: this.getCategoryByIndex(index + 1),
-                                            searchResults: this.searchResults,
-                                            isSearchMode: this.isSearchMode
+                                            category: this.getCategoryByIndex(index + 1)
                                         };
                                     };
                                     componentCall.paramsGenerator_ = paramsLambda;
                                 }
                                 else {
                                     this.updateStateVarsOfChildByElmtId(elmtId, {
-                                        category: this.getCategoryByIndex(index + 1),
-                                        searchResults: this.searchResults,
-                                        isSearchMode: this.isSearchMode
+                                        category: this.getCategoryByIndex(index + 1)
                                     });
                                 }
                             }, { name: "GoodsList" });
@@ -524,7 +479,7 @@ export default class TabBar extends ViewPU {
                     TabContent.tabBar({ builder: () => {
                             this.otherTabBar.call(this, item, index);
                         } });
-                    TabContent.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(272:11)", "entry");
+                    TabContent.debugLine("entry/src/main/ets/view/TabBarsComponent.ets(262:11)", "entry");
                 }, TabContent);
                 TabContent.pop();
             };
