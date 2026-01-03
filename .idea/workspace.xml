@@ -1,9 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1f95a541-56ed-4fea-b44b-cc1448b20666" name="更改" comment="merge branch 'Hong-ho-main'">
-      <change beforePath="$PROJECT_DIR$/.hvigor/cache/file-cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/.hvigor/cache/file-cache.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.hvigor/outputs/logs/details/details.json" beforeDir="false" afterPath="$PROJECT_DIR$/.hvigor/outputs/logs/details/details.json" afterDir="false" />
+    <list default="true" id="1f95a541-56ed-4fea-b44b-cc1448b20666" name="更改" comment="排序">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Yigofang_Mall/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/ets/view/GoodsListComponent.ets" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/ets/viewmodel/InitialData.ets" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/ets/viewmodel/ListDataSource.ets" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/ets/viewmodel/SearchUtils.ets" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/element/color.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/goodsImg_clothes_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/goodsImg_clothes_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/goodsImg_clothes_3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/goodsImg_clothes_4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/home1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/home2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/home3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/home4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/phone1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/phone2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/phone3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/phone4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/wear1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/wear2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/wear3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/wear4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/en_US/element/string.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AppScope/app.json5" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/AppScope/app.json5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AppScope/resources/base/element/string.json" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/AppScope/resources/base/element/string.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AppScope/resources/base/media/app_icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/AppScope/resources/base/media/app_icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-profile.json5" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/build-profile.json5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/build-profile.json5" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/build-profile.json5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/hvigorfile.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/hvigorfile.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/oh-package.json5" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/oh-package.json5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/ets/common/CommonConstants.ets" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/ets/common/CommonConstants.ets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/ets/entryability/EntryAbility.ets" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/ets/entryability/EntryAbility.ets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/ets/pages/ListIndex.ets" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/ets/pages/ListIndex.ets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/ets/view/PutDownRefreshLayout.ets" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/ets/view/PutDownRefreshLayout.ets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/ets/view/SearchBoxComponent.ets" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/ets/view/SearchBoxComponent.ets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/ets/view/SortDialogComponent.ets" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/ets/view/SortDialogComponent.ets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/ets/view/TabBarsComponent.ets" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/ets/view/TabBarsComponent.ets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/module.json5" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/module.json5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/resources/base/element/string.json" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/element/string.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/resources/base/media/clothes1.png" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/clothes1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/resources/base/media/clothes2.png" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/clothes2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/resources/base/media/clothes3.png" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/clothes3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/resources/base/media/clothes4.png" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/clothes4.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/resources/base/media/goodsImg.png" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/goodsImg.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/resources/base/media/goodsImg_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/goodsImg_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/resources/base/media/goodsImg_3.png" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/goodsImg_3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/resources/base/media/goodsImg_4.png" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/goodsImg_4.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/resources/base/media/home1.png" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/goodsImg_home_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/resources/base/media/home2.png" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/goodsImg_home_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/resources/base/media/home3.png" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/goodsImg_home_3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/resources/base/media/home4.png" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/goodsImg_home_4.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/resources/base/media/phone1.png" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/goodsImg_phone_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/resources/base/media/phone2.png" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/goodsImg_phone_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/resources/base/media/phone3.png" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/goodsImg_phone_3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/resources/base/media/phone4.png" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/goodsImg_phone_4.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/resources/base/media/refreshing.gif" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/refreshing.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/resources/base/media/wear1.png" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/goodsImg_wear_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/resources/base/media/wear2.png" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/goodsImg_wear_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/resources/base/media/wear3.png" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/goodsImg_wear_3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/resources/base/media/wear4.png" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/media/goodsImg_wear_4.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/resources/base/profile/main_pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/base/profile/main_pages.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/resources/en_US/element/string.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry/src/main/resources/zh_CN/element/string.json" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/entry/src/main/resources/zh_CN/element/string.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hvigor/hvigor-config.json5" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/hvigor/hvigor-config.json5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hvigorfile.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/hvigorfile.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/oh-package.json5" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/oh-package.json5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screenshots/device/List_usage.en.gif" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/screenshots/device/List_usage.en.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screenshots/device/List_usage.gif" beforeDir="false" afterPath="$PROJECT_DIR$/Yigofang_Mall/screenshots/device/List_usage.gif" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +99,7 @@
   <component name="HiLogStateProjectLevelPreference">
     <panelStates>
       <hilogPanelState>
-        <option name="filterName" value="User logs of selected app" />
+        <option name="filterName" value="No filters" />
         <option name="logPanelType" value="ONLINE" />
         <option name="processName" value="com.example.list_harmony" />
       </hilogPanelState>
@@ -54,7 +124,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "ace.nodejs.version": "18.20.1",
-    "git-widget-placeholder": "feat",
+    "git-widget-placeholder": "正在合并feat",
     "last_opened_file_path": "C:/Users/24505/Documents/GitHub/Yigofang_Mall/entry/src/main/ets/viewmodel",
     "projectSizeLastTraceTimestamp-05ea5c946757c6d6ed619247f0c7f8f2d2023e55a1be8a2624748a6eaedf": "1767327846810",
     "projectSizeLastTraceTimestamp-6c124ed2cec1170f35018b825856bf7fca51bfcb9a07373bd70e043a728d": "1767379997417",
@@ -141,7 +211,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="feat" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -150,6 +232,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="merge branch 'Hong-ho-main'" />
     <MESSAGE value="修复了商品懒加载无法正确显示名称的问题" />
-    <option name="LAST_COMMIT_MESSAGE" value="修复了商品懒加载无法正确显示名称的问题" />
+    <MESSAGE value="排序，修改了一部分问题" />
+    <MESSAGE value="排序" />
+    <option name="LAST_COMMIT_MESSAGE" value="排序" />
   </component>
 </project>

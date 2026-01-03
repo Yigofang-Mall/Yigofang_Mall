@@ -1,0 +1,73 @@
+# .gitignore for Yigofang_Mall — ArkTS / HarmonyOS / DevEco Studio project
+
+# DevEco / HarmonyOS build & preview artifacts
+entry/.preview/
+entry/build/
+build/
+.hvigor/
+.github/
+
+# DevEco / package management
+.ohpm/
+.oh_modules/
+node_modules/
+
+# Generated packages / archives
+*.hap
+*.har
+*.map
+
+# IDE / editor
+.idea/
+*.iml
+.vscode/
+*.code-workspace
+
+# Logs and temporary
+*.log
+.tmp/
+temp/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor swap/temp
+*.swp
+*~
+
+# Misc
+*.zip
+*.tar.gz
+
+# Keep local workspace config out of repo
+/.vscode/
+
+# Note: Python-specific ignores removed because this repository is ArkTS / ETS based.
+# If you later add Python code, add a dedicated Python section instead.
+.cursorignore
+.cursorindexingignore
+
+# Marimo
+marimo/_static/
+marimo/_lsp/
+__marimo__/
+
+# HarmonyOS DevEco Studio
+.hvigor/
+.idea/
+*.iml
+.DS_Store
+
+# Build files
+build/
+*.log
+
+# DevEco generated files
+.ohpm/
+.oh_modules/
+node_modules/
+
+# OS generated files
+.DS_Store
+Thumbs.db
