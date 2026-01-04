@@ -32,47 +32,47 @@ struct ListIndex {
   private displaySync: displaySync.DisplaySync | undefined = undefined;
   private lastTime: number = 0;
   private frameCount: number = 0;
-
-  aboutToAppear() {
-    let startTime = AppStorage.get<number>('appStartTime');
-    if (startTime) {
-      let duration = new Date().getTime() - startTime;
-      this.startupTime = duration + 'ms';
-    }
-
-    this.intervalId = setInterval(() => {
-      let pss = hidebug.getPss();
-      this.memoryUsage = Number(pss / BigInt(1024)).toFixed(2) + ' MB';
-    }, 1000);
-
-    this.displaySync = displaySync.create();
-    this.displaySync.setExpectedFrameRateRange({
-      expected: 60,
-      min: 0,
-      max: 120
-    });
-    this.displaySync.on("frame", (frameInfo) => {
-      this.frameCount++;
-      let currentTime = frameInfo.timestamp;
-      if (this.lastTime === 0) {
-        this.lastTime = currentTime;
-        return;
-      }
-      if (currentTime - this.lastTime >= 1000000000) {
-        this.fps = this.frameCount;
-        this.frameCount = 0;
-        this.lastTime = currentTime;
-      }
-    });
-    this.displaySync.start();
-  }
-
-  aboutToDisappear() {
-    clearInterval(this.intervalId);
-    if (this.displaySync) {
-      this.displaySync.stop();
-    }
-  }
+  //用于Debug性能代码, 请勿删除
+  // aboutToAppear() {
+  //   let startTime = AppStorage.get<number>('appStartTime');
+  //   if (startTime) {
+  //     let duration = new Date().getTime() - startTime;
+  //     this.startupTime = duration + 'ms';
+  //   }
+  //
+  //   this.intervalId = setInterval(() => {
+  //     let pss = hidebug.getPss();
+  //     this.memoryUsage = Number(pss / BigInt(1024)).toFixed(2) + ' MB';
+  //   }, 1000);
+  //
+  //   this.displaySync = displaySync.create();
+  //   this.displaySync.setExpectedFrameRateRange({
+  //     expected: 60,
+  //     min: 0,
+  //     max: 120
+  //   });
+  //   this.displaySync.on("frame", (frameInfo) => {
+  //     this.frameCount++;
+  //     let currentTime = frameInfo.timestamp;
+  //     if (this.lastTime === 0) {
+  //       this.lastTime = currentTime;
+  //       return;
+  //     }
+  //     if (currentTime - this.lastTime >= 1000000000) {
+  //       this.fps = this.frameCount;
+  //       this.frameCount = 0;
+  //       this.lastTime = currentTime;
+  //     }
+  //   });
+  //   this.displaySync.start();
+  // }
+  //
+  // aboutToDisappear() {
+  //   clearInterval(this.intervalId);
+  //   if (this.displaySync) {
+  //     this.displaySync.stop();
+  //   }
+  // }
 
   build() {
     Stack({ alignContent: Alignment.Top }) {
@@ -94,12 +94,13 @@ struct ListIndex {
       }
       .height(LAYOUT_WIDTH_OR_HEIGHT)
 
-      Text(`Memory: ${this.memoryUsage} | Cold Start: ${this.startupTime} | FPS: ${this.fps}`)
-        .fontColor(Color.Red)
-        .fontSize(14)
-        .fontWeight(FontWeight.Bold)
-        .margin({ top: 10 })
-        .zIndex(999)
+      //性能信息
+      // Text(`Memory: ${this.memoryUsage} | Cold Start: ${this.startupTime} | FPS: ${this.fps}`)
+      //   .fontColor(Color.Red)
+      //   .fontSize(14)
+      //   .fontWeight(FontWeight.Bold)
+      //   .margin({ top: 10 })
+      //   .zIndex(999)
     }
     .height(LAYOUT_WIDTH_OR_HEIGHT)
     .backgroundColor($r('app.color.primaryBgColor')) // 设置背景色

@@ -4,7 +4,6 @@
     <list default="true" id="1f95a541-56ed-4fea-b44b-cc1448b20666" name="更改" comment="排序、搜索">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/entry/src/main/ets/pages/ListIndex.ets" beforeDir="false" afterPath="$PROJECT_DIR$/entry/src/main/ets/pages/ListIndex.ets" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/系统测试文档_v2.md" beforeDir="false" afterPath="$PROJECT_DIR$/系统测试文档_v2.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,9 +48,9 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "127.0.0.1:5555": "5378659871767513267372",
+    "127.0.0.1:5555": "5378659871767514925431",
     "Application.entry.executor": "Run",
-    "MODULE_HAP_TIME": "{\"127.0.0.1:5555entry\":\"2026-01-04T07:54:20.387952300Z\"}",
+    "MODULE_HAP_TIME": "{\"127.0.0.1:5555entry\":\"2026-01-04T08:21:58.533339500Z\"}",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "ace.nodejs.version": "18.20.1",
