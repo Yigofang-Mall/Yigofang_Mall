@@ -16,6 +16,7 @@
 import TabBar from '../view/TabBarsComponent';
 import { LAYOUT_WIDTH_OR_HEIGHT, STORE } from '../common/CommonConstants';
 import hidebug from '@ohos.hidebug';
+import displaySync from '@ohos.graphics.displaySync';
 
 /**
  * 应用主页面
@@ -26,7 +27,11 @@ import hidebug from '@ohos.hidebug';
 struct ListIndex {
   @State memoryUsage: string = '0 MB';
   @State startupTime: string = '';
+  @State fps: number = 0;
   private intervalId: number = -1;
+  private displaySync: displaySync.DisplaySync | undefined = undefined;
+  private lastTime: number = 0;
+  private frameCount: number = 0;
 
   aboutToAppear() {
     let startTime = AppStorage.get<number>('appStartTime');
@@ -39,10 +44,34 @@ struct ListIndex {
       let pss = hidebug.getPss();
       this.memoryUsage = Number(pss / BigInt(1024)).toFixed(2) + ' MB';
     }, 1000);
+
+    this.displaySync = displaySync.create();
+    this.displaySync.setExpectedFrameRateRange({
+      expected: 60,
+      min: 0,
+      max: 120
+    });
+    this.displaySync.on("frame", (frameInfo) => {
+      this.frameCount++;
+      let currentTime = frameInfo.timestamp;
+      if (this.lastTime === 0) {
+        this.lastTime = currentTime;
+        return;
+      }
+      if (currentTime - this.lastTime >= 1000000000) {
+        this.fps = this.frameCount;
+        this.frameCount = 0;
+        this.lastTime = currentTime;
+      }
+    });
+    this.displaySync.start();
   }
 
   aboutToDisappear() {
     clearInterval(this.intervalId);
+    if (this.displaySync) {
+      this.displaySync.stop();
+    }
   }
 
   build() {
@@ -65,7 +94,7 @@ struct ListIndex {
       }
       .height(LAYOUT_WIDTH_OR_HEIGHT)
 
-      Text(`Memory: ${this.memoryUsage} | Cold Start: ${this.startupTime}`)
+      Text(`Memory: ${this.memoryUsage} | Cold Start: ${this.startupTime} | FPS: ${this.fps}`)
         .fontColor(Color.Red)
         .fontSize(14)
         .fontWeight(FontWeight.Bold)

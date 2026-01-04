@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1f95a541-56ed-4fea-b44b-cc1448b20666" name="更改" comment="排序、搜索">
-      <change beforePath="$PROJECT_DIR$/.hvigor/cache/file-cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/.hvigor/cache/file-cache.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.hvigor/outputs/logs/details/details.json" beforeDir="false" afterPath="$PROJECT_DIR$/.hvigor/outputs/logs/details/details.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/entry/src/main/ets/pages/ListIndex.ets" beforeDir="false" afterPath="$PROJECT_DIR$/entry/src/main/ets/pages/ListIndex.ets" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/架构设计.md" beforeDir="false" afterPath="$PROJECT_DIR$/架构设计.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/系统测试文档_v2.md" beforeDir="false" afterPath="$PROJECT_DIR$/系统测试文档_v2.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -52,13 +49,13 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "127.0.0.1:5555": "5378659871767511691919",
+    "127.0.0.1:5555": "5378659871767513267372",
     "Application.entry.executor": "Run",
-    "MODULE_HAP_TIME": "{\"127.0.0.1:5555entry\":\"2026-01-04T07:28:04.608104700Z\"}",
+    "MODULE_HAP_TIME": "{\"127.0.0.1:5555entry\":\"2026-01-04T07:54:20.387952300Z\"}",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "ace.nodejs.version": "18.20.1",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "yyx-v2",
     "last_opened_file_path": "C:/Users/24505/Documents/GitHub/Yigofang_Mall/entry/src/main/ets/viewmodel",
     "projectSizeLastTraceTimestamp-05ea5c946757c6d6ed619247f0c7f8f2d2023e55a1be8a2624748a6eaedf": "1767327846810",
     "projectSizeLastTraceTimestamp-6c124ed2cec1170f35018b825856bf7fca51bfcb9a07373bd70e043a728d": "1767379997417",
