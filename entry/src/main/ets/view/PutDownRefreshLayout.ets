@@ -27,16 +27,16 @@ export default struct PutDownRefresh {
 
   build() {
     // 刷新指示器布局行
-    Row() {
-      // 刷新图标
-      Image($r('app.media.refreshing'))
-        .width(commonConst.ICON_WIDTH)
-        .height(commonConst.ICON_HEIGHT)
-      // 刷新状态文本
-      Text(this.refreshText).fontSize(commonConst.NORMAL_FONT_SIZE)
-    }
-    .justifyContent(FlexAlign.Center) // 居中对齐
-    .width(commonConst.GOODS_LIST_WIDTH)
-    .height(commonConst.GOODS_LIST_HEIGHT)
+    // Row() {
+    //   // 刷新图标
+    //   Image($r('app.media.refreshing'))
+    //     .width(commonConst.ICON_WIDTH)
+    //     .height(commonConst.ICON_HEIGHT)
+    //   // 刷新状态文本
+    //   Text(this.refreshText).fontSize(commonConst.NORMAL_FONT_SIZE)
+    // }
+    // .justifyContent(FlexAlign.Center) // 居中对齐
+    // .width(commonConst.GOODS_LIST_WIDTH)
+    // .height(commonConst.GOODS_LIST_HEIGHT)
   }
 }

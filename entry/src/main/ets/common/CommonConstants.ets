@@ -71,3 +71,16 @@ export const MAX_DATA_LENGTH: number = 12;
 // 文本最大行数
 export const MAX_LINES_TEXT: number = 1;
 
+// 新增常量
+export const PAGE_SIZE: number = 6; // 每页加载商品数量
+export const FEATURED_SIZE: number = 6; // 精选页每次刷新展示的商品数量
+export const REFRESH_DELAY: number = 1000; // 模拟网络延迟
+export const LAZY_LOAD_THRESHOLD: number = 6; // 懒加载触发阈值
+export const INITIAL_LOAD_COUNT: number = 20; // 初始加载数量
+
+
+// 搜索框相关常量
+export const SEARCH_HEIGHT: string = '40vp'; // 搜索框高度
+export const SEARCH_MARGIN: number = 12; // 搜索框外边距
+export const SEARCH_PADDING: number = 12; // 搜索框内边距
+

@@ -10,7 +10,7 @@
     },
     {
       "name": "EntryAbility_label",
-      "value": "Yigofang_Mall"
+      "value": "List"
     },
     {
       "name": "selected",
@@ -74,7 +74,7 @@
     },
     {
       "name": "shopping_mall",
-      "value": "Yigofang_Mall"
+      "value": "Shopping Mall"
     }
   ]
 }

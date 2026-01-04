@@ -10,7 +10,7 @@
     },
     {
       "name": "EntryAbility_label",
-      "value": "Yigofang_Mall"
+      "value": "List"
     },
     {
       "name": "selected",
@@ -74,7 +74,135 @@
     },
     {
       "name": "shopping_mall",
-      "value": "Yigofang_Mall"
+      "value": "Shopping Mall"
+    },
+    {
+      "name": "goods_name_phone_1",
+      "value": "vivo X300 Pro新品蔡司2亿APO超级长焦天玑9500拍照手机官方旗舰店官网正品"
+    },
+    {
+      "name": "goods_name_phone_2",
+      "value": "HUAWEI Mate 80 麒麟9020芯片 第二代红枫影像 鸿蒙AI 华为直屏鸿蒙智能手机华为官方旗舰店"
+    },
+    {
+      "name": "goods_name_phone_3",
+      "value": "Apple/苹果 iPhone 17 Pro Max 手机 A19 Pro芯片 2025新款 全新未拆封，官方正品"
+    },
+    {
+      "name": "goods_name_phone_4",
+      "value": "小米17 Pro手机新品上市小米徕卡联合研发小米官方旗舰店官网小米澎湃OS小米17pro"
+    },
+    {
+      "name": "goods_price_phone_1",
+      "value": "¥4799"
+    },
+    {
+      "name": "goods_price_phone_2",
+      "value": "¥5199"
+    },
+    {
+      "name": "goods_price_phone_3",
+      "value": "¥9999"
+    },
+    {
+      "name": "goods_price_phone_4",
+      "value": "¥4499"
+    },
+    {
+      "name": "goods_name_clothes_1",
+      "value": "花纱羊毛混纺半高领毛衣开衫老钱棕色灰色百搭cleanfit"
+    },
+    {
+      "name": "goods_name_clothes_2",
+      "value": "OUR LEGACY Evening男士黑色Polo衫休闲宽松复古针织开衫外套"
+    },
+    {
+      "name": "goods_name_clothes_3",
+      "value": "No day off「烧边牛角扣」羊毛混纺针织亨利领毛衣纯色基础长袖男"
+    },
+    {
+      "name": "goods_name_clothes_4",
+      "value": "高知感舒芙蕾休闲复古慵懒羊毛混纺毛织开衫外套"
+    },
+    {
+      "name": "goods_price_clothes_1",
+      "value": "¥236"
+    },
+    {
+      "name": "goods_price_clothes_2",
+      "value": "¥3300"
+    },
+    {
+      "name": "goods_price_clothes_3",
+      "value": "¥149"
+    },
+    {
+      "name": "goods_price_clothes_4",
+      "value": "¥403"
+    },
+    {
+      "name": "goods_name_wear_1",
+      "value": "Apple Watch Series 11 GPS + 蜂窝款 44mm 钛金属表壳 海洋表带 智能手表"
+    },
+    {
+      "name": "goods_name_wear_2",
+      "value": "【新品上市】Huawei/华为 WATCH GT 6智能手表21天超长续航华为手机专卖店智能穿戴设备健康全新骑行体验"
+    },
+    {
+      "name": "goods_name_wear_3",
+      "value": "小米手环10智能手环运动健康防水睡眠心率全面屏长续航小米手环9升级款"
+    },
+    {
+      "name": "goods_name_wear_4",
+      "value": "三星/Samsung Galaxy Watch8 智能手表 运动AI心率监测睡眠监测血氧血压心率适配三星三折叠"
+    },
+    {
+      "name": "goods_price_wear_1",
+      "value": "¥5799"
+    },
+    {
+      "name": "goods_price_wear_2",
+      "value": "¥1388"
+    },
+    {
+      "name": "goods_price_wear_3",
+      "value": "¥269"
+    },
+    {
+      "name": "goods_price_wear_4",
+      "value": "¥1824"
+    },
+    {
+      "name": "goods_name_home_1",
+      "value": "草地浮游水气缸桌面灯摆件氛围小夜灯鱼缸"
+    },
+    {
+      "name": "goods_name_home_2",
+      "value": "物有引力 财火灯 复古氛围灯卧室床头小夜灯充电民宿装饰圣诞创意"
+    },
+    {
+      "name": "goods_name_home_3",
+      "value": "现代轻奢椭圆形装饰托盘样板房创意家居餐桌茶几水果盘收纳盘摆件"
+    },
+    {
+      "name": "goods_name_home_4",
+      "value": "原木奶油风客厅装饰画趣味猫咪沙发背景墙挂画立体砂岩高级感壁画"
+    },
+    {
+      "name": "goods_price_home_1",
+      "value": "¥333"
+    },
+    {
+      "name": "goods_price_home_2",
+      "value": "¥38"
+    },
+    {
+      "name": "goods_price_home_3",
+      "value": "¥127"
+    },
+    {
+      "name": "goods_price_home_4",
+      "value": "¥345"
     }
   ]
 }
